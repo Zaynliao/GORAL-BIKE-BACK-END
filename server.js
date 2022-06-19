@@ -1,7 +1,7 @@
 const express = require('express');
 // 利用 express 建立一個 express application
 const app = express();
-const path = require('path');
+
 const cors = require('cors');
 // path 為內建套件
 const path = require('path');
@@ -21,14 +21,11 @@ let pool = require('./utils/db');
 // express 處理靜態資料
 // 靜態資料: html, css 檔案, javascript 檔案, 圖片, 影音檔...
 // express 少數內建的中間件 static
-// 方法1: 不要指定網址 /
-app.use(express.static(path.join(__dirname, 'assets')));
-// http://localhost:3001/images/test1.jpg
 // 方法2: 指定網址 public
-app.use(
-  '/images/81pic',
-  express.static(path.join(__dirname, 'public', '81pic'))
-);
+// app.use('/images', imagesRouter);
+// 在 public 的 images 的裡面的檔案
+app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
+// http://localhost:3001/images/callback-hell.png
 // http://localhost:3001/images/members  --> public/members
 // http://localhost:3001/images/members/1655003608497.jpg
 
@@ -36,10 +33,6 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 // 要讓 express 認得 req 裡 json
 app.use(express.json());
-
-// 在 public 的 images 的裡面的檔案
-app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
-// http://localhost:3001/images/callback-hell.png
 
 // 引進 router
 const CourseRouter = require('./routers/courseRouter');
