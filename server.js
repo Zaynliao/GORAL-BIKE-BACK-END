@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 // path 為內建套件
+const path = require('path');
 require('dotenv').config();
 
 app.use(
@@ -15,6 +16,20 @@ app.use(
 );
 
 let pool = require('./utils/db'); // 重構 | 把 db.js 引入
+
+// express 處理靜態資料
+// 靜態資料: html, css 檔案, javascript 檔案, 圖片, 影音檔...
+// express 少數內建的中間件 static
+// 方法1: 不要指定網址 /
+app.use(express.static(path.join(__dirname, 'assets')));
+// http://localhost:3001/images/test1.jpg
+// 方法2: 指定網址 public
+app.use(
+  '/images/81pic',
+  express.static(path.join(__dirname, 'public', '81pic'))
+);
+// http://localhost:3001/images/members  --> public/members
+// http://localhost:3001/images/members/1655003608497.jpg
 
 // express.urlencoded 要讓 express 認得 req 裡 body 裡面的資料
 app.use(express.urlencoded({ extended: true }));
