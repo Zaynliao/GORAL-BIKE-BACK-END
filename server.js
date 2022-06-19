@@ -1,13 +1,13 @@
-// npm init -f
-// npm i express
 const express = require('express');
 // 利用 express 建立一個 express application
 const app = express();
+const path = require('path');
 const cors = require('cors');
 // path 為內建套件
 const path = require('path');
 require('dotenv').config();
 
+// 跨源
 app.use(
   cors({
     origin: ['http://localhost:3000'],
@@ -15,7 +15,8 @@ app.use(
   })
 );
 
-let pool = require('./utils/db'); // 重構 | 把 db.js 引入
+// 把 db.js 引入
+let pool = require('./utils/db');
 
 // express 處理靜態資料
 // 靜態資料: html, css 檔案, javascript 檔案, 圖片, 影音檔...
@@ -36,9 +37,14 @@ app.use(express.urlencoded({ extended: true }));
 // 要讓 express 認得 req 裡 json
 app.use(express.json());
 
-const CourseRouter = require('./routers/courseRouter'); // 引進 router
+// 在 public 的 images 的裡面的檔案
+app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
+// http://localhost:3001/images/callback-hell.png
 
-app.use('/api/course', CourseRouter); // 使用 router
+// 引進 router
+const CourseRouter = require('./routers/courseRouter');
+// 使用 router
+app.use('/api/course', CourseRouter);
 
 app.use((req, res, next) => {
   console.log('所有路由的後面 => 404', req.path);
