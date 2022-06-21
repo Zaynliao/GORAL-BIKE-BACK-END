@@ -52,4 +52,16 @@ router.get('/', async (req, res, next) => {
   });
 });
 
+router.get('/:courseId', async (req, res, next) => {
+  // req.params | 取得網址上的參數
+  // req.params.stockId
+  let [data] = await pool.execute(
+    'SELECT * FROM classes, course_category, course_location, course_status, venue WHERE course_id = ? AND classes.course_category_id = course_category.course_category_id AND classes.course_location_id = course_location.course_location_id AND classes.course_status_id = course_status.course_status_id AND course_location.course_venue_id = venue.id',
+    [req.params.courseId]
+  );
+
+  res.json({
+    data: data,
+  });
+});
 module.exports = router;
