@@ -37,9 +37,11 @@ app.use(express.json());
 // 引進 router
 const CourseRouter = require('./routers/courseRouter');
 const ProductRouter = require('./routers/productRouter');
+const NewsRouter = require('./routers/newsRouter');
 // 使用 router
 app.use('/api/course', CourseRouter);
 app.use('/api/product', ProductRouter);
+app.use('/api/news', NewsRouter);
 
 app.use((req, res, next) => {
   console.log('所有路由的後面 => 404', req.path);
