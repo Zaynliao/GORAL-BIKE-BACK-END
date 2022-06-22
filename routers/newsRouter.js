@@ -15,6 +15,10 @@ router.get('/', async (req, res, next) => {
   // 取得當頁資料
 
   const [newsResults] = await pool.execute(
+    'SELECT `news`.*,`newspicture`.`name` FROM `news_picture`,`newspicture`,`news` WHERE `news_picture`.`news_id`=`news`.`id` AND `news_picture`.`picture_id`=`newspicture`.`id` GROUP BY `news`.`id` ORDER BY `news`.`date` DESC'
+  );
+
+  const [newsLimitResults] = await pool.execute(
     'SELECT `news`.*,`newspicture`.`name` FROM `news_picture`,`newspicture`,`news` WHERE `news_picture`.`news_id`=`news`.`id` AND `news_picture`.`picture_id`=`newspicture`.`id` GROUP BY `news`.`id` ORDER BY `news`.`date` DESC  LIMIT ? OFFSET ? ',
     [perPage, offset]
   );
@@ -23,12 +27,27 @@ router.get('/', async (req, res, next) => {
     'SELECT `news`.*,`newspicture`.`name` FROM `news_picture`,`newspicture`,`news` WHERE `news_picture`.`news_id`=`news`.`id` AND `news_picture`.`picture_id`=`newspicture`.`id` GROUP BY `news`.`touch` DESC LIMIT 10'
   );
 
-  res.json({ newsResults: newsResults, hotNewsResults: hotNewsResults });
+  res.json({
+    newsResults: newsResults,
+    newsLimitResults: newsLimitResults,
+    hotNewsResults: hotNewsResults,
+  });
 });
 
 router.get('/newsDetail', async (req, res, next) => {
   //   console.log('news');
   let newsID = req.query.newsID || 1;
+
+  const touch = await pool.execute(
+    'SELECT touch FROM `news` WHERE `news`.`id` = ?',
+    [newsID]
+  );
+  console.log(touch[0][0].touch);
+  const resultTouch = (touch[0][0].touch += 1);
+  await pool.execute('UPDATE `news` SET `touch` = ? WHERE `news`.`id` = ?', [
+    resultTouch,
+    newsID,
+  ]);
 
   const [newsResults] = await pool.execute(
     'SELECT `news`.* FROM `news` WHERE `news`.`id`=?',
@@ -40,8 +59,10 @@ router.get('/newsDetail', async (req, res, next) => {
     [newsID]
   );
 
-  console.log(newsPicture);
-  res.json({ newsResults: newsResults, newsPicture: newsPicture });
+  res.json({
+    newsResults: newsResults,
+    newsPicture: newsPicture,
+  });
 });
 
 module.exports = router;
