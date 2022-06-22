@@ -1,8 +1,10 @@
 const express = require('express');
 // 利用 express 建立一個 express application
 const app = express();
-const path = require('path');
+
 const cors = require('cors');
+// path 為內建套件
+const path = require('path');
 require('dotenv').config();
 
 // 跨源
@@ -16,21 +18,30 @@ app.use(
 // 把 db.js 引入
 let pool = require('./utils/db');
 
+// express 處理靜態資料
+// 靜態資料: html, css 檔案, javascript 檔案, 圖片, 影音檔...
+// express 少數內建的中間件 static
+// 方法2: 指定網址 public
+// app.use('/images', imagesRouter);
+// 在 public 的 images 的裡面的檔案
+app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
+// http://localhost:3001/images/callback-hell.png
+// http://localhost:3001/images/members  --> public/members
+// http://localhost:3001/images/members/1655003608497.jpg
+
 // express.urlencoded 要讓 express 認得 req 裡 body 裡面的資料
 app.use(express.urlencoded({ extended: true }));
 // 要讓 express 認得 req 裡 json
 app.use(express.json());
 
-// 在 public 的 images 的裡面的檔案
-app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
-// http://localhost:3001/ images/callback-hell.png
-
 // 引進 router
 const CourseRouter = require('./routers/courseRouter');
 const ProductRouter = require('./routers/productRouter');
+const NewsRouter = require('./routers/newsRouter');
 // 使用 router
 app.use('/api/course', CourseRouter);
 app.use('/api/product', ProductRouter);
+app.use('/api/news', NewsRouter);
 
 app.use((req, res, next) => {
   console.log('所有路由的後面 => 404', req.path);
