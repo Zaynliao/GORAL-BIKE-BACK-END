@@ -5,7 +5,29 @@ const moment = require('moment');
 
 const pool = require('../utils/db'); // 引入 db
 
+///------------------------------------------------------------------------------------- /course
+
 router.get('/', async (req, res, next) => {
+  // ------------------------------------------------------ 不用額外處理的前端網頁字串
+
+  let searchWord = req.query.search || ''; // 取得關鍵字
+  let statu = req.query.statu || 1; // 取得目前狀態
+  let price = req.query.priceSubmit || [0, 10000]; // 取得價錢篩選
+  let person = req.query.personSubmit || [0, 100]; // 取得人數篩選
+
+  // ------------------------------------------------------ 要額外處理的前端網頁字串
+
+  let category = req.query.category || [0]; // 取得課程難度
+
+  // 複選 > 疊加 > 串接
+  if (category) {
+    categorySQLArray = ` AND classes.course_category_id IN (${category})`;
+  }
+
+  {
+    category === '' ? (categorySQLArray = '') : categorySQLArray;
+  }
+
   let sortMethod = req.query.sortMethod || 'hotSort'; // 取得排序方法
   {
     switch (sortMethod) {
@@ -24,17 +46,8 @@ router.get('/', async (req, res, next) => {
     }
   }
 
-  let statu = req.query.statu || 1; // 取得目前狀態
-  let price = req.query.priceSubmit || [0, 10000]; // 取得價錢篩選
-  let person = req.query.personSubmit || [0, 100]; // 取得人數篩選
-  let category = req.query.category || [0]; // 取得課程難度
-  if (category) {
-    categorySQLArray = ` AND classes.course_category_id IN (${category})`;
-  }
-  {
-    category === '' ? (categorySQLArray = '') : categorySQLArray;
-  }
   let page = req.query.page || 1; // 取得目前在第幾頁
+
   const perPage = 9; // 一頁幾筆
   const offset = (page - 1) * perPage; // 計算每頁跳過幾筆顯示
 
@@ -83,8 +96,24 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------ 取得當頁資料
 
+  // SELECT * FROM classes, course_category, course_location, course_status, venue
+  // WHERE classes.course_valid = ?
+  // AND classes.course_category_id = course_category.course_category_id
+  // AND classes.course_location_id = course_location.course_location_id
+  // AND classes.course_status_id = course_status.course_status_id
+  // AND course_location.course_venue_id = venue.id
+  // AND classes.course_status_id = ?
+  // AND classes.course_price BETWEEN ? AND ?
+  // AND classes.course_inventory BETWEEN ? AND ?
+  // AND classes.course_date BETWEEN ? AND ?
+  // AND classes.course_title LIKE ?
+  // ${categorySQLArray}
+  // ${sortMethodString}
+  // LIMIT ?
+  // OFFSET ?
+
   let [pageResults] = await pool.execute(
-    `SELECT * FROM classes, course_category, course_location, course_status, venue WHERE classes.course_valid = ? AND classes.course_category_id = course_category.course_category_id AND classes.course_location_id = course_location.course_location_id AND classes.course_status_id = course_status.course_status_id AND course_location.course_venue_id = venue.id AND classes.course_status_id = ? AND classes.course_price BETWEEN ? AND ? AND classes.course_inventory BETWEEN ? AND ? AND classes.course_date BETWEEN ? AND ? ${categorySQLArray} ${sortMethodString} LIMIT ? OFFSET ? `,
+    `SELECT * FROM classes, course_category, course_location, course_status, venue WHERE classes.course_valid = ? AND classes.course_category_id = course_category.course_category_id AND classes.course_location_id = course_location.course_location_id AND classes.course_status_id = course_status.course_status_id AND course_location.course_venue_id = venue.id AND classes.course_status_id = ? AND classes.course_price BETWEEN ? AND ? AND classes.course_inventory BETWEEN ? AND ? AND classes.course_date BETWEEN ? AND ? AND classes.course_title LIKE ? ${categorySQLArray} ${sortMethodString} LIMIT ? OFFSET ? `,
     [
       1,
       statu,
@@ -94,6 +123,7 @@ router.get('/', async (req, res, next) => {
       person[1],
       startDateRange,
       endDateRange,
+      '%' + searchWord + '%',
       perPage,
       offset,
     ]
@@ -111,6 +141,8 @@ router.get('/', async (req, res, next) => {
   });
 });
 
+///------------------------------------------------------------------------------------- /course/1
+
 router.get('/:courseId', async (req, res, next) => {
   // req.params | 取得網址上的參數
   // req.params.stockId
@@ -123,4 +155,5 @@ router.get('/:courseId', async (req, res, next) => {
     data: data,
   });
 });
+
 module.exports = router;
