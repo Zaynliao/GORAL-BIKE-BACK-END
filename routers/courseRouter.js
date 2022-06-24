@@ -17,31 +17,22 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------------------------ 要額外處理的前端網頁字串
 
-  let category = req.query.category || [0]; // 取得課程難度
-
-  // 複選 > 疊加 > 串接
-  if (category) {
-    categorySQLArray = ` AND classes.course_category_id IN (${category})`;
-  }
-
-  {
-    category === '' ? (categorySQLArray = '') : categorySQLArray;
-  }
+  let category = req.query.category.toString() || [0]; // 取得課程難度
 
   let sortMethod = req.query.sortMethod || 'hotSort'; // 取得排序方法
   {
     switch (sortMethod) {
       case 'hotSort':
-        sortMethodString = `ORDER BY (classes.course_enrollment/classes.course_inventory) DESC`;
+        sortMethodString = `(classes.course_enrollment/classes.course_inventory) DESC`;
         break;
       case 'newSort':
-        sortMethodString = `ORDER BY classes.course_date DESC`;
+        sortMethodString = `classes.course_date DESC`;
         break;
       case 'cheapSort':
-        sortMethodString = `ORDER BY classes.course_price ASC`;
+        sortMethodString = `classes.course_price ASC`;
         break;
       case 'expensiveSort':
-        sortMethodString = `ORDER BY classes.course_price DESC`;
+        sortMethodString = `classes.course_price DESC`;
         break;
     }
   }
@@ -113,7 +104,7 @@ router.get('/', async (req, res, next) => {
   // OFFSET ?
 
   let [pageResults] = await pool.execute(
-    `SELECT * FROM classes, course_category, course_location, course_status, venue WHERE classes.course_valid = ? AND classes.course_category_id = course_category.course_category_id AND classes.course_location_id = course_location.course_location_id AND classes.course_status_id = course_status.course_status_id AND course_location.course_venue_id = venue.id AND classes.course_status_id = ? AND classes.course_price BETWEEN ? AND ? AND classes.course_inventory BETWEEN ? AND ? AND classes.course_date BETWEEN ? AND ? AND classes.course_title LIKE ? ${categorySQLArray} ${sortMethodString} LIMIT ? OFFSET ? `,
+    `SELECT * FROM classes, course_category, course_location, course_status, venue WHERE classes.course_valid = ? AND classes.course_category_id = course_category.course_category_id AND classes.course_location_id = course_location.course_location_id AND classes.course_status_id = course_status.course_status_id AND course_location.course_venue_id = venue.id AND classes.course_status_id = ? AND classes.course_price BETWEEN ? AND ? AND classes.course_inventory BETWEEN ? AND ? AND classes.course_date BETWEEN ? AND ? AND classes.course_title LIKE ? AND classes.course_category_id IN (?) ORDER BY ${sortMethodString} LIMIT ? OFFSET ? `,
     [
       1,
       statu,
@@ -124,6 +115,7 @@ router.get('/', async (req, res, next) => {
       startDateRange,
       endDateRange,
       '%' + searchWord + '%',
+      category,
       perPage,
       offset,
     ]
