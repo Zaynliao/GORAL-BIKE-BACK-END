@@ -39,13 +39,11 @@ const CourseRouter = require('./routers/courseRouter');
 const ActivityRouter = require('./routers/activityRouter');
 const ProductRouter = require('./routers/productRouter');
 const NewsRouter = require('./routers/newsRouter');
-const ActivityRouter = require('./routers/activityRouter');
 // 使用 router
 app.use('/api/course', CourseRouter);
 app.use('/api/activity', ActivityRouter);
 app.use('/api/product', ProductRouter);
 app.use('/api/news', NewsRouter);
-app.use('/api/activity', ActivityRouter);
 
 app.use((req, res, next) => {
   console.log('所有路由的後面 => 404', req.path);
