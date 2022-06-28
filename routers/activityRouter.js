@@ -127,6 +127,7 @@ router.get('/', async (req, res, next) => {
 
   const total = pageResults.length; // 總筆數
   const lastPage = Math.ceil(total / perPage); // 總頁數
+  let [activityResults] = await pool.execute(`SELECT * FROM activity`);
 
   res.json({
     pagination: { total, lastPage, page }, // 頁碼有關的資料
@@ -134,6 +135,7 @@ router.get('/', async (req, res, next) => {
     categoryGroup: newCategory, // 課程難度類別
     dateRange: { finalStartDate, finalEndDate },
     data: pageResults, // 主資料
+    activityFullDtaa: activityResults,
   });
 });
 
