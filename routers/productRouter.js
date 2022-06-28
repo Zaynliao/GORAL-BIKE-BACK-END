@@ -34,7 +34,7 @@ router.get('/', async (req, res, next) => {
   // 總筆數
   const total = data.length;
   // 一頁幾筆
-  const perPage = 7;
+  const perPage = 500;
   // 總頁數
   const lastPage = Math.ceil(total / perPage);
   // 計算每頁跳過幾筆顯示
@@ -84,7 +84,7 @@ router.get('/product_id', async (req, res, next) => {
 });
 router.get('/product_color', async (req, res, next) => {
   pool.execute(`SELECT color_value FROM product_color`);
-  let [pageResults] = await pool.execute('SELECT * FROM product_color');
+  let [pageResults] = await pool.execute('SELECT * FROM product_color WHERE valid = ?', [1]);
   res.json({
     data: pageResults,
   });
