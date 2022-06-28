@@ -56,11 +56,13 @@ const ProductRouter = require('./routers/productRouter');
 const NewsRouter = require('./routers/newsRouter');
 const AuthRouter = require('./routers/authRouter');
 const MemberRouter = require('./routers/memberRouter');
-const session = require('./routers/session');
+const sessionRouter = require('./routers/sessionRouter');
+const verifyRouter = require('./routers/verifyRouter');
 // 使用 router
-app.use('/api/session', session);
-app.use('/api/member', MemberRouter);
 app.use('/api/auth', AuthRouter);
+app.use('/api/verify', verifyRouter);
+app.use('/api/member', MemberRouter);
+app.use('/api/session', sessionRouter);
 app.use('/api/course', CourseRouter);
 app.use('/api/activity', ActivityRouter);
 app.use('/api/product', ProductRouter);

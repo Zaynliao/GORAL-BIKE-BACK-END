@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../utils/db'); // 引入 db
+const sgMail = require('@sendgrid/mail');
+const randomString = require('randomstring');
+const moment = require('moment');
 
 const { body, validationResult } = require('express-validator');
 
@@ -50,17 +53,54 @@ router.post('/register', registerRules, async (req, res, next) => {
     return res.status(400).json({ code: 3002, error: '這個email已經註冊過' });
   }
 
+  // 產生指定長度的隨機字串(用於驗證)
+  const verifyCode = randomString.generate(10);
+  // 產生時間戳記
+
+  const joinTime = moment().valueOf();
+  const joinTimeStamp = Math.floor(joinTime / 1000);
+
+  // 寄送驗證信設定
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const msg = {
+    to: req.body.email,
+    from: 'Goral Bike <goralbiker@gmail.com>',
+    subject: '歡迎您註冊羊百克網站',
+    text: '您好，請點選以下連結進行驗證',
+    html: `
+      <div>
+          <a href=${process.env.MAILING_URL}/api/verify/v=${verifyCode}&t=${joinTimeStamp}>請點此處進行驗證</a>
+          <p>或是直接複製下列網址貼到瀏覽器上做驗證</p>
+          <span>${process.env.MAILING_URL}/api/verify/v=${verifyCode}&t=${joinTimeStamp}</span>
+      </div>
+      `,
+  };
+
+  const sendMail = async () => {
+    try {
+      await sgMail.send(msg);
+    } catch (err) {
+      console.error(err);
+      return res.json({
+        code: 30006,
+        msg: 'Something went wrong, please try again later',
+      });
+    }
+  };
+
   // 密碼雜湊
   let hashPassword = await bcrypt.hash(req.body.password, 10);
 
   // 存入資料庫
   let [result] = await pool.execute(
-    `INSERT INTO users (name, password, email, phone, create_time) 
-    VALUES (?, ?, ?, ?, NOW())`,
-    [req.body.name, hashPassword, req.body.email, req.body.phone]
+    `INSERT INTO users (name, password, email, phone, create_time,verify_string) 
+    VALUES (?, ?, ?, ?, NOW(),?)`,
+    [req.body.name, hashPassword, req.body.email, req.body.phone, verifyCode]
   );
+
+  sendMail();
   console.log('insert result:', result);
-  res.json({ code: 0, result: '註冊成功' });
+  res.json({ code: 0, msg: '註冊成功，請至您的信箱收取驗證信以驗證身份' });
 });
 
 // /api/member/login
