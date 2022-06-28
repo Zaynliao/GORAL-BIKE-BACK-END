@@ -1,4 +1,3 @@
-const { response, application } = require('express');
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
@@ -132,12 +131,15 @@ router.get('/', async (req, res, next) => {
   const total = pageResults.length; // 總筆數
   const lastPage = Math.ceil(total / perPage); // 總頁數
 
+  let [classResults] = await pool.execute(`SELECT * FROM classes`);
+
   res.json({
     pagination: { total, lastPage, page }, // 頁碼有關的資料
     stateGroup: newStatu, // 課程報名狀態類別
     categoryGroup: newCategory, // 課程難度類別
     dateRange: { finalStartDate, finalEndDate },
     data: pageResults, // 主資料
+    classFullDtaa: classResults,
   });
 });
 
