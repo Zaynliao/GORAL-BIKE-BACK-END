@@ -129,6 +129,8 @@ router.get('/', async (req, res, next) => {
   const lastPage = Math.ceil(total / perPage); // 總頁數
   let [activityResults] = await pool.execute(`SELECT * FROM activity`);
 
+  let [activityResults] = await pool.execute(`SELECT * FROM activity`);
+
   res.json({
     pagination: { total, lastPage, page }, // 頁碼有關的資料
     stateGroup: newStatu, // 課程報名狀態類別
