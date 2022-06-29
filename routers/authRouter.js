@@ -82,8 +82,8 @@ router.post('/register', registerRules, async (req, res, next) => {
     } catch (err) {
       console.error(err);
       return res.json({
-        code: 30006,
-        msg: 'Something went wrong, please try again later',
+        code: 3006,
+        error: '發生錯誤，請稍後在試',
       });
     }
   };
@@ -138,7 +138,7 @@ router.post('/login', async (req, res, next) => {
   req.session.user = returnUser;
   console.log(req.session);
   //回覆資料給前端
-  res.json({ code: 0, user: returnUser, message: '登入成功' });
+  res.json({ code: 0, user: returnUser, msg: '登入成功' });
 });
 
 // /api/member/logout
@@ -146,7 +146,7 @@ router.get('/logout', async (req, res, next) => {
   console.log(req.session);
   req.session.destroy();
   res.clearCookie('connect.sid'); // clean up!
-  return res.json({ code: 0, result: '登出成功' });
+  return res.json({ code: 0, msg: '登出成功' });
 });
 
 module.exports = router;
