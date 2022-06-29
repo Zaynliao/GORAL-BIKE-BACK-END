@@ -4,14 +4,25 @@ const router = express.Router();
 
 // 引入 database
 const pool = require('../utils/db');
-
+router.get('/update_rating', (req, res, next) => {
+  for (let index = 1; index < 142; index++) {
+    let rating = 4 * Math.random() + 1;
+    Math.round(rating*10)/10;
+    pool.execute(
+      `UPDATE product SET product_rating = ${rating} WHERE product.product_id = ${index}`
+    );
+  }
+});
+router.get('/product_all', async(req,res,next)=>{
+  let [productResults] = await pool.execute('SELECT * FROM product');
+  res.json(productResults);
+})
 router.get('/', async (req, res, next) => {
   console.log('product');
   let [data, fields] = await pool.execute(
     'SELECT * FROM product WHERE valid = ?', //<----- SQL -SELECT
     [1]
   );
-  const empty = 'bogo';
   const category = req.query.category || false;
   const brand = req.query.brand || false;
   const minPrice = req.query.minPrice || 0;
@@ -23,14 +34,14 @@ router.get('/', async (req, res, next) => {
   // 總筆數
   const total = data.length;
   // 一頁幾筆
-  const perPage = 7;
+  const perPage = 500;
   // 總頁數
   const lastPage = Math.ceil(total / perPage);
   // 計算每頁跳過幾筆顯示
   const offset = (page - 1) * perPage;
   // 取得當頁資料
 
-  let query = '';
+  let query = ``;
   let conditionParams = [];
 
   if (category) {
@@ -42,7 +53,7 @@ router.get('/', async (req, res, next) => {
     conditionParams.push(brand);
   }
   if (search) {
-    query += ` product_name = ? AND `;
+    query += ` product_name LIKE ? AND`;
     conditionParams.push(search);
   }
   if (color) {
@@ -65,10 +76,15 @@ router.get('/', async (req, res, next) => {
     data: pageResults,
   });
 });
-
+router.get('/product_id', async (req, res, next) => {
+  let [pageResults] = await pool.execute(`SELECT * FROM product WHERE product_id = ?`, [req.query.product_id]);
+  res.json({
+    data: pageResults,
+  });
+});
 router.get('/product_color', async (req, res, next) => {
   pool.execute(`SELECT color_value FROM product_color`);
-  let [pageResults] = await pool.execute('SELECT * FROM product_color');
+  let [pageResults] = await pool.execute('SELECT * FROM product_color WHERE valid = ?', [1]);
   res.json({
     data: pageResults,
   });
