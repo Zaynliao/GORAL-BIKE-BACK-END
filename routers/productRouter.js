@@ -4,21 +4,12 @@ const router = express.Router();
 
 // 引入 database
 const pool = require('../utils/db');
-router.get('/update_rating', (req, res, next) => {
-  for (let index = 1; index < 142; index++) {
-    let rating = 4 * Math.random() + 1;
-    Math.round(rating*10)/10;
-    pool.execute(
-      `UPDATE product SET product_rating = ${rating} WHERE product.product_id = ${index}`
-    );
-  }
-});
+
 router.get('/product_all', async(req,res,next)=>{
   let [productResults] = await pool.execute('SELECT * FROM product');
   res.json(productResults);
-})
+});
 router.get('/', async (req, res, next) => {
-  console.log('product');
   let [data, fields] = await pool.execute(
     'SELECT * FROM product WHERE valid = ?', //<----- SQL -SELECT
     [1]
