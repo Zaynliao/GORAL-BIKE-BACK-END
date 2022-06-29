@@ -19,15 +19,6 @@ router.get('/', async (req, res, next) => {
 
   let category = req.query.category || [0]; // 取得難度
 
-  // 複選 > 疊加 > 串接
-  if (category) {
-    categorySQLArray = ` AND activity.activity_venue_id IN (${category})`;
-  }
-
-  {
-    category === '' ? (categorySQLArray = '') : categorySQLArray;
-  }
-
   let sortMethod = req.query.sortMethod || 'hotSort'; // 取得排序方法
   {
     switch (sortMethod) {
@@ -106,7 +97,7 @@ router.get('/', async (req, res, next) => {
     AND activity.activity_persons BETWEEN ? AND ?
     AND activity.activity_date BETWEEN ? AND ?
     AND activity.activity_name LIKE ?
-    ${categorySQLArray}
+    AND activity.activity_venue_id IN (?) 
     ${sortMethodString}
     LIMIT ?
     OFFSET ?`,
@@ -120,6 +111,7 @@ router.get('/', async (req, res, next) => {
       startDateRange,
       endDateRange,
       '%' + searchWord + '%',
+      category.toString(),
       perPage,
       offset,
     ]
@@ -127,6 +119,7 @@ router.get('/', async (req, res, next) => {
 
   const total = pageResults.length; // 總筆數
   const lastPage = Math.ceil(total / perPage); // 總頁數
+  let [activityResults] = await pool.execute(`SELECT * FROM activity`);
 
   res.json({
     pagination: { total, lastPage, page }, // 頁碼有關的資料
@@ -134,6 +127,7 @@ router.get('/', async (req, res, next) => {
     categoryGroup: newCategory, // 課程難度類別
     dateRange: { finalStartDate, finalEndDate },
     data: pageResults, // 主資料
+    activityFullDtaa: activityResults,
   });
 });
 
@@ -143,7 +137,7 @@ router.get('/:courseId', async (req, res, next) => {
   // req.params | 取得網址上的參數
   // req.params.stockId
   let [data] = await pool.execute(
-    'SELECT * FROM activity, activity_status, venue WHERE activity.id = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id',
+    'SELECT * FROM activity, activity_status, venue WHERE activity.activity_id = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id',
     [req.params.courseId]
   );
 
