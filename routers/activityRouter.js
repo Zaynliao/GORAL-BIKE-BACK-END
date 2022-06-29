@@ -143,7 +143,7 @@ router.get('/:courseId', async (req, res, next) => {
   // req.params | 取得網址上的參數
   // req.params.stockId
   let [data] = await pool.execute(
-    'SELECT * FROM activity, activity_status, venue WHERE activity.id = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id',
+    'SELECT * FROM activity, activity_status, venue WHERE activity.activity_id = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id',
     [req.params.courseId]
   );
 

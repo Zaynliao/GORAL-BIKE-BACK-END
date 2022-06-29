@@ -87,24 +87,22 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------ 取得當頁資料
 
-  // SELECT * FROM classes, course_category, course_location, course_status, venue
-  // WHERE classes.course_valid = ?
-  // AND classes.course_category_id = course_category.course_category_id
-  // AND classes.course_location_id = course_location.course_location_id
-  // AND classes.course_status_id = course_status.course_status_id
-  // AND course_location.course_venue_id = venue.id
-  // AND classes.course_status_id = ?
-  // AND classes.course_price BETWEEN ? AND ?
-  // AND classes.course_inventory BETWEEN ? AND ?
-  // AND classes.course_date BETWEEN ? AND ?
-  // AND classes.course_title LIKE ?
-  // ${categorySQLArray}
-  // ${sortMethodString}
-  // LIMIT ?
-  // OFFSET ?
-
   let [pageResults] = await pool.execute(
-    `SELECT * FROM classes, course_category, course_location, course_status, venue WHERE classes.course_valid = ? AND classes.course_category_id = course_category.course_category_id AND classes.course_location_id = course_location.course_location_id AND classes.course_status_id = course_status.course_status_id AND course_location.course_venue_id = venue.id AND classes.course_status_id = ? AND classes.course_price BETWEEN ? AND ? AND classes.course_inventory BETWEEN ? AND ? AND classes.course_date BETWEEN ? AND ? AND classes.course_title LIKE ? AND classes.course_category_id IN (?) ORDER BY ${sortMethodString} LIMIT ? OFFSET ? `,
+    `SELECT * FROM classes, course_category, course_location, course_status, venue, course_contents 
+    WHERE classes.course_valid = ? 
+    AND classes.course_category_id = course_category.course_category_id 
+    AND classes.course_location_id = course_location.course_location_id 
+    AND classes.course_status_id = course_status.course_status_id 
+    AND course_location.course_venue_id = venue.id 
+    AND classes.course_content_id = course_contents.course_content_id
+    AND classes.course_status_id = ? 
+    AND classes.course_price BETWEEN ? AND ? 
+    AND classes.course_inventory BETWEEN ? AND ? 
+    AND classes.course_date BETWEEN ? AND ? 
+    AND classes.course_title LIKE ? 
+    AND classes.course_category_id IN (?) 
+    ORDER BY ${sortMethodString} 
+    LIMIT ? OFFSET ? `,
     [
       1,
       statu,
@@ -139,7 +137,7 @@ router.get('/:courseId', async (req, res, next) => {
   // req.params | 取得網址上的參數
   // req.params.stockId
   let [data] = await pool.execute(
-    'SELECT * FROM classes, course_category, course_location, course_status, venue WHERE course_id = ? AND classes.course_category_id = course_category.course_category_id AND classes.course_location_id = course_location.course_location_id AND classes.course_status_id = course_status.course_status_id AND course_location.course_venue_id = venue.id',
+    'SELECT * FROM classes, course_category, course_location, course_status, venue, course_contents WHERE course_id = ? AND classes.course_category_id = course_category.course_category_id AND classes.course_location_id = course_location.course_location_id AND classes.course_status_id = course_status.course_status_id AND course_location.course_venue_id = venue.id AND classes.course_content_id = course_contents.course_content_id',
     [req.params.courseId]
   );
 
