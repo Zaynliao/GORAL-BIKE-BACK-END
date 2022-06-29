@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-29 14:19:14
+-- 產生時間： 2022-06-29 14:22:22
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 8.1.4
 
@@ -21,6 +21,7 @@ SET time_zone = "+00:00";
 -- 資料表結構 `accessory`
 --
 
+DROP TABLE IF EXISTS `accessory`;
 CREATE TABLE `accessory` (
   `id` int(3) UNSIGNED NOT NULL,
   `accessory_name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -84,6 +85,7 @@ INSERT INTO `accessory` (`id`, `accessory_name`, `accessory_picture`, `accessory
 -- 資料表結構 `accessory_category`
 --
 
+DROP TABLE IF EXISTS `accessory_category`;
 CREATE TABLE `accessory_category` (
   `id` int(3) UNSIGNED NOT NULL,
   `accessory_category_name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -114,6 +116,7 @@ INSERT INTO `accessory_category` (`id`, `accessory_category_name`) VALUES
 -- 資料表結構 `activity`
 --
 
+DROP TABLE IF EXISTS `activity`;
 CREATE TABLE `activity` (
   `activity_id` int(3) UNSIGNED NOT NULL,
   `activity_venue_id` int(3) NOT NULL,
@@ -165,6 +168,7 @@ INSERT INTO `activity` (`activity_id`, `activity_venue_id`, `activity_pictures`,
 -- 資料表結構 `activity_status`
 --
 
+DROP TABLE IF EXISTS `activity_status`;
 CREATE TABLE `activity_status` (
   `id` int(3) UNSIGNED NOT NULL,
   `activity_status_name` varchar(10) NOT NULL
@@ -185,6 +189,7 @@ INSERT INTO `activity_status` (`id`, `activity_status_name`) VALUES
 -- 資料表結構 `classes`
 --
 
+DROP TABLE IF EXISTS `classes`;
 CREATE TABLE `classes` (
   `course_id` int(3) NOT NULL,
   `course_category_id` int(3) NOT NULL,
@@ -244,6 +249,7 @@ INSERT INTO `classes` (`course_id`, `course_category_id`, `course_title`, `cours
 -- 資料表結構 `coupons`
 --
 
+DROP TABLE IF EXISTS `coupons`;
 CREATE TABLE `coupons` (
   `id` int(5) NOT NULL,
   `coupon_name` varchar(50) NOT NULL,
@@ -276,6 +282,7 @@ INSERT INTO `coupons` (`id`, `coupon_name`, `coupon_code`, `coupon_content`, `co
 -- 資料表結構 `course_category`
 --
 
+DROP TABLE IF EXISTS `course_category`;
 CREATE TABLE `course_category` (
   `course_category_id` int(3) NOT NULL,
   `course_category_name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -295,6 +302,7 @@ INSERT INTO `course_category` (`course_category_id`, `course_category_name`) VAL
 -- 資料表結構 `course_contents`
 --
 
+DROP TABLE IF EXISTS `course_contents`;
 CREATE TABLE `course_contents` (
   `course_content_id` int(3) NOT NULL,
   `course_content_introduction` varchar(4000) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -325,6 +333,7 @@ INSERT INTO `course_contents` (`course_content_id`, `course_content_introduction
 -- 資料表結構 `course_location`
 --
 
+DROP TABLE IF EXISTS `course_location`;
 CREATE TABLE `course_location` (
   `course_location_id` int(3) NOT NULL,
   `course_venue_id` int(3) NOT NULL,
@@ -360,6 +369,7 @@ INSERT INTO `course_location` (`course_location_id`, `course_venue_id`, `course_
 -- 資料表結構 `course_status`
 --
 
+DROP TABLE IF EXISTS `course_status`;
 CREATE TABLE `course_status` (
   `course_status_id` int(11) NOT NULL,
   `course_status_name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -380,6 +390,7 @@ INSERT INTO `course_status` (`course_status_id`, `course_status_name`) VALUES
 -- 資料表結構 `news`
 --
 
+DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -410,6 +421,7 @@ INSERT INTO `news` (`id`, `title`, `content`, `date`, `touch`) VALUES
 -- 資料表結構 `newspicture`
 --
 
+DROP TABLE IF EXISTS `newspicture`;
 CREATE TABLE `newspicture` (
   `id` int(11) NOT NULL,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
@@ -462,6 +474,7 @@ INSERT INTO `newspicture` (`id`, `name`) VALUES
 -- 資料表結構 `news_picture`
 --
 
+DROP TABLE IF EXISTS `news_picture`;
 CREATE TABLE `news_picture` (
   `news_id` int(10) NOT NULL,
   `picture_id` int(10) NOT NULL
@@ -514,6 +527,7 @@ INSERT INTO `news_picture` (`news_id`, `picture_id`) VALUES
 -- 資料表結構 `order_list`
 --
 
+DROP TABLE IF EXISTS `order_list`;
 CREATE TABLE `order_list` (
   `order_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
@@ -557,6 +571,7 @@ INSERT INTO `order_list` (`order_id`, `user_id`, `order_address`, `total_amount`
 -- 資料表結構 `payment_method`
 --
 
+DROP TABLE IF EXISTS `payment_method`;
 CREATE TABLE `payment_method` (
   `id` int(2) NOT NULL,
   `payment_method_name` varchar(100) NOT NULL,
@@ -581,6 +596,7 @@ INSERT INTO `payment_method` (`id`, `payment_method_name`, `valid`) VALUES
 -- 資料表結構 `product`
 --
 
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `product_id` int(5) NOT NULL,
   `product_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -680,6 +696,7 @@ INSERT INTO `product` (`product_id`, `product_name`, `product_images`, `product_
 -- 資料表結構 `product_brand`
 --
 
+DROP TABLE IF EXISTS `product_brand`;
 CREATE TABLE `product_brand` (
   `brand_id` int(4) NOT NULL,
   `brand_name` varchar(100) NOT NULL
@@ -702,6 +719,7 @@ INSERT INTO `product_brand` (`brand_id`, `brand_name`) VALUES
 -- 資料表結構 `product_category`
 --
 
+DROP TABLE IF EXISTS `product_category`;
 CREATE TABLE `product_category` (
   `product_category_id` int(3) NOT NULL,
   `product_category_name` varchar(20) NOT NULL
@@ -722,6 +740,7 @@ INSERT INTO `product_category` (`product_category_id`, `product_category_name`) 
 -- 資料表結構 `product_color`
 --
 
+DROP TABLE IF EXISTS `product_color`;
 CREATE TABLE `product_color` (
   `color_id` int(4) NOT NULL,
   `color_name` varchar(22) NOT NULL,
@@ -754,6 +773,7 @@ INSERT INTO `product_color` (`color_id`, `color_name`, `color_value`, `valid`) V
 -- 資料表結構 `product_order`
 --
 
+DROP TABLE IF EXISTS `product_order`;
 CREATE TABLE `product_order` (
   `id` int(10) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -939,6 +959,7 @@ INSERT INTO `product_order` (`id`, `product_id`, `order_id`, `order_count`) VALU
 -- 資料表結構 `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(4) UNSIGNED NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -980,6 +1001,7 @@ INSERT INTO `user` (`id`, `name`, `account`, `password`, `gender`, `birthday`, `
 -- 資料表結構 `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `user_id` int(8) NOT NULL,
   `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1011,6 +1033,7 @@ INSERT INTO `users` (`user_id`, `name`, `password`, `email`, `phone`, `photo`, `
 -- 資料表結構 `venue`
 --
 
+DROP TABLE IF EXISTS `venue`;
 CREATE TABLE `venue` (
   `id` int(3) UNSIGNED NOT NULL,
   `venue_name` varchar(10) NOT NULL
