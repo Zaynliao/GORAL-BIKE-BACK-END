@@ -5,6 +5,7 @@ const app = express();
 const cors = require('cors');
 // path 為內建套件
 const path = require('path');
+// 讀取環境設定
 require('dotenv').config();
 
 // 跨源
@@ -12,6 +13,20 @@ app.use(
   cors({
     origin: ['http://localhost:3000'],
     credentials: true,
+  })
+);
+
+//啟用session
+const expressSession = require('express-session');
+let FileStore = require('session-file-store')(expressSession);
+app.use(
+  expressSession({
+    store: new FileStore({
+      path: path.join(__dirname, '..', 'sessions'),
+    }),
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.SESSION_SECRET,
   })
 );
 
@@ -36,10 +51,20 @@ app.use(express.json());
 
 // 引進 router
 const CourseRouter = require('./routers/courseRouter');
+const ActivityRouter = require('./routers/activityRouter');
 const ProductRouter = require('./routers/productRouter');
 const NewsRouter = require('./routers/newsRouter');
+const AuthRouter = require('./routers/authRouter');
+const MemberRouter = require('./routers/memberRouter');
+const sessionRouter = require('./routers/sessionRouter');
+const verifyRouter = require('./routers/verifyRouter');
 // 使用 router
+app.use('/api/auth', AuthRouter);
+app.use('/api/verify', verifyRouter);
+app.use('/api/member', MemberRouter);
+app.use('/api/session', sessionRouter);
 app.use('/api/course', CourseRouter);
+app.use('/api/activity', ActivityRouter);
 app.use('/api/product', ProductRouter);
 app.use('/api/news', NewsRouter);
 

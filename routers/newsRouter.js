@@ -18,18 +18,12 @@ router.get('/', async (req, res, next) => {
     'SELECT `news`.*,`newspicture`.`name` FROM `news_picture`,`newspicture`,`news` WHERE `news_picture`.`news_id`=`news`.`id` AND `news_picture`.`picture_id`=`newspicture`.`id` GROUP BY `news`.`id` ORDER BY `news`.`date` DESC'
   );
 
-  const [newsLimitResults] = await pool.execute(
-    'SELECT `news`.*,`newspicture`.`name` FROM `news_picture`,`newspicture`,`news` WHERE `news_picture`.`news_id`=`news`.`id` AND `news_picture`.`picture_id`=`newspicture`.`id` GROUP BY `news`.`id` ORDER BY `news`.`date` DESC  LIMIT ? OFFSET ? ',
-    [perPage, offset]
-  );
-
   const [hotNewsResults] = await pool.execute(
     'SELECT `news`.*,`newspicture`.`name` FROM `news_picture`,`newspicture`,`news` WHERE `news_picture`.`news_id`=`news`.`id` AND `news_picture`.`picture_id`=`newspicture`.`id` GROUP BY `news`.`touch` DESC LIMIT 10'
   );
 
   res.json({
     newsResults: newsResults,
-    newsLimitResults: newsLimitResults,
     hotNewsResults: hotNewsResults,
   });
 });

@@ -1,10 +1,11 @@
+const { response, application } = require('express');
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 
 const pool = require('../utils/db'); // 引入 db
 
-///------------------------------------------------------------------------------------- /course
+///------------------------------------------------------------------------------------- /activity
 
 router.get('/', async (req, res, next) => {
   // ------------------------------------------------------ 不用額外處理的前端網頁字串
@@ -16,11 +17,11 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------------------------ 要額外處理的前端網頁字串
 
-  let category = req.query.category || [0]; // 取得課程難度
+  let category = req.query.category || [0]; // 取得難度
 
   // 複選 > 疊加 > 串接
   if (category) {
-    categorySQLArray = ` AND classes.course_category_id IN (${category})`;
+    categorySQLArray = ` AND activity.activity_venue_id IN (${category})`;
   }
 
   {
@@ -31,16 +32,16 @@ router.get('/', async (req, res, next) => {
   {
     switch (sortMethod) {
       case 'hotSort':
-        sortMethodString = `ORDER BY (classes.course_enrollment/classes.course_inventory) DESC`;
+        sortMethodString = `ORDER BY activity.activity_persons DESC`;
         break;
       case 'newSort':
-        sortMethodString = `ORDER BY classes.course_date DESC`;
+        sortMethodString = `ORDER BY activity.activity_date DESC`;
         break;
       case 'cheapSort':
-        sortMethodString = `ORDER BY classes.course_price ASC`;
+        sortMethodString = `ORDER BY activity.activity_fee ASC`;
         break;
       case 'expensiveSort':
-        sortMethodString = `ORDER BY classes.course_price DESC`;
+        sortMethodString = `ORDER BY activity.activity_fee DESC`;
         break;
     }
   }
@@ -52,23 +53,23 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------ 取得報名狀態類別
 
-  let [stateGroup] = await pool.execute(`SELECT * FROM course_status`);
+  let [stateGroup] = await pool.execute(`SELECT * FROM activity_status`);
 
   let newStatu = stateGroup.map((v, i) => {
-    return v.course_status_name;
+    return v.activity_status_name;
   });
 
   // ------------------------------------ 取得課程難度類別
 
-  let [categoryGroup] = await pool.execute(`SELECT * FROM course_category`);
+  let [categoryGroup] = await pool.execute(`SELECT * FROM venue`);
 
   let newCategory = categoryGroup.map((v, i) => {
-    return v.course_category_name;
+    return v.venue_name;
   });
   // ------------------------------------ 取得最先日期
 
   let [earlyDate] = await pool.execute(
-    `SELECT MIN(course_date) AS earlyDate FROM classes`
+    `SELECT MIN(activity_date) AS earlyDate FROM activity`
   );
   let [startDate] = earlyDate.map((v) => {
     return v.earlyDate;
@@ -82,7 +83,7 @@ router.get('/', async (req, res, next) => {
   // ------------------------------------ 取得最後日期
 
   let [lateDate] = await pool.execute(
-    `SELECT MAX(course_date) AS lateDate FROM classes`
+    `SELECT MAX(activity_date) AS lateDate FROM activity`
   );
   let [endDate] = lateDate.map((v) => {
     return v.lateDate;
@@ -95,24 +96,20 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------ 取得當頁資料
 
-  // SELECT * FROM classes, course_category, course_location, course_status, venue
-  // WHERE classes.course_valid = ?
-  // AND classes.course_category_id = course_category.course_category_id
-  // AND classes.course_location_id = course_location.course_location_id
-  // AND classes.course_status_id = course_status.course_status_id
-  // AND course_location.course_venue_id = venue.id
-  // AND classes.course_status_id = ?
-  // AND classes.course_price BETWEEN ? AND ?
-  // AND classes.course_inventory BETWEEN ? AND ?
-  // AND classes.course_date BETWEEN ? AND ?
-  // AND classes.course_title LIKE ?
-  // ${categorySQLArray}
-  // ${sortMethodString}
-  // LIMIT ?
-  // OFFSET ?
-
   let [pageResults] = await pool.execute(
-    `SELECT * FROM classes, course_category, course_location, course_status, venue WHERE classes.course_valid = ? AND classes.course_category_id = course_category.course_category_id AND classes.course_location_id = course_location.course_location_id AND classes.course_status_id = course_status.course_status_id AND course_location.course_venue_id = venue.id AND classes.course_status_id = ? AND classes.course_price BETWEEN ? AND ? AND classes.course_inventory BETWEEN ? AND ? AND classes.course_date BETWEEN ? AND ? AND classes.course_title LIKE ? ${categorySQLArray} ${sortMethodString} LIMIT ? OFFSET ? `,
+    `  SELECT * FROM activity, activity_status, venue
+    WHERE activity.activity_valid = ?
+    AND activity.activity_venue_id = venue.id
+    AND activity.activity_status_id = activity_status.id
+    AND activity.activity_status_id = ?
+    AND activity.activity_fee BETWEEN ? AND ?
+    AND activity.activity_persons BETWEEN ? AND ?
+    AND activity.activity_date BETWEEN ? AND ?
+    AND activity.activity_name LIKE ?
+    ${categorySQLArray}
+    ${sortMethodString}
+    LIMIT ?
+    OFFSET ?`,
     [
       1,
       statu,
@@ -131,15 +128,12 @@ router.get('/', async (req, res, next) => {
   const total = pageResults.length; // 總筆數
   const lastPage = Math.ceil(total / perPage); // 總頁數
 
-  let [classResults] = await pool.execute(`SELECT * FROM classes`);
-
   res.json({
     pagination: { total, lastPage, page }, // 頁碼有關的資料
     stateGroup: newStatu, // 課程報名狀態類別
     categoryGroup: newCategory, // 課程難度類別
     dateRange: { finalStartDate, finalEndDate },
     data: pageResults, // 主資料
-    classFullDtaa: classResults,
   });
 });
 
@@ -149,7 +143,7 @@ router.get('/:courseId', async (req, res, next) => {
   // req.params | 取得網址上的參數
   // req.params.stockId
   let [data] = await pool.execute(
-    'SELECT * FROM classes, course_category, course_location, course_status, venue WHERE course_id = ? AND classes.course_category_id = course_category.course_category_id AND classes.course_location_id = course_location.course_location_id AND classes.course_status_id = course_status.course_status_id AND course_location.course_venue_id = venue.id',
+    'SELECT * FROM activity, activity_status, venue WHERE activity.id = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id',
     [req.params.courseId]
   );
 
