@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------------------------ 要額外處理的前端網頁字串
 
-  let category = req.query.category.toString() || [0]; // 取得課程難度
+  let category = req.query.category || [0]; // 取得課程難度
 
   let sortMethod = req.query.sortMethod || 'hotSort'; // 取得排序方法
   {
@@ -112,7 +112,7 @@ router.get('/', async (req, res, next) => {
       startDateRange,
       endDateRange,
       '%' + searchWord + '%',
-      category,
+      category.toString(),
       perPage,
       offset,
     ]
