@@ -34,7 +34,7 @@ router.get('/', async (req, res, next) => {
   // 總筆數
   const total = data.length;
   // 一頁幾筆
-  const perPage = 500;
+  const perPage = 7;
   // 總頁數
   const lastPage = Math.ceil(total / perPage);
   // 計算每頁跳過幾筆顯示
