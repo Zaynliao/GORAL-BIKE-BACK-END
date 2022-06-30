@@ -7,18 +7,18 @@ const pool = require('../utils/db');
 router.get('/update_rating', (req, res, next) => {
   for (let index = 1; index < 142; index++) {
     let rating = 4 * Math.random() + 1;
-    Math.round(rating*10)/10;
+    Math.round(rating * 10) / 10;
     pool.execute(
       `UPDATE product SET product_rating = ${rating} WHERE product.product_id = ${index}`
     );
   }
 });
-router.get('/product_all', async(req,res,next)=>{
+router.get('/product_all', async (req, res, next) => {
   let [productResults] = await pool.execute('SELECT * FROM product');
   res.json(productResults);
-})
+});
 router.get('/', async (req, res, next) => {
-  console.log('product');
+  // console.log('product');
   let [data, fields] = await pool.execute(
     'SELECT * FROM product WHERE valid = ?', //<----- SQL -SELECT
     [1]
@@ -61,8 +61,8 @@ router.get('/', async (req, res, next) => {
     conditionParams.push(color);
   }
 
-  console.log(query);
-  console.log(conditionParams);
+  // console.log(query);
+  // console.log(conditionParams);
 
   let [pageResults] = await pool.execute(
     `SELECT * FROM product WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY product_id DESC LIMIT ? OFFSET ? `,
@@ -77,14 +77,20 @@ router.get('/', async (req, res, next) => {
   });
 });
 router.get('/product_id', async (req, res, next) => {
-  let [pageResults] = await pool.execute(`SELECT * FROM product WHERE product_id = ?`, [req.query.product_id]);
+  let [pageResults] = await pool.execute(
+    `SELECT * FROM product WHERE product_id = ?`,
+    [req.query.product_id]
+  );
   res.json({
     data: pageResults,
   });
 });
 router.get('/product_color', async (req, res, next) => {
   pool.execute(`SELECT color_value FROM product_color`);
-  let [pageResults] = await pool.execute('SELECT * FROM product_color WHERE valid = ?', [1]);
+  let [pageResults] = await pool.execute(
+    'SELECT * FROM product_color WHERE valid = ?',
+    [1]
+  );
   res.json({
     data: pageResults,
   });
