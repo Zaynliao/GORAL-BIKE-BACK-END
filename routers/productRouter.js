@@ -56,9 +56,8 @@ router.get('/product_all', async (req, res, next) => {
   let [productResults] = await pool.execute('SELECT * FROM product');
   res.json(productResults);
 });
-
 router.get('/', async (req, res, next) => {
-  console.log('product');
+  // console.log('product');
   let [data, fields] = await pool.execute(
     'SELECT * FROM product WHERE valid = ?', //<----- SQL -SELECT
     [1]
@@ -90,8 +89,8 @@ router.get('/', async (req, res, next) => {
     conditionParams.push(color);
   }
 
-  console.log(query);
-  console.log(conditionParams);
+  // console.log(query);
+  // console.log(conditionParams);
 
   let [totalLength] = await pool.execute(
     `SELECT * FROM product WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY product_id DESC `,

@@ -58,6 +58,7 @@ const AuthRouter = require('./routers/authRouter');
 const MemberRouter = require('./routers/memberRouter');
 const sessionRouter = require('./routers/sessionRouter');
 const verifyRouter = require('./routers/verifyRouter');
+const CartRouter = require('./routers/cartRouter');
 // 使用 router
 app.use('/api/auth', AuthRouter);
 app.use('/api/verify', verifyRouter);
@@ -67,6 +68,7 @@ app.use('/api/course', CourseRouter);
 app.use('/api/activity', ActivityRouter);
 app.use('/api/product', ProductRouter);
 app.use('/api/news', NewsRouter);
+app.use('/api/cart', CartRouter);
 
 app.use((req, res, next) => {
   console.log('所有路由的後面 => 404', req.path);

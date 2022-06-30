@@ -8,17 +8,9 @@ const pool = require('../utils/db'); // 引入 db
 ///------------------------------------------------------------------------------------- /activity
 
 router.get('/', async (req, res, next) => {
-  // ------------------------------------------------------ 不用額外處理的前端網頁字串
-
   let searchWord = req.query.search || ''; // 取得關鍵字
-  let statu = req.query.statu || 1; // 取得目前狀態
-  let price = req.query.priceSubmit || [0, 10000]; // 取得價錢篩選
-  let person = req.query.personSubmit || [0, 100]; // 取得人數篩選
-
-  // ------------------------------------------------------ 要額外處理的前端網頁字串
-
-  let category = req.query.category || [0]; // 取得難度
-
+  let statu = req.query.statu || ''; // 取得目前狀態
+  let category = req.query.category || ''; // 取得分類
   let sortMethod = req.query.sortMethod || 'hotSort'; // 取得排序方法
   {
     switch (sortMethod) {
@@ -57,6 +49,43 @@ router.get('/', async (req, res, next) => {
   let newCategory = categoryGroup.map((v, i) => {
     return v.venue_name;
   });
+
+  // ------------------------------------ 取得最低價
+  let [minPrice] = await pool.execute(
+    `SELECT MIN(activity_fee) AS minPrice FROM activity`
+  );
+  let [sqlMinPrice] = minPrice.map((v) => {
+    return v.minPrice;
+  });
+
+  // ------------------------------------ 取得最高價
+  let [maxPrice] = await pool.execute(
+    `SELECT MAX(activity_fee) AS maxPrice FROM activity`
+  );
+  let [sqlMaxPrice] = maxPrice.map((v) => {
+    return v.maxPrice;
+  });
+
+  let price = req.query.priceSubmit || [sqlMinPrice, sqlMaxPrice]; // 取得價錢範圍
+
+  // ------------------------------------ 取得最少人數
+  let [minPerson] = await pool.execute(
+    `SELECT MIN(activity_persons) AS minPerson FROM activity`
+  );
+  let [sqlMinPerson] = minPerson.map((v) => {
+    return v.minPerson;
+  });
+
+  // ------------------------------------ 取得最多人數
+  let [maxPerson] = await pool.execute(
+    `SELECT MAX(activity_persons) AS maxPerson FROM activity`
+  );
+  let [sqlMaxPerson] = maxPerson.map((v) => {
+    return v.maxPerson;
+  });
+
+  let person = req.query.personSubmit || [sqlMinPerson, sqlMaxPerson]; // 取得人數範圍
+
   // ------------------------------------ 取得最先日期
 
   let [earlyDate] = await pool.execute(
@@ -85,47 +114,63 @@ router.get('/', async (req, res, next) => {
 
   let endDateRange = req.query.endDateSubmit || finalEndDate; // 取得最晚日期
 
-  // ------------------------------------ 取得當頁資料
+  let dateRange = [startDateRange, endDateRange]; // 日期範圍
+
+  // ------------------------------------ 判斷是否篩選
+
+  let query = '';
+  let conditionParams = [];
+  if (statu) {
+    query += ` AND activity_status_id = ?`;
+    conditionParams.push(statu);
+  }
+  if (searchWord) {
+    query += ` AND activity_name LIKE ?`;
+    conditionParams.push('%' + searchWord + '%');
+  }
+  if (price) {
+    query += ` AND activity_fee BETWEEN ? AND ?`;
+    conditionParams.push(price[0], price[1]);
+  }
+  if (person) {
+    query += ` AND activity_persons BETWEEN ? AND ?`;
+    conditionParams.push(person[0], person[1]);
+  }
+
+  if (category) {
+    query += ` AND activity.activity_venue_id IN (${category})`;
+  }
+
+  if (dateRange) {
+    query += ` AND activity_date BETWEEN ? AND ?`;
+    conditionParams.push(dateRange[0], dateRange[1]);
+  }
+
+  // console.log(query);
+  // console.log(conditionParams);
+  // ------------------------------------ 篩選過的資料
+  let [filterResult] = await pool.execute(
+    `SELECT * FROM activity, activity_status, venue WHERE activity.activity_valid = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id ${query} ${sortMethodString} `,
+    [1, ...conditionParams]
+  );
+  // ------------------------------------ 分頁資料
 
   let [pageResults] = await pool.execute(
-    `  SELECT * FROM activity, activity_status, venue
-    WHERE activity.activity_valid = ?
-    AND activity.activity_venue_id = venue.id
-    AND activity.activity_status_id = activity_status.id
-    AND activity.activity_status_id = ?
-    AND activity.activity_fee BETWEEN ? AND ?
-    AND activity.activity_persons BETWEEN ? AND ?
-    AND activity.activity_date BETWEEN ? AND ?
-    AND activity.activity_name LIKE ?
-    AND activity.activity_venue_id IN (?) 
-    ${sortMethodString}
-    LIMIT ?
-    OFFSET ?`,
-    [
-      1,
-      statu,
-      price[0],
-      price[1],
-      person[0],
-      person[1],
-      startDateRange,
-      endDateRange,
-      '%' + searchWord + '%',
-      category.toString(),
-      perPage,
-      offset,
-    ]
+    `SELECT * FROM activity, activity_status, venue WHERE activity.activity_valid = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id ${query} ${sortMethodString} LIMIT ? OFFSET ?`,
+    [1, ...conditionParams, perPage, offset]
   );
 
-  const total = pageResults.length; // 總筆數
+  const total = filterResult.length; // 總筆數
   const lastPage = Math.ceil(total / perPage); // 總頁數
   let [activityResults] = await pool.execute(`SELECT * FROM activity`);
 
   res.json({
     pagination: { total, lastPage, page }, // 頁碼有關的資料
-    stateGroup: newStatu, // 課程報名狀態類別
-    categoryGroup: newCategory, // 課程難度類別
-    dateRange: { finalStartDate, finalEndDate },
+    stateGroup: newStatu, // 狀態
+    priceRange: { sqlMinPrice, sqlMaxPrice }, // 價錢範圍
+    personRange: { sqlMinPerson, sqlMaxPerson }, // 人數範圍
+    dateRange: { finalStartDate, finalEndDate }, // 時間範圍
+    categoryGroup: newCategory, // 類別
     data: pageResults, // 主資料
     activityFullDtaa: activityResults,
   });
