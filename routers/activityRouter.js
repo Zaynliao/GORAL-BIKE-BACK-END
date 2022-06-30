@@ -114,6 +114,8 @@ router.get('/', async (req, res, next) => {
 
   let endDateRange = req.query.endDateSubmit || finalEndDate; // 取得最晚日期
 
+  let dateRange = [startDateRange, endDateRange]; // 日期範圍
+
   // ------------------------------------ 判斷是否篩選
 
   let query = '';
@@ -136,12 +138,16 @@ router.get('/', async (req, res, next) => {
   }
 
   if (category) {
-    query += ` AND activity.activity_venue_id IN (?)`;
-    conditionParams.push((1, 2, 3, 4));
+    query += ` AND activity.activity_venue_id IN (${category})`;
   }
 
-  console.log(query);
-  console.log(conditionParams);
+  if (dateRange) {
+    query += ` AND activity_date BETWEEN ? AND ?`;
+    conditionParams.push(dateRange[0], dateRange[1]);
+  }
+
+  // console.log(query);
+  // console.log(conditionParams);
   // ------------------------------------ 篩選過的資料
   let [filterResult] = await pool.execute(
     `SELECT * FROM activity, activity_status, venue WHERE activity.activity_valid = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id ${query} ${sortMethodString} `,
