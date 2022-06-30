@@ -162,7 +162,6 @@ router.get('/', async (req, res, next) => {
 
   const total = filterResult.length; // 總筆數
   const lastPage = Math.ceil(total / perPage); // 總頁數
-
   let [activityResults] = await pool.execute(`SELECT * FROM activity`);
 
   res.json({

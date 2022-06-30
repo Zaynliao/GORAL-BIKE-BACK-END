@@ -48,7 +48,7 @@ router.post('/resend', async (req, res) => {
         console.error(err);
         return res.json({
           code: 3006,
-          msg: '發生錯誤，請稍後在試',
+          error: '發生錯誤，請稍後在試',
         });
       }
     };
@@ -63,13 +63,13 @@ router.post('/resend', async (req, res) => {
 
     return res.json({
       code: 200,
-      msg: '新的驗證信已寄出',
+      msg: '新的驗證信已寄出，請前往信箱收信',
     });
   } catch (err) {
     console.error(err);
     return res.json({
       code: 3006,
-      msg: '發生錯誤，請稍後在試',
+      error: '發生錯誤，請稍後在試',
     });
   }
 });
@@ -123,7 +123,7 @@ router.get('/:verifyString', async (req, res, next) => {
     console.error(err);
     return res.json({
       code: 3006,
-      msg: '發生錯誤，請稍後在試',
+      error: '發生錯誤，請稍後在試',
     });
   }
 });
