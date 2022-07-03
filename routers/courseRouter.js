@@ -10,8 +10,9 @@ router.get('/', async (req, res, next) => {
   let searchWord = req.query.search || ''; // 取得關鍵字
   let statu = req.query.statu || ''; // 取得目前狀態
   let category = req.query.category || ''; // 取得分類
-  let sortMethod = req.query.sortMethod || 'hotSort'; // 取得排序方法
+  let sortMethod = req.query.sortMethod || 'newSort'; // 取得排序方法
   let cardStyle = req.query.cardStyle || 'row'; // 陳列方式
+  let userId = '1'; // 收藏測試用 userid
 
   switch (sortMethod) {
     case 'hotSort':
@@ -149,26 +150,20 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------ 篩選過的資料
   let [filterResult] = await pool.execute(
-    `SELECT * FROM classes, course_category, course_location, course_status, venue, course_contents 
-    WHERE classes.course_valid = ? 
-    AND classes.course_category_id = course_category.course_category_id 
-    AND classes.course_location_id = course_location.course_location_id 
-    AND classes.course_status_id = course_status.course_status_id 
-    AND course_location.course_venue_id = venue.id 
-    AND classes.course_content_id = course_contents.course_content_id ${query} ${sortMethodString} `,
+    `SELECT * FROM classes WHERE course_valid = ? ${query} ${sortMethodString} `,
     [1, ...conditionParams]
   );
   // ------------------------------------ 分頁資料
 
   let [pageResults] = await pool.execute(
-    `SELECT * FROM classes, course_category, course_location, course_status, venue, course_contents 
-    WHERE classes.course_valid = ? 
-    AND classes.course_category_id = course_category.course_category_id 
-    AND classes.course_location_id = course_location.course_location_id 
-    AND classes.course_status_id = course_status.course_status_id 
-    AND course_location.course_venue_id = venue.id 
-    AND classes.course_content_id = course_contents.course_content_id ${query} ${sortMethodString} LIMIT ? OFFSET ?`,
-    [1, ...conditionParams, perPage, offset]
+    `SELECT * FROM classes
+    LEFT JOIN course_status ON course_status.course_status_id = classes.course_status_id
+    LEFT JOIN course_category ON course_category.course_category_id = classes.course_category_id
+    LEFT JOIN course_contents ON course_contents.course_content_id = classes.course_content_id
+    LEFT JOIN course_location ON course_location.course_location_id  = classes.course_location_id
+    LEFT JOIN venue ON venue.id = course_location.course_venue_id
+    LEFT JOIN course_favorite ON course_favorite.favorite_course_id = classes.course_id AND course_favorite.favorite_user_id = ? WHERE course_valid = ? ${query} ${sortMethodString} LIMIT ? OFFSET ?`,
+    [userId, 1, ...conditionParams, perPage, offset]
   );
 
   const total = filterResult.length; // 總筆數
