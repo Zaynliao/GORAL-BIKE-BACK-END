@@ -25,7 +25,7 @@ router.get('/product_detailed_description_add', async (req, res, next) => {
       '最頂規的鋁合金單避震車，採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。',
       '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano Deore 11s 傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。',
       '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Shimano 1x11s 傳動系統，Manitou避震前叉，油壓碟煞。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。',
-      '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano XT\SLX 2x12傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。',
+      '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano XTSLX 2x12傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。',
       '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ',
       '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。',
     ];
@@ -37,10 +37,6 @@ router.get('/product_detailed_description_add', async (req, res, next) => {
     );
   }
 });
-
-
-
-
 
 router.get('/product_description_add', async (req, res, next) => {
   for (let i = 1; i <= 141; i++) {
@@ -77,7 +73,9 @@ router.get('/product_description_add', async (req, res, next) => {
 
 router.get('/product_color_push', async (req, res, next) => {
   for (let i = 70; i >= 1; i--) {
-    await pool.execute(`INSERT INTO 'product_product_color' ('product_id', 'product_color_id') VALUES ('${i}', '');`);
+    await pool.execute(
+      `INSERT INTO 'product_product_color' ('product_id', 'product_color_id') VALUES ('${i}', '');`
+    );
   }
 });
 
@@ -182,9 +180,18 @@ router.get('/product_category', async (req, res, next) => {
   res.json(categoryResults);
 });
 router.get('/product_color_picker', async (req, res, next) => {
-  const  product_id = req.query.product_id;
-  let [colorResults] = await pool.execute('SELECT * FROM product_product_color WHERE product_id = ?', [product_id]);
-  res.json(colorResults);
+  const product_id = req.query.product_id || 0;
+  // pool.execute(`SELECT color_id FROM product_product_color WHERE product_id = ?`, [bikeID]);
+  let [pageResults] = await pool.execute(
+    'SELECT GROUP_CONCAT(`product_color`.`color_name`) as color_name,GROUP_CONCAT(`product_color`.`color_value`) as hex_value FROM `product_product_color`,`product_color`,`product` WHERE `product`.`product_id` = `product_product_color`.`product_id` AND `product_product_color`.`product_color_id`=`product_color`.`color_id` AND `product`.`product_id`=?;',
+    [product_id]
+  );
+  console.log(pageResults);
+  console.log(product_id);
+  res.json({
+    color_name: pageResults[0].color_name,
+    hex_value: pageResults[0].hex_value,
+  });
 });
 
 module.exports = router;
