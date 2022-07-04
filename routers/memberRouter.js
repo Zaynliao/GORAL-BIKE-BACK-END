@@ -28,26 +28,29 @@ router.post('/update', async (req, res, next) => {
 });
 
 router.post('/favorite/update', async (req, res, next) => {
-  // console.log('更新的資料', req.body.courseId);
-  const userId = 1; // 收藏測試用 userId
+  let favoriteMethod = req.body.favoriteMethod;
+  if (favoriteMethod === 'activity') {
+    favoriteLabel = 'favorite_activity';
+  } else {
+    favoriteLabel = 'favorite_course';
+  }
   if (req.body.courseId !== '') {
- 
     let [checkFavorite] = await pool.execute(
-      `SELECT * FROM course_favorite WHERE favorite_user_id = ? AND favorite_course_id = ?`,
-      [userId, req.body.courseId]
+      `SELECT * FROM ${favoriteLabel} WHERE favorite_user_id = ? AND ${favoriteLabel}_id = ?`,
+      [req.body.userId, req.body.courseId]
     );
     // console.log('是否有資料', checkFavorite);
 
     if (checkFavorite.length > 0) {
       let [deleteFavorite] = await pool.execute(
-        `DELETE FROM course_favorite WHERE favorite_user_id = ? AND favorite_course_id = ?`,
-        [userId, req.body.courseId]
+        `DELETE FROM ${favoriteLabel} WHERE favorite_user_id = ? AND ${favoriteLabel}_id = ?`,
+        [req.body.userId, req.body.courseId]
       );
       // console.log('刪除資料', deleteFavorite);
     } else {
       let [insertFavorite] = await pool.execute(
-        `INSERT INTO course_favorite (favorite_user_id, favorite_course_id) VALUES (?, ?)`,
-        [userId, req.body.courseId]
+        `INSERT INTO ${favoriteLabel} (favorite_user_id, ${favoriteLabel}_id) VALUES (?, ?)`,
+        [req.body.userId, req.body.courseId]
       );
       // console.log('插入資料', insertFavorite);
     }
@@ -55,8 +58,7 @@ router.post('/favorite/update', async (req, res, next) => {
   res.json({ result: '更新資料成功' });
 });
 
-router.get('/favorite', async (req, res, next) => {
-  const userId = 1; // 收藏測試用 userId
+router.get('/favorite/course', async (req, res, next) => {
   let [favoriteResults] = await pool.execute(
     `SELECT * FROM classes
     LEFT JOIN course_status ON course_status.course_status_id = classes.course_status_id
@@ -64,8 +66,21 @@ router.get('/favorite', async (req, res, next) => {
     LEFT JOIN course_contents ON course_contents.course_content_id = classes.course_content_id
     LEFT JOIN course_location ON course_location.course_location_id  = classes.course_location_id
     LEFT JOIN venue ON venue.id = course_location.course_venue_id
-    RIGHT JOIN course_favorite ON course_favorite.favorite_course_id = classes.course_id AND course_favorite.favorite_user_id = ? WHERE course_valid = ?`,
-    [userId, 1]
+    RIGHT JOIN favorite_course ON favorite_course.favorite_course_id = classes.course_id AND favorite_course.favorite_user_id = ? WHERE course_valid = ?`,
+    [13, 1]
+  );
+  res.json({
+    data: favoriteResults, // 主資料
+  });
+});
+
+router.get('/favorite/activity', async (req, res, next) => {
+  let [favoriteResults] = await pool.execute(
+    `SELECT * FROM activity
+    LEFT JOIN activity_status ON activity.activity_status_id = activity_status.id
+    LEFT JOIN venue ON activity.activity_venue_id = venue.id
+    RIGHT JOIN favorite_activity ON favorite_activity.favorite_activity_id = classes.activity_id AND favorite_activity.favorite_user_id = ? WHERE activity_valid = ?`,
+    [13, 1]
   );
   res.json({
     data: favoriteResults, // 主資料

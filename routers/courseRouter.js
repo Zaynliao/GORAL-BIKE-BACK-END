@@ -12,8 +12,8 @@ router.get('/', async (req, res, next) => {
   let category = req.query.category || ''; // 取得分類
   let sortMethod = req.query.sortMethod || 'newSort'; // 取得排序方法
   let cardStyle = req.query.cardStyle || 'row'; // 陳列方式
-  let userId = '1'; // 收藏測試用 userid
-
+  let userId = req.query.userId || '';
+  // console.log(userId);
   switch (sortMethod) {
     case 'hotSort':
       sortMethodString = `ORDER BY course_enrollment DESC`;
@@ -117,6 +117,8 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------ 判斷是否篩選
 
+  let loginQuery = '';
+  let loginParams = [];
   let query = '';
   let conditionParams = [];
   if (statu) {
@@ -145,6 +147,11 @@ router.get('/', async (req, res, next) => {
     conditionParams.push(dateRange[0], dateRange[1]);
   }
 
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_course ON favorite_course.favorite_course_id = classes.course_id AND favorite_course.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
+
   // console.log(query);
   // console.log(conditionParams);
 
@@ -161,9 +168,8 @@ router.get('/', async (req, res, next) => {
     LEFT JOIN course_category ON course_category.course_category_id = classes.course_category_id
     LEFT JOIN course_contents ON course_contents.course_content_id = classes.course_content_id
     LEFT JOIN course_location ON course_location.course_location_id  = classes.course_location_id
-    LEFT JOIN venue ON venue.id = course_location.course_venue_id
-    LEFT JOIN course_favorite ON course_favorite.favorite_course_id = classes.course_id AND course_favorite.favorite_user_id = ? WHERE course_valid = ? ${query} ${sortMethodString} LIMIT ? OFFSET ?`,
-    [userId, 1, ...conditionParams, perPage, offset]
+    LEFT JOIN venue ON venue.id = course_location.course_venue_id ${loginQuery} WHERE course_valid = ? ${query} ${sortMethodString} LIMIT ? OFFSET ?`,
+    [...loginParams, 1, ...conditionParams, perPage, offset]
   );
 
   const total = filterResult.length; // 總筆數

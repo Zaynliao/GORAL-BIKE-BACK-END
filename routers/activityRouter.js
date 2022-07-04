@@ -13,6 +13,7 @@ router.get('/', async (req, res, next) => {
   let category = req.query.category || ''; // 取得分類
   let sortMethod = req.query.sortMethod || 'hotSort'; // 取得排序方法
   let cardStyle = req.query.cardStyle || 'row'; // 陳列方式
+  let userId = req.query.userId || '';
   {
     switch (sortMethod) {
       case 'hotSort':
@@ -119,6 +120,8 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------ 判斷是否篩選
 
+  let loginQuery = '';
+  let loginParams = [];
   let query = '';
   let conditionParams = [];
   if (statu) {
@@ -147,18 +150,26 @@ router.get('/', async (req, res, next) => {
     conditionParams.push(dateRange[0], dateRange[1]);
   }
 
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_activity ON favorite_activity.favorite_activity_id = activity.activity_id AND favorite_activity.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
+
   // console.log(query);
   // console.log(conditionParams);
   // ------------------------------------ 篩選過的資料
   let [filterResult] = await pool.execute(
-    `SELECT * FROM activity, activity_status, venue WHERE activity.activity_valid = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id ${query} ${sortMethodString} `,
+    `SELECT * FROM activity WHERE activity_valid = ?  ${query} ${sortMethodString} `,
     [1, ...conditionParams]
   );
   // ------------------------------------ 分頁資料
 
   let [pageResults] = await pool.execute(
-    `SELECT * FROM activity, activity_status, venue WHERE activity.activity_valid = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id ${query} ${sortMethodString} LIMIT ? OFFSET ?`,
-    [1, ...conditionParams, perPage, offset]
+    `SELECT * FROM activity
+    LEFT JOIN activity_status ON activity.activity_status_id = activity_status.id
+    LEFT JOIN venue ON activity.activity_venue_id = venue.id
+    ${loginQuery} WHERE activity_valid = ? ${query} ${sortMethodString} LIMIT ? OFFSET ?`,
+    [...loginParams, 1, ...conditionParams, perPage, offset]
   );
 
   const total = filterResult.length; // 總筆數
