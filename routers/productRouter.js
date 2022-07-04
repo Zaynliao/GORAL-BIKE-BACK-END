@@ -7,14 +7,14 @@ const pool = require('../utils/db');
 router.get('/update_rating', (req, res, next) => {
   for (let index = 1; index < 142; index++) {
     let rating = 4 * Math.random() + 1;
-    Math.round(rating * 10) / 10;
+    rating = Math.round(rating * 10) / 10;
     pool.execute(
       `UPDATE product SET product_rating = ${rating} WHERE product.product_id = ${index}`
     );
   }
 });
 router.get('/product_description_add', async (req, res, next) => {
-  for (let i = 1; i <= 141; i++) {
+  for (let i = 1; i <= 142; i++) {
     let random = parseInt(Math.random() * 21);
     arr = [
       '中階碳纖維單避震登山車，適用XC\\Marathon騎乘環境。CF3碳纖維車架，主流零組件搭配。',
@@ -39,7 +39,6 @@ router.get('/product_description_add', async (req, res, next) => {
       '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，3x9 零組件搭配， RockShox避震前叉。',
     ];
     let randomText = arr[random];
-    console.log(randomText);
     await pool.execute(
       `UPDATE product SET product_description = '${randomText}' WHERE product.product_id = ${i}`
     );
@@ -47,17 +46,29 @@ router.get('/product_description_add', async (req, res, next) => {
 });
 
 router.get('/product_color_push', async (req, res, next) => {
-  for (let i = 70; i >= 1; i--) {
-    await pool.execute(`INSERT INTO 'product_product_color' ('product_id', 'product_color_id') VALUES ('${i}', '');`);
+  for (let i = 73; i >= 1; i--) {
+    await pool.execute(
+      `INSERT INTO 'product_product_color' ('product_id', 'product_color_id') VALUES ('${i}', '');`
+    );
   }
 });
 
 router.get('/product_all', async (req, res, next) => {
-  let [productResults] = await pool.execute('SELECT * FROM product');
+  const userId = req.query.userId || ''; // Login user id
+  let loginQuery = '';
+  let loginParams = [];
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_product ON favorite_product.favorite_product_id = product.product_id AND favorite_product.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
+  let [productResults] = await pool.execute(
+    `SELECT * FROM product ${loginQuery}`,
+    [...loginParams]
+  );
   res.json(productResults);
 });
+
 router.get('/', async (req, res, next) => {
-  // console.log('product');
   let [data, fields] = await pool.execute(
     'SELECT * FROM product WHERE valid = ?', //<----- SQL -SELECT
     [1]
@@ -68,9 +79,18 @@ router.get('/', async (req, res, next) => {
   const maxPrice = req.query.maxPrice || 500000;
   const color = req.query.color || false;
   const search = req.query.search ? `%${req.query.search}%` : false;
+  const sortMethod = req.query.sortMethod || 'product_id DESC';
+  console.log(sortMethod);
+
+  // ----- favorite
+  const userId = req.query.userId || '';
 
   let query = ``;
   let conditionParams = [];
+
+  // ----- favorite
+  let loginQuery = '';
+  let loginParams = [];
 
   if (category) {
     query += ` product_category_id = ? AND `;
@@ -89,11 +109,17 @@ router.get('/', async (req, res, next) => {
     conditionParams.push(color);
   }
 
+  // ----- favorite
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_product ON favorite_product.favorite_product_id = product.product_id AND favorite_product.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
+
   // console.log(query);
   // console.log(conditionParams);
 
   let [totalLength] = await pool.execute(
-    `SELECT * FROM product WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY product_id DESC `,
+    `SELECT * FROM product WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY ${sortMethod} `,
     [...conditionParams, 1, minPrice, maxPrice]
   );
   // 取得目前在第幾頁
@@ -109,11 +135,11 @@ router.get('/', async (req, res, next) => {
   const offset = (page - 1) * perPage;
   // 取得當頁資料
   let [pageResults] = await pool.execute(
-    `SELECT * FROM product WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY product_id DESC LIMIT ? OFFSET ? `,
-    [...conditionParams, 1, minPrice, maxPrice, perPage, offset]
+    `SELECT * FROM product ${loginQuery} WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY ${sortMethod} LIMIT ? OFFSET ? `,
+    [...loginParams, ...conditionParams, 1, minPrice, maxPrice, perPage, offset]
   );
-  console.log('total', total);
-  console.log(lastPage);
+
+  // console.log(pageResults);
   res.json({
     // 儲存跟頁碼有關的資料
     pagination: { total, lastPage, page },
@@ -123,9 +149,16 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/product_id', async (req, res, next) => {
+  const userId = req.query.userId || ''; // Login user id
+  let loginQuery = '';
+  let loginParams = [];
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_product ON favorite_product.favorite_product_id = product.product_id AND favorite_product.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
   let [pageResults] = await pool.execute(
-    `SELECT * FROM product WHERE product_id = ?`,
-    [req.query.product_id]
+    `SELECT * FROM product ${loginQuery} WHERE product_id = ?`,
+    [...loginParams, req.query.product_id]
   );
   res.json({
     data: pageResults,
@@ -140,6 +173,20 @@ router.get('/product_color', async (req, res, next) => {
   );
   res.json({
     data: pageResults,
+  });
+});
+router.get('/product_color_picker', async (req, res, next) => {
+  const product_id = req.query.product_id || 0;
+  // pool.execute(`SELECT color_id FROM product_product_color WHERE product_id = ?`, [bikeID]);
+  let [pageResults] = await pool.execute(
+    'SELECT GROUP_CONCAT(`product_color`.`color_name`) as color_name,GROUP_CONCAT(`product_color`.`color_value`) as hex_value FROM `product_product_color`,`product_color`,`product` WHERE `product`.`product_id` = `product_product_color`.`product_id` AND `product_product_color`.`product_color_id`=`product_color`.`color_id` AND `product`.`product_id`=?;',
+    [product_id]
+  );
+  console.log(pageResults);
+  console.log(product_id);
+  res.json({
+    color_name: pageResults[0].color_name,
+    hex_value: pageResults[0].hex_value,
   });
 });
 
