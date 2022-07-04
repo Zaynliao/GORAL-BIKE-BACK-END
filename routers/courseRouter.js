@@ -12,7 +12,8 @@ router.get('/', async (req, res, next) => {
   let category = req.query.category || ''; // 取得分類
   let sortMethod = req.query.sortMethod || 'newSort'; // 取得排序方法
   let cardStyle = req.query.cardStyle || 'row'; // 陳列方式
-  let userId = req.query.userId || '';
+  // let userId = req.query.userId || '';
+  let userId = 13; // 測試用
   // console.log(userId);
   switch (sortMethod) {
     case 'hotSort':

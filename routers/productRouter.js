@@ -48,7 +48,9 @@ router.get('/product_description_add', async (req, res, next) => {
 
 router.get('/product_color_push', async (req, res, next) => {
   for (let i = 70; i >= 1; i--) {
-    await pool.execute(`INSERT INTO 'product_product_color' ('product_id', 'product_color_id') VALUES ('${i}', '');`);
+    await pool.execute(
+      `INSERT INTO 'product_product_color' ('product_id', 'product_color_id') VALUES ('${i}', '');`
+    );
   }
 });
 
@@ -68,7 +70,11 @@ router.get('/', async (req, res, next) => {
   const maxPrice = req.query.maxPrice || 500000;
   const color = req.query.color || false;
   const search = req.query.search ? `%${req.query.search}%` : false;
+  // const userId = req.query.userId || ''; // Login user id
+  let userId = 13; // 測試用
 
+  let loginQuery = '';
+  let loginParams = [];
   let query = ``;
   let conditionParams = [];
 
@@ -87,6 +93,11 @@ router.get('/', async (req, res, next) => {
   if (color) {
     query += ` product_color = ? AND `;
     conditionParams.push(color);
+  }
+
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_product ON favorite_product.favorite_product_id = product.product_id AND favorite_product.favorite_user_id = ?`;
+    loginParams.push(userId);
   }
 
   // console.log(query);
@@ -109,8 +120,8 @@ router.get('/', async (req, res, next) => {
   const offset = (page - 1) * perPage;
   // 取得當頁資料
   let [pageResults] = await pool.execute(
-    `SELECT * FROM product WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY product_id DESC LIMIT ? OFFSET ? `,
-    [...conditionParams, 1, minPrice, maxPrice, perPage, offset]
+    `SELECT * FROM product ${loginQuery} WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY product_id DESC LIMIT ? OFFSET ? `,
+    [...loginParams, ...conditionParams, 1, minPrice, maxPrice, perPage, offset]
   );
   console.log('total', total);
   console.log(lastPage);
