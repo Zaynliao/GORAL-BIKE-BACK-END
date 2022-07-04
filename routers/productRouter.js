@@ -55,9 +55,20 @@ router.get('/product_color_push', async (req, res, next) => {
 });
 
 router.get('/product_all', async (req, res, next) => {
-  let [productResults] = await pool.execute('SELECT * FROM product');
+  const userId = req.query.userId || ''; // Login user id
+  let loginQuery = '';
+  let loginParams = [];
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_product ON favorite_product.favorite_product_id = product.product_id AND favorite_product.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
+  let [productResults] = await pool.execute(
+    `SELECT * FROM product ${loginQuery}`,
+    [...loginParams]
+  );
   res.json(productResults);
 });
+
 router.get('/', async (req, res, next) => {
   // console.log('product');
   let [data, fields] = await pool.execute(
@@ -70,8 +81,8 @@ router.get('/', async (req, res, next) => {
   const maxPrice = req.query.maxPrice || 500000;
   const color = req.query.color || false;
   const search = req.query.search ? `%${req.query.search}%` : false;
-  // const userId = req.query.userId || ''; // Login user id
-  let userId = 13; // 測試用
+  const userId = req.query.userId || ''; // Login user id
+  // let userId = 13; // 測試用
 
   let loginQuery = '';
   let loginParams = [];
@@ -134,9 +145,16 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/product_id', async (req, res, next) => {
+  const userId = req.query.userId || ''; // Login user id
+  let loginQuery = '';
+  let loginParams = [];
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_product ON favorite_product.favorite_product_id = product.product_id AND favorite_product.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
   let [pageResults] = await pool.execute(
-    `SELECT * FROM product WHERE product_id = ?`,
-    [req.query.product_id]
+    `SELECT * FROM product ${loginQuery} WHERE product_id = ?`,
+    [...loginParams, req.query.product_id]
   );
   res.json({
     data: pageResults,

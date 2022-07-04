@@ -7,14 +7,15 @@ const pool = require('../utils/db'); // 引入 db
 ///------------------------------------------------------------------------------------- /course
 
 router.get('/', async (req, res, next) => {
-  let searchWord = req.query.search || ''; // 取得關鍵字
-  let statu = req.query.statu || ''; // 取得目前狀態
-  let category = req.query.category || ''; // 取得分類
-  let sortMethod = req.query.sortMethod || 'newSort'; // 取得排序方法
+  // -------------- 取得 /api/course 的 query string
+  let searchWord = req.query.search || ''; // 關鍵字
+  let statu = req.query.statu || ''; // 報名狀態
+  let category = req.query.category || ''; // 難度
+  let sortMethod = req.query.sortMethod || 'newSort'; // 排序方法
   let cardStyle = req.query.cardStyle || 'row'; // 陳列方式
-  // let userId = req.query.userId || '';
-  let userId = 13; // 測試用
-  // console.log(userId);
+  let page = req.query.page || 1; // 當前頁數
+  let userId = req.query.userId || ''; // userId
+
   switch (sortMethod) {
     case 'hotSort':
       sortMethodString = `ORDER BY course_enrollment DESC`;
@@ -29,11 +30,6 @@ router.get('/', async (req, res, next) => {
       sortMethodString = `ORDER BY course_price DESC`;
       break;
   }
-
-  let page = req.query.page || 1; // 取得目前在第幾頁
-
-  const perPage = cardStyle === 'row' ? 3 : 6; // 一頁幾筆
-  const offset = (page - 1) * perPage; // 計算每頁跳過幾筆顯示
 
   // ------------------------------------ 取得報名狀態類別
 
@@ -163,6 +159,9 @@ router.get('/', async (req, res, next) => {
   );
   // ------------------------------------ 分頁資料
 
+  const perPage = cardStyle === 'row' ? 3 : 6; // 一頁幾筆
+  const offset = (page - 1) * perPage; // 計算每頁跳過幾筆顯示
+
   let [pageResults] = await pool.execute(
     `SELECT * FROM classes
     LEFT JOIN course_status ON course_status.course_status_id = classes.course_status_id
@@ -176,6 +175,16 @@ router.get('/', async (req, res, next) => {
   const total = filterResult.length; // 總筆數
   const lastPage = Math.ceil(total / perPage); // 總頁數
 
+  // --------------------------------------- 推薦 Swiper
+
+  let [goodResults] = await pool.execute(
+    `SELECT * FROM classes 
+    ${loginQuery} 
+    WHERE course_valid = ? `,
+    [...loginParams, 1]
+  );
+
+  // -------------------------------------- 首頁
   let [classResults] = await pool.execute(`SELECT * FROM classes`);
 
   res.json({
@@ -186,6 +195,7 @@ router.get('/', async (req, res, next) => {
     dateRange: { finalStartDate, finalEndDate }, // 時間範圍
     categoryGroup: newCategory, // 類別
     data: pageResults, // 主資料
+    hitData: goodResults, // 推薦課程
     classFullDtaa: classResults,
   });
 });
@@ -194,10 +204,20 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:courseId', async (req, res, next) => {
   // req.params | 取得網址上的參數
-  // req.params.stockId
+  let userId = req.query.userId || '';
+  let loginQuery = '';
+  let loginParams = [];
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_course ON favorite_course.favorite_course_id = classes.course_id AND favorite_course.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
   let [data] = await pool.execute(
-    'SELECT * FROM classes, course_category, course_location, course_status, venue, course_contents WHERE course_id = ? AND classes.course_category_id = course_category.course_category_id AND classes.course_location_id = course_location.course_location_id AND classes.course_status_id = course_status.course_status_id AND course_location.course_venue_id = venue.id AND classes.course_content_id = course_contents.course_content_id',
-    [req.params.courseId]
+    `SELECT * FROM classes LEFT JOIN course_status ON course_status.course_status_id = classes.course_status_id
+    LEFT JOIN course_category ON course_category.course_category_id = classes.course_category_id
+    LEFT JOIN course_contents ON course_contents.course_content_id = classes.course_content_id
+    LEFT JOIN course_location ON course_location.course_location_id  = classes.course_location_id
+    LEFT JOIN venue ON venue.id = course_location.course_venue_id ${loginQuery} WHERE classes.course_id = ?`,
+    [...loginParams, req.params.courseId]
   );
 
   res.json({
