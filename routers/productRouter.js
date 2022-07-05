@@ -17,7 +17,7 @@ router.get('/insert_product_check_142to148', async (req, res, next) => {
   for (let index = 142; index <= 148; index++) {
     let arr = [];
     for (let i = 0; i < 6; i++) {
-      let check = [6,5,4,3,2,1];
+      let check = [6, 5, 4, 3, 2, 1];
       await pool.execute(
         "INSERT INTO `product_product_check` (`product_id`, `product_check_id`) VALUES ('" +
           index +
@@ -52,7 +52,7 @@ router.get('/insert_product_check', async (req, res, next) => {
 
 router.get('/insert_product_parts_142to148', async (req, res, next) => {
   for (let index = 142; index <= 148; index++) {
-    let arr = [8,7,6,5,4,1]
+    let arr = [8, 7, 6, 5, 4, 1];
 
     for (let i = 0; i < 6; i++) {
       await pool.execute(
@@ -159,7 +159,7 @@ router.get('/product_all', async (req, res, next) => {
   res.json(productResults);
 });
 router.get('/', async (req, res, next) => {
-  let [data, fields] = await pool.execute(
+  let [homepageData] = await pool.execute(
     'SELECT * FROM product WHERE valid = ?', //<----- SQL -SELECT
     [1]
   );
@@ -218,6 +218,7 @@ router.get('/', async (req, res, next) => {
     pagination: { total, lastPage, page },
     // 主資料
     data: pageResults,
+    homepageData: homepageData,
   });
 });
 
@@ -303,7 +304,7 @@ router.get('/product_check', async (req, res, next) => {
   console.log(pageResults);
   console.log(product_id);
   res.json({
-    product_check_name: pageResults[0].product_check
+    product_check_name: pageResults[0].product_check,
   });
 });
 
