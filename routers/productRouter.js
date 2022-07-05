@@ -160,7 +160,7 @@ router.get('/product_all', async (req, res, next) => {
 });
 router.get('/productHomepage', async (req, res, next) => {
   let [homepageData] = await pool.execute(
-    'SELECT product_name,product_images,product_description FROM product GROUP BY product_name ORDER BY `product`.`product_name`'
+    'SELECT product_id,product_name,product_images,product_description FROM product GROUP BY product_name ORDER BY `product`.`product_name`'
   );
   res.json(homepageData);
 });

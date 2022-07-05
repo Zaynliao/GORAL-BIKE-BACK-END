@@ -163,7 +163,6 @@ router.get('/', async (req, res, next) => {
 
   const total = filterResult.length; // 總筆數
   const lastPage = Math.ceil(total / perPage); // 總頁數
-  let [activityResults] = await pool.execute(`SELECT * FROM activity`);
 
   res.json({
     pagination: { total, lastPage, page }, // 頁碼有關的資料
@@ -173,8 +172,15 @@ router.get('/', async (req, res, next) => {
     dateRange: { finalStartDate, finalEndDate }, // 時間範圍
     categoryGroup: newCategory, // 類別
     data: pageResults, // 主資料
-    activityFullDtaa: activityResults,
   });
+});
+
+router.get('/activityHomepage', async (req, res, next) => {
+  let [activityResults] = await pool.execute(
+    `SELECT activity_pictures FROM activity`
+  );
+  console.log(activityResults);
+  res.json(activityResults);
 });
 
 ///------------------------------------------------------------------------------------- /course/1
