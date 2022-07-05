@@ -158,11 +158,13 @@ router.get('/product_all', async (req, res, next) => {
   let [productResults] = await pool.execute('SELECT * FROM product');
   res.json(productResults);
 });
-router.get('/', async (req, res, next) => {
+router.get('/productHomepage', async (req, res, next) => {
   let [homepageData] = await pool.execute(
-    'SELECT * FROM product WHERE valid = ?', //<----- SQL -SELECT
-    [1]
+    'SELECT product_name,product_images,product_description FROM product GROUP BY product_name ORDER BY `product`.`product_name`'
   );
+  res.json(homepageData);
+});
+router.get('/', async (req, res, next) => {
   const category = req.query.category || false;
   const brand = req.query.brand || false;
   const minPrice = req.query.minPrice || 0;
@@ -218,7 +220,6 @@ router.get('/', async (req, res, next) => {
     pagination: { total, lastPage, page },
     // 主資料
     data: pageResults,
-    homepageData: homepageData,
   });
 });
 
