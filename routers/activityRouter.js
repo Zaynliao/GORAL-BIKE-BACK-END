@@ -12,6 +12,7 @@ router.get('/', async (req, res, next) => {
   let statu = req.query.statu || ''; // 取得目前狀態
   let category = req.query.category || ''; // 取得分類
   let sortMethod = req.query.sortMethod || 'hotSort'; // 取得排序方法
+  let cardStyle = req.query.cardStyle || 'row'; // 陳列方式
   {
     switch (sortMethod) {
       case 'hotSort':
@@ -31,7 +32,7 @@ router.get('/', async (req, res, next) => {
 
   let page = req.query.page || 1; // 取得目前在第幾頁
 
-  const perPage = 9; // 一頁幾筆
+  const perPage = cardStyle === 'row' ? 3 : 6; // 一頁幾筆
   const offset = (page - 1) * perPage; // 計算每頁跳過幾筆顯示
 
   // ------------------------------------ 取得報名狀態類別
