@@ -4,13 +4,55 @@ const router = express.Router();
 
 // 引入 database
 const pool = require('../utils/db');
-router.get('/update_rating', (req, res, next) => {
+router.get('/update_rating', async (req, res, next) => {
   for (let index = 1; index < 142; index++) {
     let rating = 4 * Math.random() + 1;
     Math.round(rating * 10) / 10;
-    pool.execute(
+    await pool.execute(
       `UPDATE product SET product_rating = ${rating} WHERE product.product_id = ${index}`
     );
+  }
+});
+router.get('/insert_product_check', async (req, res, next) => {
+  for (let index = 73; index > 0; index--) {
+    let arr = [];
+    for (let i = 0; i < 6; i++) {
+      let check = Math.round(23 * Math.random() + 1);
+      while (arr.indexOf(check) !== -1) {
+        check = Math.round(23 * Math.random() + 1);
+      }
+      arr.push(check);
+      await pool.execute(
+        "INSERT INTO `product_product_check` (`product_id`, `product_check_id`) VALUES ('" +
+          index +
+          "', '" +
+          check +
+          "')"
+      );
+    }
+    // console.log(arr);
+  }
+});
+router.get('/insert_product_parts', async (req, res, next) => {
+  for (let index = 73; index > 0; index--) {
+    let arr = [];
+    let random = Math.ceil(9 * Math.random());
+
+    for (let i = 0; i < random; i++) {
+      let parts = Math.ceil(9 * Math.random());
+      while (arr.indexOf(parts) !== -1) {
+        parts = Math.ceil(9 * Math.random());
+      }
+      arr.push(parts);
+      await pool.execute(
+        "INSERT INTO `product_product_parts` (`product_id`, `product_parts_id`) VALUES ('" +
+          index +
+          "', '" +
+          parts +
+          "')"
+      );
+    }
+    // console.log(arr);
   }
 });
 
@@ -183,7 +225,7 @@ router.get('/product_color_picker', async (req, res, next) => {
   const product_id = req.query.product_id || 0;
   // pool.execute(`SELECT color_id FROM product_product_color WHERE product_id = ?`, [bikeID]);
   let [pageResults] = await pool.execute(
-    'SELECT GROUP_CONCAT(`product_color`.`color_name`) as color_name,GROUP_CONCAT(`product_color`.`color_value`) as hex_value FROM `product_product_color`,`product_color`,`product` WHERE `product`.`product_id` = `product_product_color`.`product_id` AND `product_product_color`.`product_color_id`=`product_color`.`color_id` AND `product`.`product_id`=?;',
+    'SELECT GROUP_CONCAT(`product_color`.`color_name`) as color_name,GROUP_CONCAT(`product_color`.`color_value`) as hex_value FROM `product_product_color`,`product_color`,`product` WHERE `product`.`product_id` = `product_product_color`.`product_id` AND `product_product_color`.`product_color_id`=`product_color`.`color_id` AND `product`.`product_id`= ?;',
     [product_id]
   );
   console.log(pageResults);
@@ -191,6 +233,33 @@ router.get('/product_color_picker', async (req, res, next) => {
   res.json({
     color_name: pageResults[0].color_name,
     hex_value: pageResults[0].hex_value,
+  });
+});
+router.get('/product_parts', async (req, res, next) => {
+  const product_id = req.query.product_id || 0;
+  // pool.execute(`SELECT color_id FROM product_product_color WHERE product_id = ?`, [bikeID]);
+  let [pageResults] = await pool.execute(
+    'SELECT GROUP_CONCAT(`product_parts`.`product_parts`) as product_parts,GROUP_CONCAT(`product_parts`.`product_parts_images`) as product_parts_images FROM `product_product_parts`,`product_parts`,`product` WHERE `product`.`product_id` = `product_product_parts`.`product_id` AND `product_product_parts`.`product_parts_id`=`product_parts`.`product_parts_id` AND `product`.`product_id`= ?',
+    [product_id]
+  );
+  console.log(pageResults);
+  console.log(product_id);
+  res.json({
+    product_parts_name: pageResults[0].product_parts,
+    product_parts_image: pageResults[0].product_parts_images,
+  });
+});
+router.get('/product_check', async (req, res, next) => {
+  const product_id = req.query.product_id || 0;
+  // pool.execute(`SELECT color_id FROM product_product_color WHERE product_id = ?`, [bikeID]);
+  let [pageResults] = await pool.execute(
+    'SELECT GROUP_CONCAT(`product_check`.`product_check_name`) as product_check FROM `product_product_check`,`product_check`,`product` WHERE `product`.`product_id` = `product_product_check`.`product_id` AND `product_product_check`.`product_check_id`=`product_check`.`product_check_id` AND `product`.`product_id`= ?',
+    [product_id]
+  );
+  console.log(pageResults);
+  console.log(product_id);
+  res.json({
+    product_check_name: pageResults[0].product_check
   });
 });
 
