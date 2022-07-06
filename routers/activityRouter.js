@@ -195,8 +195,15 @@ router.get('/', async (req, res, next) => {
     categoryGroup: newCategory, // 類別
     data: pageResults, // 主資料
     hitData: goodResults, // 推薦活動
-    activityFullDtaa: activityResults,
   });
+});
+
+router.get('/activityHomepage', async (req, res, next) => {
+  let [activityResults] = await pool.execute(
+    `SELECT activity_pictures FROM activity`
+  );
+  console.log(activityResults);
+  res.json(activityResults);
 });
 
 ///------------------------------------------------------------------------------------- /course/1
