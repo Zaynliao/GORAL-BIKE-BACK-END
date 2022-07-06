@@ -30,7 +30,6 @@ router.get('/', async (req, res, next) => {
   const color = req.query.color || false;
   const search = req.query.search ? `%${req.query.search}%` : false;
   const sortMethod = req.query.sortMethod || 'product_id DESC';
-  console.log(sortMethod);
   let query = ``;
   let conditionParams = [];
 
@@ -65,14 +64,22 @@ router.get('/', async (req, res, next) => {
   const lastPage = Math.ceil(total / perPage);
 
   // 計算每頁跳過幾筆顯示
-  const offset = (page - 1) * perPage;
+  let offset = (page - 1) * perPage;
   // 取得當頁資料
   let [pageResults] = await pool.execute(
     `SELECT * FROM product WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY ${sortMethod} LIMIT ? OFFSET ? `,
     [...conditionParams, 1, minPrice, maxPrice, perPage, offset]
   );
-
-  // console.log(pageResults);
+  if (pageResults.length === 0 && page > 1) {
+    page = 1;
+    offset = (page - 1) * perPage;
+    [pageResults] = await pool.execute(
+      `SELECT * FROM product WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY ${sortMethod} LIMIT ? OFFSET ? `,
+      [...conditionParams, 1, minPrice, maxPrice, perPage, offset]
+    );
+  }
+  console.log(total)
+  console.log(page)
   res.json({
     // 儲存跟頁碼有關的資料
     pagination: { total, lastPage, page },
@@ -105,11 +112,9 @@ router.get('/product_color_picker', async (req, res, next) => {
   const product_id = req.query.product_id || 0;
   // pool.execute(`SELECT color_id FROM product_product_color WHERE product_id = ?`, [bikeID]);
   let [pageResults] = await pool.execute(
-    'SELECT GROUP_CONCAT(`product_color`.`color_name`) as color_name,GROUP_CONCAT(`product_color`.`color_value`) as hex_value FROM `product_product_color`,`product_color`,`product` WHERE `product`.`product_id` = `product_product_color`.`product_id` AND `product_product_color`.`product_color_id`=`product_color`.`color_id` AND `product`.`product_id`=?;',
+    'SELECT GROUP_CONCAT(`product_color`.`color_name`) as color_name,GROUP_CONCAT(`product_color`.`color_value`) as hex_value FROM `product_product_color`,`product_color`,`product` WHERE `product`.`product_id` = `product_product_color`.`product_id` AND `product_product_color`.`product_color_id`=`product_color`.`color_id` AND `product`.`product_id`= ?;',
     [product_id]
   );
-  console.log(pageResults);
-  console.log(product_id);
   res.json({
     color_name: pageResults[0].color_name,
     hex_value: pageResults[0].hex_value,
@@ -132,8 +137,6 @@ router.get('/product_color_picker', async (req, res, next) => {
     'SELECT GROUP_CONCAT(`product_color`.`color_name`) as color_name,GROUP_CONCAT(`product_color`.`color_value`) as hex_value FROM `product_product_color`,`product_color`,`product` WHERE `product`.`product_id` = `product_product_color`.`product_id` AND `product_product_color`.`product_color_id`=`product_color`.`color_id` AND `product`.`product_id`= ?;',
     [product_id]
   );
-  console.log(pageResults);
-  console.log(product_id);
   res.json({
     color_name: pageResults[0].color_name,
     hex_value: pageResults[0].hex_value,
@@ -146,8 +149,6 @@ router.get('/product_parts', async (req, res, next) => {
     'SELECT GROUP_CONCAT(`product_parts`.`product_parts`) as product_parts,GROUP_CONCAT(`product_parts`.`product_parts_images`) as product_parts_images FROM `product_product_parts`,`product_parts`,`product` WHERE `product`.`product_id` = `product_product_parts`.`product_id` AND `product_product_parts`.`product_parts_id`=`product_parts`.`product_parts_id` AND `product`.`product_id`= ?',
     [product_id]
   );
-  console.log(pageResults);
-  console.log(product_id);
   res.json({
     product_parts_name: pageResults[0].product_parts,
     product_parts_image: pageResults[0].product_parts_images,
@@ -160,10 +161,8 @@ router.get('/product_check', async (req, res, next) => {
     'SELECT GROUP_CONCAT(`product_check`.`product_check_name`) as product_check FROM `product_product_check`,`product_check`,`product` WHERE `product`.`product_id` = `product_product_check`.`product_id` AND `product_product_check`.`product_check_id`=`product_check`.`product_check_id` AND `product`.`product_id`= ?',
     [product_id]
   );
-  console.log(pageResults);
-  console.log(product_id);
   res.json({
-    product_check_name: pageResults[0].product_check
+    product_check_name: pageResults[0].product_check,
   });
 });
 
