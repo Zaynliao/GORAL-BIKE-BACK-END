@@ -15,14 +15,26 @@ router.get('/update_rating', async (req, res, next) => {
 });
 
 router.get('/product_all', async (req, res, next) => {
-  let [productResults] = await pool.execute('SELECT * FROM product');
+  const userId = req.query.userId || ''; // Login user id
+  let loginQuery = '';
+  let loginParams = [];
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_product ON favorite_product.favorite_product_id = product.product_id AND favorite_product.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
+  let [productResults] = await pool.execute(
+    `SELECT * FROM product ${loginQuery}`,
+    [...loginParams]
+  );
   res.json(productResults);
 });
-router.get('/', async (req, res, next) => {
-  let [data, fields] = await pool.execute(
-    'SELECT * FROM product WHERE valid = ?', //<----- SQL -SELECT
-    [1]
+router.get('/productHomepage', async (req, res, next) => {
+  let [homepageData] = await pool.execute(
+    'SELECT product_id,product_name,product_images,product_description FROM product GROUP BY product_name ORDER BY `product`.`product_name`'
   );
+  res.json(homepageData);
+});
+router.get('/', async (req, res, next) => {
   const category = req.query.category || false;
   const brand = req.query.brand || false;
   const minPrice = req.query.minPrice || 0;
@@ -30,8 +42,16 @@ router.get('/', async (req, res, next) => {
   const color = req.query.color || false;
   const search = req.query.search ? `%${req.query.search}%` : false;
   const sortMethod = req.query.sortMethod || 'product_id DESC';
+
+  // ----- favorite
+  const userId = req.query.userId || '';
+
   let query = ``;
   let conditionParams = [];
+
+  // ----- favorite
+  let loginQuery = '';
+  let loginParams = [];
 
   if (category) {
     query += ` product_category_id = ? AND `;
@@ -48,6 +68,12 @@ router.get('/', async (req, res, next) => {
   if (color) {
     query += ` product_color = ? AND `;
     conditionParams.push(color);
+  }
+
+  // ----- favorite
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_product ON favorite_product.favorite_product_id = product.product_id AND favorite_product.favorite_user_id = ?`;
+    loginParams.push(userId);
   }
 
   let [totalLength] = await pool.execute(
@@ -67,8 +93,8 @@ router.get('/', async (req, res, next) => {
   let offset = (page - 1) * perPage;
   // 取得當頁資料
   let [pageResults] = await pool.execute(
-    `SELECT * FROM product WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY ${sortMethod} LIMIT ? OFFSET ? `,
-    [...conditionParams, 1, minPrice, maxPrice, perPage, offset]
+    `SELECT * FROM product ${loginQuery} WHERE ${query} valid = ? AND product_price BETWEEN ? AND ? ORDER BY ${sortMethod} LIMIT ? OFFSET ? `,
+    [...loginParams, ...conditionParams, 1, minPrice, maxPrice, perPage, offset]
   );
   if (pageResults.length === 0 && page > 1) {
     page = 1;
@@ -78,8 +104,6 @@ router.get('/', async (req, res, next) => {
       [...conditionParams, 1, minPrice, maxPrice, perPage, offset]
     );
   }
-  console.log(total)
-  console.log(page)
   res.json({
     // 儲存跟頁碼有關的資料
     pagination: { total, lastPage, page },
@@ -89,9 +113,16 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/product_id', async (req, res, next) => {
+  const userId = req.query.userId || ''; // Login user id
+  let loginQuery = '';
+  let loginParams = [];
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_product ON favorite_product.favorite_product_id = product.product_id AND favorite_product.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
   let [pageResults] = await pool.execute(
-    `SELECT * FROM product WHERE product_id = ?`,
-    [req.query.product_id]
+    `SELECT * FROM product ${loginQuery} WHERE product_id = ?`,
+    [...loginParams, req.query.product_id]
   );
   res.json({
     data: pageResults,
