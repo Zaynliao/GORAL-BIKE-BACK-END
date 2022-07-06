@@ -16,18 +16,19 @@ router.get('/', async (req, res, next) => {
   let page = req.query.page || 1; // 當前頁數
   let userId = req.query.userId || ''; // userId
 
+  let sortCourseMethodString = '';
   switch (sortMethod) {
     case 'hotSort':
-      sortMethodString = `ORDER BY course_enrollment DESC`;
+      sortCourseMethodString = `ORDER BY course_enrollment DESC`;
       break;
     case 'newSort':
-      sortMethodString = `ORDER BY course_date DESC`;
+      sortCourseMethodString = `ORDER BY course_date DESC`;
       break;
     case 'cheapSort':
-      sortMethodString = `ORDER BY course_price ASC`;
+      sortCourseMethodString = `ORDER BY course_price ASC`;
       break;
     case 'expensiveSort':
-      sortMethodString = `ORDER BY course_price DESC`;
+      sortCourseMethodString = `ORDER BY course_price DESC`;
       break;
   }
 
@@ -154,7 +155,7 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------ 篩選過的資料
   let [filterResult] = await pool.execute(
-    `SELECT * FROM classes WHERE course_valid = ? ${query} ${sortMethodString} `,
+    `SELECT * FROM classes WHERE course_valid = ? ${query} ${sortCourseMethodString} `,
     [1, ...conditionParams]
   );
   // ------------------------------------ 分頁資料
@@ -168,7 +169,7 @@ router.get('/', async (req, res, next) => {
     LEFT JOIN course_category ON course_category.course_category_id = classes.course_category_id
     LEFT JOIN course_contents ON course_contents.course_content_id = classes.course_content_id
     LEFT JOIN course_location ON course_location.course_location_id  = classes.course_location_id
-    LEFT JOIN venue ON venue.id = course_location.course_venue_id ${loginQuery} WHERE course_valid = ? ${query} ${sortMethodString} LIMIT ? OFFSET ?`,
+    LEFT JOIN venue ON venue.id = course_location.course_venue_id ${loginQuery} WHERE course_valid = ? ${query} ${sortCourseMethodString} LIMIT ? OFFSET ?`,
     [...loginParams, 1, ...conditionParams, perPage, offset]
   );
 

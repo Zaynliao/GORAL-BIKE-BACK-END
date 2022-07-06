@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const moment = require('moment');
 const pool = require('../utils/db'); // 引入 db
 const multer = require('multer');
 const path = require('path');
@@ -150,68 +151,421 @@ router.post('/password/update', async (req, res) => {
 });
 
 router.post('/favorite/update', async (req, res, next) => {
-  let favoriteMethod = req.body.favoriteMethod;
+  let favoriteMethod = req.body.favoriteMethod; // 收藏的方法 : product/course/activity
 
+  // 收藏目標 id 不為空才做
   if (req.body.courseId !== '') {
+    // 檢查是否有收藏的資料
     let [checkFavorite] = await pool.execute(
       `SELECT * FROM favorite_${favoriteMethod} WHERE favorite_user_id = ? AND favorite_${favoriteMethod}_id = ?`,
       [req.body.userId, req.body.courseId]
     );
-    // console.log('是否有資料', checkFavorite);
 
+    // 有收藏資料則刪除收藏資料 -> 有愛心變成沒愛心
     if (checkFavorite.length > 0) {
       let [deleteFavorite] = await pool.execute(
         `DELETE FROM favorite_${favoriteMethod} WHERE favorite_user_id = ? AND favorite_${favoriteMethod}_id = ?`,
         [req.body.userId, req.body.courseId]
       );
-      // console.log('刪除資料', deleteFavorite);
     } else {
+      // 沒收藏資料則新增收藏資料 -> 沒愛心變成有愛心
       let [insertFavorite] = await pool.execute(
         `INSERT INTO favorite_${favoriteMethod} (favorite_user_id, favorite_${favoriteMethod}_id) VALUES (?, ?)`,
         [req.body.userId, req.body.courseId]
       );
-      // console.log('插入資料', insertFavorite);
     }
   }
-  res.json({ result: '更新資料成功' });
+  res.json({ result: '更新收藏資料成功' });
 });
 
 router.get('/favorite/course', async (req, res, next) => {
+  // 前端篩選條件
+  let searchWord = req.query.search || ''; // 關鍵字
+  let statu = req.query.statu || ''; // 報名狀態
+  let category = req.query.category || ''; // 難度
+  let sortMethod = req.query.sortMethod || 'newSort'; // 排序方法
+  let cardStyle = req.query.cardStyle || 'row'; // 陳列方式
+  let page = req.query.page || 1; // 當前頁數
+  let sortCourseMethodString = '';
+
+  switch (sortMethod) {
+    case 'hotSort':
+      sortCourseMethodString = `ORDER BY course_enrollment DESC`;
+      break;
+    case 'newSort':
+      sortCourseMethodString = `ORDER BY course_date DESC`;
+      break;
+    case 'cheapSort':
+      sortCourseMethodString = `ORDER BY course_price ASC`;
+      break;
+    case 'expensiveSort':
+      sortCourseMethodString = `ORDER BY course_price DESC`;
+      break;
+  }
+
+  // ------------------------------------ 取得報名狀態類別
+
+  let [stateGroup] = await pool.execute(`SELECT * FROM course_status`);
+
+  let newStatu = stateGroup.map((v, i) => {
+    return v.course_status_name;
+  });
+
+  // ------------------------------------ 取得課程難度類別
+
+  let [categoryGroup] = await pool.execute(`SELECT * FROM course_category`);
+
+  let newCategory = categoryGroup.map((v, i) => {
+    return v.course_category_name;
+  });
+
+  // ------------------------------------ 取得最低價
+  let [minPrice] = await pool.execute(
+    `SELECT MIN(course_price) AS minPrice FROM classes`
+  );
+  let [sqlMinPrice] = minPrice.map((v) => {
+    return v.minPrice;
+  });
+
+  // ------------------------------------ 取得最高價
+  let [maxPrice] = await pool.execute(
+    `SELECT MAX(course_price) AS maxPrice FROM classes`
+  );
+  let [sqlMaxPrice] = maxPrice.map((v) => {
+    return v.maxPrice;
+  });
+
+  let price = req.query.priceSubmit || [sqlMinPrice, sqlMaxPrice]; // 取得價錢範圍
+
+  // ------------------------------------ 取得最少人數
+  let [minPerson] = await pool.execute(
+    `SELECT MIN(course_enrollment) AS minPerson FROM classes`
+  );
+  let [sqlMinPerson] = minPerson.map((v) => {
+    return v.minPerson;
+  });
+
+  // ------------------------------------ 取得最多人數
+  let [maxPerson] = await pool.execute(
+    `SELECT MAX(course_enrollment) AS maxPerson FROM classes`
+  );
+  let [sqlMaxPerson] = maxPerson.map((v) => {
+    return v.maxPerson;
+  });
+
+  let person = req.query.personSubmit || [sqlMinPerson, sqlMaxPerson]; // 取得人數範圍
+  // ------------------------------------ 取得最先日期
+
+  let [earlyDate] = await pool.execute(
+    `SELECT MIN(course_date) AS earlyDate FROM classes`
+  );
+  let [startDate] = earlyDate.map((v) => {
+    return v.earlyDate;
+  });
+
+  let startTime = startDate.getTime();
+  let finalStartDate = moment(startTime).format('yyyy-MM-DD');
+
+  let startDateRange = req.query.startDateSubmit || finalStartDate; // 取得最早日期
+
+  // ------------------------------------ 取得最後日期
+
+  let [lateDate] = await pool.execute(
+    `SELECT MAX(course_date) AS lateDate FROM classes`
+  );
+  let [endDate] = lateDate.map((v) => {
+    return v.lateDate;
+  });
+
+  let endTime = endDate.getTime();
+  let finalEndDate = moment(endTime).format('yyyy-MM-DD');
+
+  let endDateRange = req.query.endDateSubmit || finalEndDate; // 取得最晚日期
+
+  let dateRange = [startDateRange, endDateRange]; // 日期範圍
+
+  // ------------------------------------ 判斷是否篩選
+
+  let query = '';
+  let conditionParams = [];
+  if (statu) {
+    query += ` AND classes.course_status_id = ?`;
+    conditionParams.push(statu);
+  }
+  if (searchWord) {
+    query += ` AND course_title LIKE ?`;
+    conditionParams.push('%' + searchWord + '%');
+  }
+  if (price) {
+    query += ` AND course_price BETWEEN ? AND ?`;
+    conditionParams.push(price[0], price[1]);
+  }
+  if (person) {
+    query += ` AND course_enrollment BETWEEN ? AND ?`;
+    conditionParams.push(person[0], person[1]);
+  }
+
+  if (category) {
+    query += ` AND classes.course_category_id IN (${category})`;
+  }
+
+  if (dateRange) {
+    query += ` AND course_date BETWEEN ? AND ?`;
+    conditionParams.push(dateRange[0], dateRange[1]);
+  }
+
+  // ------------------------------------ 篩選過的資料
+  let [filterResult] = await pool.execute(
+    `SELECT * FROM classes 
+    RIGHT JOIN favorite_course 
+    ON favorite_course.favorite_course_id = classes.course_id 
+    AND favorite_course.favorite_user_id = ? WHERE course_valid = ? 
+    ${query}`,
+    [req.query.userId, 1, ...conditionParams]
+  );
+
+  // ------------------------------------ 分頁資料
+
+  const perPage = cardStyle === 'row' ? 3 : 6; // 一頁幾筆
+  const offset = (page - 1) * perPage; // 計算每頁跳過幾筆顯示
+
   let [favoriteResults] = await pool.execute(
     `SELECT * FROM classes
-  LEFT JOIN course_status ON course_status.course_status_id = classes.course_status_id
-  LEFT JOIN course_category ON course_category.course_category_id = classes.course_category_id
-  LEFT JOIN course_contents ON course_contents.course_content_id = classes.course_content_id
-  LEFT JOIN course_location ON course_location.course_location_id  = classes.course_location_id
-  LEFT JOIN venue ON venue.id = course_location.course_venue_id
-  RIGHT JOIN favorite_course ON favorite_course.favorite_course_id = classes.course_id AND favorite_course.favorite_user_id = ? WHERE course_valid = ?`,
-    [req.query.userId, 1]
+    LEFT JOIN course_status ON course_status.course_status_id = classes.course_status_id
+    LEFT JOIN course_category ON course_category.course_category_id = classes.course_category_id
+    LEFT JOIN course_contents ON course_contents.course_content_id = classes.course_content_id
+    LEFT JOIN course_location ON course_location.course_location_id  = classes.course_location_id
+    LEFT JOIN venue ON venue.id = course_location.course_venue_id
+    RIGHT JOIN favorite_course ON favorite_course.favorite_course_id = classes.course_id 
+    AND favorite_course.favorite_user_id = ? 
+    WHERE course_valid = ? 
+    ${query} 
+    ${sortCourseMethodString} 
+    LIMIT ? 
+    OFFSET ?`,
+    [req.query.userId, 1, ...conditionParams, perPage, offset]
   );
+
+  const total = filterResult.length; // 總筆數
+  const lastPage = Math.ceil(total / perPage); // 總頁數
+
   res.json({
+    pagination: { total, lastPage, page }, // 頁碼有關的資料
+    stateGroup: newStatu, // 狀態
+    priceRange: { sqlMinPrice, sqlMaxPrice }, // 價錢範圍
+    personRange: { sqlMinPerson, sqlMaxPerson }, // 人數範圍
+    dateRange: { finalStartDate, finalEndDate }, // 時間範圍
+    categoryGroup: newCategory, // 類別
     data: favoriteResults, // 主資料
   });
 });
 
 router.get('/favorite/activity', async (req, res, next) => {
-  let [favoriteResults] = await pool.execute(
-    `SELECT * FROM activity
-    LEFT JOIN activity_status ON activity.activity_status_id = activity_status.id
-    LEFT JOIN venue ON activity.activity_venue_id = venue.id
-    RIGHT JOIN favorite_activity ON favorite_activity.favorite_activity_id = activity.activity_id AND favorite_activity.favorite_user_id = ? WHERE activity_valid = ?`,
-    [req.query.userId, 1]
+  let searchWord = req.query.search || ''; // 關鍵字
+  let statu = req.query.statu || ''; // 報名狀態
+  let category = req.query.category || ''; // 難度
+  let sortMethod = req.query.sortMethod || 'newSort'; // 排序方法
+  let cardStyle = req.query.cardStyle || 'row'; // 陳列方式
+  let page = req.query.page || 1; // 當前頁數
+  let sortActivityMethodString = '';
+  {
+    switch (sortMethod) {
+      case 'hotSort':
+        sortActivityMethodString = `ORDER BY activity.activity_persons DESC`;
+        break;
+      case 'newSort':
+        sortActivityMethodString = `ORDER BY activity.activity_date DESC`;
+        break;
+      case 'cheapSort':
+        sortActivityMethodString = `ORDER BY activity.activity_fee ASC`;
+        break;
+      case 'expensiveSort':
+        sortActivityMethodString = `ORDER BY activity.activity_fee DESC`;
+        break;
+    }
+  }
+
+  // ------------------------------------ 取得報名狀態類別
+
+  let [stateGroup] = await pool.execute(`SELECT * FROM activity_status`);
+
+  let newStatu = stateGroup.map((v, i) => {
+    return v.activity_status_name;
+  });
+
+  // ------------------------------------ 取得課程難度類別
+
+  let [categoryGroup] = await pool.execute(`SELECT * FROM venue`);
+
+  let newCategory = categoryGroup.map((v, i) => {
+    return v.venue_name;
+  });
+
+  // ------------------------------------ 取得最低價
+  let [minPrice] = await pool.execute(
+    `SELECT MIN(activity_fee) AS minPrice FROM activity`
   );
+  let [sqlMinPrice] = minPrice.map((v) => {
+    return v.minPrice;
+  });
+
+  // ------------------------------------ 取得最高價
+  let [maxPrice] = await pool.execute(
+    `SELECT MAX(activity_fee) AS maxPrice FROM activity`
+  );
+  let [sqlMaxPrice] = maxPrice.map((v) => {
+    return v.maxPrice;
+  });
+
+  let price = req.query.priceSubmit || [sqlMinPrice, sqlMaxPrice]; // 取得價錢範圍
+
+  // ------------------------------------ 取得最少人數
+  let [minPerson] = await pool.execute(
+    `SELECT MIN(activity_persons) AS minPerson FROM activity`
+  );
+  let [sqlMinPerson] = minPerson.map((v) => {
+    return v.minPerson;
+  });
+
+  // ------------------------------------ 取得最多人數
+  let [maxPerson] = await pool.execute(
+    `SELECT MAX(activity_persons) AS maxPerson FROM activity`
+  );
+  let [sqlMaxPerson] = maxPerson.map((v) => {
+    return v.maxPerson;
+  });
+
+  let person = req.query.personSubmit || [sqlMinPerson, sqlMaxPerson]; // 取得人數範圍
+
+  // ------------------------------------ 取得最先日期
+
+  let [earlyDate] = await pool.execute(
+    `SELECT MIN(activity_date) AS earlyDate FROM activity`
+  );
+  let [startDate] = earlyDate.map((v) => {
+    return v.earlyDate;
+  });
+
+  let startTime = startDate.getTime();
+  let finalStartDate = moment(startTime).format('yyyy-MM-DD');
+
+  let startDateRange = req.query.startDateSubmit || finalStartDate; // 取得最早日期
+
+  // ------------------------------------ 取得最後日期
+
+  let [lateDate] = await pool.execute(
+    `SELECT MAX(activity_date) AS lateDate FROM activity`
+  );
+  let [endDate] = lateDate.map((v) => {
+    return v.lateDate;
+  });
+
+  let endTime = endDate.getTime();
+  let finalEndDate = moment(endTime).format('yyyy-MM-DD');
+
+  let endDateRange = req.query.endDateSubmit || finalEndDate; // 取得最晚日期
+
+  let dateRange = [startDateRange, endDateRange]; // 日期範圍
+
+  // ------------------------------------ 判斷是否篩選
+
+  let query = '';
+  let conditionParams = [];
+  if (statu) {
+    query += ` AND activity_status_id = ?`;
+    conditionParams.push(statu);
+  }
+  if (searchWord) {
+    query += ` AND activity_name LIKE ?`;
+    conditionParams.push('%' + searchWord + '%');
+  }
+  if (price) {
+    query += ` AND activity_fee BETWEEN ? AND ?`;
+    conditionParams.push(price[0], price[1]);
+  }
+  if (person) {
+    query += ` AND activity_persons BETWEEN ? AND ?`;
+    conditionParams.push(person[0], person[1]);
+  }
+
+  if (category) {
+    query += ` AND activity.activity_venue_id IN (${category})`;
+  }
+
+  if (dateRange) {
+    query += ` AND activity_date BETWEEN ? AND ?`;
+    conditionParams.push(dateRange[0], dateRange[1]);
+  }
+
+  // ------------------------------------ 篩選過的資料
+  let [filterResult] = await pool.execute(
+    `SELECT * FROM activity WHERE activity_valid = ?  ${query} ${sortActivityMethodString} `,
+    [1, ...conditionParams]
+  );
+  // ------------------------------------ 分頁資料
+  const perPage = cardStyle === 'row' ? 3 : 6; // 一頁幾筆
+  const offset = (page - 1) * perPage; // 計算每頁跳過幾筆顯示
+
+  let [favoriteFilterResults] = await pool.execute(
+    `SELECT * FROM activity 
+    RIGHT JOIN favorite_activity 
+    ON favorite_activity.favorite_activity_id = activity.activity_id 
+    AND favorite_activity.favorite_user_id = ? 
+    WHERE activity_valid = ? 
+    ${query}`,
+    [req.query.userId, 1, ...conditionParams]
+  );
+
+  const total = favoriteFilterResults.length; // 總筆數
+  const lastPage = Math.ceil(total / perPage); // 總頁數
+
+  let [favoritePageResults] = await pool.execute(
+    `SELECT * FROM activity
+    LEFT JOIN activity_status 
+    ON activity.activity_status_id = activity_status.id
+    LEFT JOIN venue 
+    ON activity.activity_venue_id = venue.id
+    RIGHT JOIN favorite_activity 
+    ON favorite_activity.favorite_activity_id = activity.activity_id 
+    AND favorite_activity.favorite_user_id = ? 
+    WHERE activity_valid = ? 
+    ${query} 
+    ${sortActivityMethodString} 
+    LIMIT ? 
+    OFFSET ?`,
+    [req.query.userId, 1, ...conditionParams, perPage, offset]
+  );
+
   res.json({
-    data: favoriteResults, // 主資料
+    pagination: { total, lastPage, page }, // 頁碼有關的資料
+    stateGroup: newStatu, // 狀態
+    priceRange: { sqlMinPrice, sqlMaxPrice }, // 價錢範圍
+    personRange: { sqlMinPerson, sqlMaxPerson }, // 人數範圍
+    dateRange: { finalStartDate, finalEndDate }, // 時間範圍
+    categoryGroup: newCategory, // 類別
+    data: favoritePageResults, // 主資料
   });
 });
 
 router.get('/favorite/product', async (req, res, next) => {
-  let [favoriteResults] = await pool.execute(
+  let [favoriteFilterResults] = await pool.execute(
     `SELECT * FROM product RIGHT JOIN favorite_product ON favorite_product.favorite_product_id = product.product_id AND favorite_product.favorite_user_id = ? WHERE valid = ?`,
     [req.query.userId, 1]
   );
+
+  let page = req.query.page || 1;
+  const total = favoriteFilterResults.length;
+  const perPage = 9;
+  const lastPage = Math.ceil(total / perPage);
+  const offset = (page - 1) * perPage;
+
+  let [favoritePageResults] = await pool.execute(
+    `SELECT * FROM product RIGHT JOIN favorite_product ON favorite_product.favorite_product_id = product.product_id AND favorite_product.favorite_user_id = ? WHERE valid = ? LIMIT ? OFFSET ? `,
+    [req.query.userId, 1, perPage, offset]
+  );
   res.json({
-    data: favoriteResults, // 主資料
+    pagination: { total, lastPage, page },
+    data: favoritePageResults, // 主資料
   });
 });
 

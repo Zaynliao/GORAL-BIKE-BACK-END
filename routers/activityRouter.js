@@ -16,20 +16,20 @@ router.get('/', async (req, res, next) => {
   let cardStyle = req.query.cardStyle || 'row'; // 陳列方式
   let page = req.query.page || 1; // 當前頁數
   let userId = req.query.userId || ''; // userId
-
+  let sortActivityMethodString = '';
   {
     switch (sortMethod) {
       case 'hotSort':
-        sortMethodString = `ORDER BY activity.activity_persons DESC`;
+        sortActivityMethodString = `ORDER BY activity.activity_persons DESC`;
         break;
       case 'newSort':
-        sortMethodString = `ORDER BY activity.activity_date DESC`;
+        sortActivityMethodString = `ORDER BY activity.activity_date DESC`;
         break;
       case 'cheapSort':
-        sortMethodString = `ORDER BY activity.activity_fee ASC`;
+        sortActivityMethodString = `ORDER BY activity.activity_fee ASC`;
         break;
       case 'expensiveSort':
-        sortMethodString = `ORDER BY activity.activity_fee DESC`;
+        sortActivityMethodString = `ORDER BY activity.activity_fee DESC`;
         break;
     }
   }
@@ -157,7 +157,7 @@ router.get('/', async (req, res, next) => {
   // console.log(conditionParams);
   // ------------------------------------ 篩選過的資料
   let [filterResult] = await pool.execute(
-    `SELECT * FROM activity WHERE activity_valid = ?  ${query} ${sortMethodString} `,
+    `SELECT * FROM activity WHERE activity_valid = ?  ${query} ${sortActivityMethodString} `,
     [1, ...conditionParams]
   );
   // ------------------------------------ 分頁資料
@@ -167,7 +167,7 @@ router.get('/', async (req, res, next) => {
     `SELECT * FROM activity
     LEFT JOIN activity_status ON activity.activity_status_id = activity_status.id
     LEFT JOIN venue ON activity.activity_venue_id = venue.id
-    ${loginQuery} WHERE activity_valid = ? ${query} ${sortMethodString} LIMIT ? OFFSET ?`,
+    ${loginQuery} WHERE activity_valid = ? ${query} ${sortActivityMethodString} LIMIT ? OFFSET ?`,
     [...loginParams, 1, ...conditionParams, perPage, offset]
   );
 
@@ -202,7 +202,7 @@ router.get('/activityHomepage', async (req, res, next) => {
   let [activityResults] = await pool.execute(
     `SELECT activity_pictures FROM activity`
   );
-  console.log(activityResults);
+  // console.log(activityResults);
   res.json(activityResults);
 });
 
