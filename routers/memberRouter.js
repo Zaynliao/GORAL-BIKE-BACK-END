@@ -55,7 +55,6 @@ const uploader = multer({
 
 // /api/member/profile
 router.get('/profile/:userId', async (req, res, next) => {
-  // console.log('註冊的資料', req.body);
   try {
     let [members] = await pool.execute(
       `
@@ -71,7 +70,7 @@ router.get('/profile/:userId', async (req, res, next) => {
   }
 });
 
-// /api/member/update
+// /api/member/profile/update
 router.post(
   '/profile/update',
   uploader.single('photo'),
@@ -119,6 +118,7 @@ router.post(
   }
 );
 
+// /api/member/password/update
 router.post('/password/update', async (req, res) => {
   // 確認有沒有這個帳號
   let [users] = await pool.execute('SELECT * FROM users WHERE user_id = ?', [
@@ -145,7 +145,7 @@ router.post('/password/update', async (req, res) => {
   let [result] = await pool.execute('UPDATE users SET password = ?', [
     hashPassword,
   ]);
-  console.log('update result:', result);
+  // console.log('update result:', result);
   res.json({ code: 0, msg: '密碼修改成功，請重新登入' });
 });
 
