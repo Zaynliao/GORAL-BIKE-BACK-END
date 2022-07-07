@@ -177,9 +177,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/activityHomepage', async (req, res, next) => {
   let [activityResults] = await pool.execute(
-    `SELECT activity_pictures FROM activity`
+    `SELECT activity_id,activity_pictures FROM activity`
   );
-  console.log(activityResults);
   res.json(activityResults);
 });
 

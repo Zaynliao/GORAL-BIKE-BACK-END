@@ -2,89 +2,23 @@
 -- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 05, 2022 at 11:47 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.4
+-- 主機： 127.0.0.1
+-- 產生時間： 2022-07-07 15:31:01
+-- 伺服器版本： 10.4.24-MariaDB
+-- PHP 版本： 8.1.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
--- Database: `goral_bike`
+-- 資料庫: `goral_bike`
 --
-
-DELIMITER $$
---
--- Procedures
---
-DROP PROCEDURE IF EXISTS `ABC`$$
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `ABC` ()   BEGIN
-      DECLARE a INT Default 0 ;
-      simple_loop: LOOP
-         SET a=a+1;
-         select a;
-         SET @b = 0.0;
-         UPDATE `product` SET `product_rating`= @b WHERE product_id = @a;
-         SET @b = 0.1 + @b;
-         IF a=141 THEN
-            LEAVE simple_loop;
-         END IF;
-   END LOOP simple_loop;
-END$$
-
-DROP PROCEDURE IF EXISTS `BC`$$
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `BC` ()   BEGIN
-      DECLARE a INT Default 0 ;
-      simple_loop: LOOP
-         SET a=a+1;
-         select a;
-         SET @b = 0.0;
-         UPDATE `product` SET `product_rating` = @b WHERE `product`.`product_id` = @a;
-         SET @b = 0.1 + @b;
-         IF a=141 THEN
-            LEAVE simple_loop;
-         END IF;
-   END LOOP simple_loop;
-END$$
-
-DROP PROCEDURE IF EXISTS `C`$$
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `C` ()   BEGIN
-      DECLARE a INT Default 0 ;
-      simple_loop: LOOP
-         SET a=a+1;
-         select a;
-         SET @b = 0.0;
-         UPDATE `product` SET `product_rating` = @b WHERE `product`.`product_id` = @a;
-         SET @b = 0.1 + @b;
-         IF a=141 THEN
-            LEAVE simple_loop;
-         END IF;
-   END LOOP simple_loop;
-END$$
-
-DROP PROCEDURE IF EXISTS `DemoLoop`$$
-CREATE DEFINER=`admin`@`localhost` PROCEDURE `DemoLoop` ()   BEGIN
-      DECLARE a INT Default 0 ;
-      simple_loop: LOOP
-         SET a=a+1;
-         select a;
-         SET @b = 0.0;
-         UPDATE `product` SET `product_rating` = @b WHERE `product`.`product_id` = @a;
-         SET @b = 0.1 + @b;
-         IF a=141 THEN
-            LEAVE simple_loop;
-         END IF;
-   END LOOP simple_loop;
-END$$
-
-DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accessory`
+-- 資料表結構 `accessory`
 --
 
 DROP TABLE IF EXISTS `accessory`;
@@ -102,7 +36,7 @@ CREATE TABLE `accessory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `accessory`
+-- 傾印資料表的資料 `accessory`
 --
 
 INSERT INTO `accessory` (`id`, `accessory_name`, `accessory_picture`, `accessory_price`, `accessory_specification`, `accessory_description`, `accessory_category`, `accessory_color`, `accessory_valid`, `accessory_up_date`) VALUES
@@ -148,7 +82,7 @@ INSERT INTO `accessory` (`id`, `accessory_name`, `accessory_picture`, `accessory
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accessory_category`
+-- 資料表結構 `accessory_category`
 --
 
 DROP TABLE IF EXISTS `accessory_category`;
@@ -158,7 +92,7 @@ CREATE TABLE `accessory_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `accessory_category`
+-- 傾印資料表的資料 `accessory_category`
 --
 
 INSERT INTO `accessory_category` (`id`, `accessory_category_name`) VALUES
@@ -179,7 +113,7 @@ INSERT INTO `accessory_category` (`id`, `accessory_category_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `activity`
+-- 資料表結構 `activity`
 --
 
 DROP TABLE IF EXISTS `activity`;
@@ -206,7 +140,7 @@ CREATE TABLE `activity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `activity`
+-- 傾印資料表的資料 `activity`
 --
 
 INSERT INTO `activity` (`activity_id`, `activity_score`, `activity_venue_id`, `activity_pictures`, `activity_name`, `activity_date`, `activity_location`, `activity_persons`, `activity_start_date`, `activity_end_date`, `activity_status_id`, `activity_fee`, `activity_content_introduction`, `activity_content_infomation`, `activity_content_apply`, `activity_content_notice`, `activity_content_image1`, `activity_content_image2`, `activity_valid`) VALUES
@@ -232,7 +166,20 @@ INSERT INTO `activity` (`activity_id`, `activity_score`, `activity_venue_id`, `a
 -- --------------------------------------------------------
 
 --
--- Table structure for table `activity_status`
+-- 資料表結構 `activity_order`
+--
+
+DROP TABLE IF EXISTS `activity_order`;
+CREATE TABLE `activity_order` (
+  `order_id` int(11) NOT NULL,
+  `activity_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `activity_status`
 --
 
 DROP TABLE IF EXISTS `activity_status`;
@@ -242,7 +189,7 @@ CREATE TABLE `activity_status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `activity_status`
+-- 傾印資料表的資料 `activity_status`
 --
 
 INSERT INTO `activity_status` (`id`, `activity_status_name`) VALUES
@@ -253,29 +200,7 @@ INSERT INTO `activity_status` (`id`, `activity_status_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `activity_venue`
---
-
-DROP TABLE IF EXISTS `activity_venue`;
-CREATE TABLE `activity_venue` (
-  `id` int(3) UNSIGNED NOT NULL,
-  `activity_venue_name` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `activity_venue`
---
-
-INSERT INTO `activity_venue` (`id`, `activity_venue_name`) VALUES
-(1, '北部'),
-(2, '中部'),
-(3, '南部'),
-(4, '東部');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `classes`
+-- 資料表結構 `classes`
 --
 
 DROP TABLE IF EXISTS `classes`;
@@ -298,7 +223,7 @@ CREATE TABLE `classes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `classes`
+-- 傾印資料表的資料 `classes`
 --
 
 INSERT INTO `classes` (`course_id`, `course_score`, `course_category_id`, `course_title`, `course_pictures`, `course_location_id`, `course_date`, `course_enrollment`, `course_start_time`, `course_end_time`, `course_status_id`, `course_price`, `course_content_id`, `course_inventory`, `course_valid`) VALUES
@@ -335,7 +260,7 @@ INSERT INTO `classes` (`course_id`, `course_score`, `course_category_id`, `cours
 -- --------------------------------------------------------
 
 --
--- Table structure for table `coupons`
+-- 資料表結構 `coupons`
 --
 
 DROP TABLE IF EXISTS `coupons`;
@@ -350,7 +275,7 @@ CREATE TABLE `coupons` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `coupons`
+-- 傾印資料表的資料 `coupons`
 --
 
 INSERT INTO `coupons` (`id`, `coupon_name`, `coupon_code`, `coupon_content`, `coupon_expiry_date`, `coupon_discount`, `valid`) VALUES
@@ -368,7 +293,7 @@ INSERT INTO `coupons` (`id`, `coupon_name`, `coupon_code`, `coupon_content`, `co
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course_category`
+-- 資料表結構 `course_category`
 --
 
 DROP TABLE IF EXISTS `course_category`;
@@ -378,7 +303,7 @@ CREATE TABLE `course_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `course_category`
+-- 傾印資料表的資料 `course_category`
 --
 
 INSERT INTO `course_category` (`course_category_id`, `course_category_name`) VALUES
@@ -388,7 +313,7 @@ INSERT INTO `course_category` (`course_category_id`, `course_category_name`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course_contents`
+-- 資料表結構 `course_contents`
 --
 
 DROP TABLE IF EXISTS `course_contents`;
@@ -403,7 +328,7 @@ CREATE TABLE `course_contents` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `course_contents`
+-- 傾印資料表的資料 `course_contents`
 --
 
 INSERT INTO `course_contents` (`course_content_id`, `course_content_introduction`, `course_content_infomation`, `course_content_apply`, `course_content_image1`, `course_content_image2`, `course_content_notice`) VALUES
@@ -419,7 +344,7 @@ INSERT INTO `course_contents` (`course_content_id`, `course_content_introduction
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course_location`
+-- 資料表結構 `course_location`
 --
 
 DROP TABLE IF EXISTS `course_location`;
@@ -430,7 +355,7 @@ CREATE TABLE `course_location` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `course_location`
+-- 傾印資料表的資料 `course_location`
 --
 
 INSERT INTO `course_location` (`course_location_id`, `course_venue_id`, `course_location_name`) VALUES
@@ -455,7 +380,20 @@ INSERT INTO `course_location` (`course_location_id`, `course_venue_id`, `course_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course_status`
+-- 資料表結構 `course_order`
+--
+
+DROP TABLE IF EXISTS `course_order`;
+CREATE TABLE `course_order` (
+  `order_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `course_status`
 --
 
 DROP TABLE IF EXISTS `course_status`;
@@ -465,7 +403,7 @@ CREATE TABLE `course_status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `course_status`
+-- 傾印資料表的資料 `course_status`
 --
 
 INSERT INTO `course_status` (`course_status_id`, `course_status_name`) VALUES
@@ -476,7 +414,83 @@ INSERT INTO `course_status` (`course_status_id`, `course_status_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `news`
+-- 資料表結構 `customizeorder`
+--
+
+DROP TABLE IF EXISTS `customizeorder`;
+CREATE TABLE `customizeorder` (
+  `orderId` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(10) NOT NULL,
+  `mark` varchar(1000) DEFAULT NULL,
+  `Frame_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Saddle_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Metal_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `DerailleurRear_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Crankset_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Pedal_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Chain_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Cage_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Bottle_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Brakes_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `PaintBlack_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Wheels_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Computer_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `HandlebarTape_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Shifters_MAT` varchar(7) NOT NULL DEFAULT '#fff',
+  `Cassette_MAT` varchar(7) NOT NULL DEFAULT '#fff'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `customizeorder`
+--
+
+INSERT INTO `customizeorder` (`orderId`, `name`, `email`, `phone`, `mark`, `Frame_MAT`, `Saddle_MAT`, `Metal_MAT`, `DerailleurRear_MAT`, `Crankset_MAT`, `Pedal_MAT`, `Chain_MAT`, `Cage_MAT`, `Bottle_MAT`, `Brakes_MAT`, `PaintBlack_MAT`, `Wheels_MAT`, `Computer_MAT`, `HandlebarTape_MAT`, `Shifters_MAT`, `Cassette_MAT`) VALUES
+(1, 'joe', 'joe123@gmail.com', '912345678', 'test', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(2, 'AAAA', 'asdasdasd@gmail.com', '2147483647', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(3, 'JJJJJJJJJJJJJJJJJJJJ', 'asdasdasd@gmail.com', '2147483647', '123456789', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
+(4, 'JJJJJJJJJJJJJJJJJJJJ', 'asdasdasd@gmail.com', '2147483647', '123456789', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
+(5, 'JJJJJJJJJJJJJJJJJJJJ', 'asdasdasd@gmail.com', '9888888888', '123456789', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
+(6, 'AAAAff', 'aaa@123.com', '9876543210', '測試用', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
+(7, 'aaaaaaa', 'asdasdasd@gmail.com', '9888888888', 'serfwerwerwer', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(8, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(9, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(10, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(11, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(12, 'asdasd', 'test15@mail.test', '9879879872', '115656464', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(13, 'asdasd', 'test15@mail.test', '9879879871', '1245623254545', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
+(14, 'asdasd', 'test15@mail.test', '9777777777', 'weqw', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
+(15, 'AAAA', 'test15@mail.test', '9888888888', '131322', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
+(16, 'asdasd', 'asdasdasd@gmail.com', '9888888888', 'ertret', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
+(17, 'asdasd', 'test15@mail.test', '9888888888', 'erwer', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
+(18, 'asda', 'ada@dasd.c', '223423412', '103232', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(19, 'AAAA', 'asdasdasd@gmail.com', '988888888', 'erwe51', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `delivery`
+--
+
+DROP TABLE IF EXISTS `delivery`;
+CREATE TABLE `delivery` (
+  `delivery_id` int(11) NOT NULL,
+  `delivery_method` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `delivery`
+--
+
+INSERT INTO `delivery` (`delivery_id`, `delivery_method`) VALUES
+(1, '門市自取'),
+(2, '宅配到府');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `news`
 --
 
 DROP TABLE IF EXISTS `news`;
@@ -489,31 +503,31 @@ CREATE TABLE `news` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `news`
+-- 傾印資料表的資料 `news`
 --
 
 INSERT INTO `news` (`id`, `title`, `content`, `date`, `touch`) VALUES
 (1, '強勢回歸，Matthews睽違一年半再奪單站勝利', '31歲的Michael Matthews在騎著TCR ADVANCED SL DISC，並搭配使用CADEX輪組系統贏得首站勝利後，率先穿上Volta a Cataluyna的領騎衫。這位澳洲明星選手在兩天前的Milan-San Remo古典賽即展現自己相當好的狀態，雖然最終是以第四名的成績與頒獎台失之交臂，但依舊可以看出Michael Matthews已一掃去年的低潮，而他也立即以單站勝利向大家說明自己已強勢回歸。\n\n　　第一站的終點是一段相當具有挑戰性的爬坡終點，但Michael Matthews可能比任何人都要熟悉，因為他曾在2019年在同一地點獲得單站勝利。”我真的有好長一段時間沒贏過了，所以能回到熟悉的地方再一次的贏得勝利，對我來說真的意義重大。”\n\n　　在西班牙舉行的Volta a Cataluyna多日賽事將持續進行，系列賽將在週日於巴塞隆納結束。”我們有很棒的團隊來參與這場賽事，” Matthews說，”我能在這類型的賽段展現競爭力，Kaden Groves將主攻平路衝刺站，至於Simon Yates則是GC和爬坡站的第一人選，我們能再任何賽段展現強大的競爭力，而且我們有了一個很棒的開始。”', '2022-06-01', 37),
-(2, 'Simon Yates單飛進站，奪下巴黎-尼斯大賽最終站冠軍', 'Simon Yates本次在法國舉行的巴黎-尼斯大賽維持著相當好的狀態，不僅在第四站的計時賽拿下第五名的好成績，在爬坡賽站也展現出他身為頂級爬坡好手的實力，他騎著TCR Advanced SL，搭配CADEX 輪組系統，戴著Rev Pro MIPS公路安全帽，在第七天的皇后站Col de Turini獲得第三名，接著在最終站贏下單站冠軍。\n \n       最終站除了有五個分級坡考驗著選手，濕冷嚴峻的天氣對選手更是一大挑戰，Simon Yates克服了一切，並在最後一個坡段發起了致勝一擊。「剛開始爬坡時，Quintana 就開始加速。」Yates說，「他(Quintana)真的帶出了一個非常快速的節奏，但我腦中就只有想著單站冠軍，我不確定我是不是能在比賽中取得優勢，但如果不去嘗試就永遠不知道答案，所以我放手一搏、盡我所能的做出攻擊，儘管這不是賽前的戰術設定。」\n\n        Yates在賽前落後領先的Roglic 47秒的時間，最終站雖然在爬坡拉出25秒的優勢，但在最後的下坡路段，2位Jumbo-Visma選手的組合依舊占盡優勢。「我心中當然也想贏得總冠軍，但我在下坡段因為身型的關係確實比較吃虧一點，加上他們有雙人小組的搭配，所以要逆轉確實不容易。」Yates說，「今天天氣真的很嚴峻，但我過去也有在這邊比賽的經驗，所以我準備得相當充足。」\n\n       這也已經是Yates在巴黎-尼斯贏得的第四座單站冠軍，也是第二次總排第二名。「現在我拿了兩次總排第二，未來有機會也許我會再回來挑戰總冠軍，但無論如何，我很滿意我這一週的表現。」\n\n       這一場勝利也給了Yates相當大的自信心，接下來他將瞄準本賽季的最大目標，也就是將在五月展開的環義大利大賽。', '2022-06-02', 1875),
+(2, 'Simon Yates單飛進站，奪下巴黎-尼斯大賽最終站冠軍', 'Simon Yates本次在法國舉行的巴黎-尼斯大賽維持著相當好的狀態，不僅在第四站的計時賽拿下第五名的好成績，在爬坡賽站也展現出他身為頂級爬坡好手的實力，他騎著TCR Advanced SL，搭配CADEX 輪組系統，戴著Rev Pro MIPS公路安全帽，在第七天的皇后站Col de Turini獲得第三名，接著在最終站贏下單站冠軍。\n \n       最終站除了有五個分級坡考驗著選手，濕冷嚴峻的天氣對選手更是一大挑戰，Simon Yates克服了一切，並在最後一個坡段發起了致勝一擊。「剛開始爬坡時，Quintana 就開始加速。」Yates說，「他(Quintana)真的帶出了一個非常快速的節奏，但我腦中就只有想著單站冠軍，我不確定我是不是能在比賽中取得優勢，但如果不去嘗試就永遠不知道答案，所以我放手一搏、盡我所能的做出攻擊，儘管這不是賽前的戰術設定。」\n\n        Yates在賽前落後領先的Roglic 47秒的時間，最終站雖然在爬坡拉出25秒的優勢，但在最後的下坡路段，2位Jumbo-Visma選手的組合依舊占盡優勢。「我心中當然也想贏得總冠軍，但我在下坡段因為身型的關係確實比較吃虧一點，加上他們有雙人小組的搭配，所以要逆轉確實不容易。」Yates說，「今天天氣真的很嚴峻，但我過去也有在這邊比賽的經驗，所以我準備得相當充足。」\n\n       這也已經是Yates在巴黎-尼斯贏得的第四座單站冠軍，也是第二次總排第二名。「現在我拿了兩次總排第二，未來有機會也許我會再回來挑戰總冠軍，但無論如何，我很滿意我這一週的表現。」\n\n       這一場勝利也給了Yates相當大的自信心，接下來他將瞄準本賽季的最大目標，也就是將在五月展開的環義大利大賽。', '2022-06-02', 1876),
 (3, '狀態絕佳!Groenewegen奪下環沙烏地阿拉伯第五站冠軍及衝刺王紅衫', '今年加入BikeExchange-Jayco車隊的荷蘭籍衝刺手Groenewegen繼環沙烏地阿拉伯賽事第三站贏得他與車隊今年首勝之後，又再次展現他季初令人印象深刻的狀態。在他的隊友們完美的帶領下，28歲的Groenewegen騎著他的Propel Advanced SL Disc衝過終點線，擊敗對手Daniel McLay與Davide Ballerini，拿下第2勝。\r\n\r\n搭配 CADEX 65 輪組系統 與 Giant Pursuit 安全帽的Groenewegen賽後分享：「隊友們完成極佳的工作，盡全力協助我(破風、補給與帶衝)，我們在3個衝刺賽站拿下2勝，真的非常棒！」\r\n\r\n除了2站勝利外，幫助Groenewegen在第五站獲勝擊敗另兩名對手的隊友Luka Mezgec也在第四站拿下第二名的佳績。而第五站的勝利，也幫助Groenewegen奪下衝刺王紅衫，結束車隊勝利的一週。', '2022-06-08', 669),
 (4, 'Groenewegen奪下BikeExchange-Jayco車隊賽季首勝', 'Groenewegen 在環沙烏地阿拉伯的第三站使用Giant Propel Advanced SL自行車與CADEX 65輪組系統的搭配，擊敗了勁敵Daniel McLay與Caleb Ewan，贏得了第三站的單站冠軍。\r\n\r\n“我們設定了一個非常好的作戰計畫，而且大家都執行得非常好。” Groenewegen接著說:”這只是我今年的第二次終點衝刺，但感覺我們的團隊就好像已經合作了兩年一樣。”\r\n\r\n為期五天的環沙烏地阿拉伯賽，是UCI亞巡賽的賽事之一，而第3站的終點設在沙烏地阿拉伯的AIUIa舊城區，在賽事中選手面臨了強大陣風的挑戰，所以在比賽前段就以已經分裂出了好幾個集團，最後僅有27為選手留在領先集團，而Groenewegen與隊友Luka Mezgec就在其中。但最後在比賽結束前，第二集團追上了領先集團，以大約50 人的集團前往最後的集團衝刺。\r\n\r\n“這一站真的蠻瘋狂的，” Groenewegen說。” Luka Mezgec和我一起待在領先集團，但後來的逆風讓追趕集團趕上我們，所以大部分的選手都回到了集團，而我很高興我的隊友們能回到集團當中，幫助我們一起贏得最後的勝利。”', '2022-06-20', 139),
-(5, ' Iden逆轉拿下PTO錦標賽冠軍  2020-12-16 世界冠軍要來當一日小編啦!  2021-', 'Giant宣布與登記在UCI WorldTour級別的BikeExchange-Jayco車隊成為合作夥伴，重返世界一級賽場，Giant提供BikeExchange-Jayco男子車隊器材贊助，將目標放在三大賽、單日古典賽和其他頂級的公路車賽事，而女子隊則是由同集團女性自行車品牌Liv提供贊助。\r\n \r\n對於能與Giant成為合作夥伴，BikeExchange-Jayco車隊認為這是車隊即將展開的第11個賽季中非常重要的一步，新加入的八位選手將加入原先的團隊，包含曾拿下環西班牙大賽冠軍與站上環義大利大賽頒獎台的Simon Yates，以及曾經贏得環法大賽衝刺綠衫的Michael Matthews，衝刺、爬坡、計時和GC選手都一併到位，新的一年團隊戰力將更佳完整。\r\n \r\n巨大集團(Giant Group)行銷長Phoebe Liu說:「Giant在過去20年一直是站在職業公路賽事的最前端，很開心能與BikeExchange-Jayco車隊合作重返世界一級的賽場。在與頂尖職業車隊的合作下，我們能不斷的精進並提升自我，進而為全世界的自行車騎士帶來最佳的騎乘體驗。」\r\n \r\n2022年BikeExchange-Jayco車隊將有來自12個不同國家的29位選手，除了前述提到的Yates和Matthews，車隊也簽下了荷蘭籍的衝刺好手Dylan Groenewegen，生涯至今已累計58場勝利。其他幾位新成員包含美國國家計時冠軍Lawson Craddock和義大利國家計時冠軍Matteo Sobrero，以及Alex Balmer (瑞士), Jan Maas (荷蘭), Kelland O’Brien (澳洲), Jesus David Peña (哥倫比亞)和Campbell Stewart (紐西蘭)\r\n \r\nBikeExchange-Jayco車隊經理Brent Copeland說:「很開心Giant能加入我們，作為我們車隊的器材贊助夥伴，他們不僅是投入大量的時間與精力在研發最新、最好的產品與技術，Giant對於自行車的熱情更是讓我們有深切的感受，也是我們覺得最難能可貴的地方。能夠與Giant這種不遺餘力支持我們的品牌合作真的很重要，他們提供給車隊的資源讓我們感到興奮。我們的合作目標清楚明確，而我們會盡一切的努力來完成目標，對於即將到來的2022賽季，我們充滿信心與動力，且迫不及待的想展開這趟旅程。」\r\n \r\nBikeExchange-Jayco車隊將會使用Giant品牌的自行車來面對所有的比賽，並搭配使用CADEX輪組系統，同時選手會配戴Giant Rev Pro 公路安全帽或Giant Pursuit TT 計時空力安全帽出賽，並在未來與Giant工程師一同開發、測試更多全新的自行車產品。', '2022-06-11', 1236947),
-(6, 'XTC Advanced SL 29世界冠軍特式版帥氣登場!', '來自哥倫比亞的「獅王」Leonardo Páez Léon(同Lion，為Páez小名)連續兩年拿下XC Marathon的世界冠軍，除了穿上代表世界冠軍的五色衫，當然也少不了一台冠軍特式車。\r\n \r\nPáez在2020年騎著XTC Advanced SL 29，於土耳其技壓群雄奪下世界冠軍，所以特式版的XTC Advanced SL 29車架以白色為底，再將代表世界冠軍的五色筆刷揮灑於上，襯托出XTC敏捷穿梭於賽道間的輕盈感；而後下叉上 #LionPaez的專屬Hashtag，以及座管處上象徵萬獸之王的雄獅標章，皆代表著這支冠軍特式版車架至高無上的榮耀。\r\n \r\n有興趣的粉絲能在FaceBook及Instagram上追蹤Páez，看他騎乘XTC Advanced SL 29冠軍特式版車架馳騁於賽道上喔。', '2022-06-13', 16599),
+(5, ' Iden逆轉拿下PTO錦標賽冠軍  2020-12-16 世界冠軍要來當一日小編啦!  2021-', 'Giant宣布與登記在UCI WorldTour級別的BikeExchange-Jayco車隊成為合作夥伴，重返世界一級賽場，Giant提供BikeExchange-Jayco男子車隊器材贊助，將目標放在三大賽、單日古典賽和其他頂級的公路車賽事，而女子隊則是由同集團女性自行車品牌Liv提供贊助。\r\n \r\n對於能與Giant成為合作夥伴，BikeExchange-Jayco車隊認為這是車隊即將展開的第11個賽季中非常重要的一步，新加入的八位選手將加入原先的團隊，包含曾拿下環西班牙大賽冠軍與站上環義大利大賽頒獎台的Simon Yates，以及曾經贏得環法大賽衝刺綠衫的Michael Matthews，衝刺、爬坡、計時和GC選手都一併到位，新的一年團隊戰力將更佳完整。\r\n \r\n巨大集團(Giant Group)行銷長Phoebe Liu說:「Giant在過去20年一直是站在職業公路賽事的最前端，很開心能與BikeExchange-Jayco車隊合作重返世界一級的賽場。在與頂尖職業車隊的合作下，我們能不斷的精進並提升自我，進而為全世界的自行車騎士帶來最佳的騎乘體驗。」\r\n \r\n2022年BikeExchange-Jayco車隊將有來自12個不同國家的29位選手，除了前述提到的Yates和Matthews，車隊也簽下了荷蘭籍的衝刺好手Dylan Groenewegen，生涯至今已累計58場勝利。其他幾位新成員包含美國國家計時冠軍Lawson Craddock和義大利國家計時冠軍Matteo Sobrero，以及Alex Balmer (瑞士), Jan Maas (荷蘭), Kelland O’Brien (澳洲), Jesus David Peña (哥倫比亞)和Campbell Stewart (紐西蘭)\r\n \r\nBikeExchange-Jayco車隊經理Brent Copeland說:「很開心Giant能加入我們，作為我們車隊的器材贊助夥伴，他們不僅是投入大量的時間與精力在研發最新、最好的產品與技術，Giant對於自行車的熱情更是讓我們有深切的感受，也是我們覺得最難能可貴的地方。能夠與Giant這種不遺餘力支持我們的品牌合作真的很重要，他們提供給車隊的資源讓我們感到興奮。我們的合作目標清楚明確，而我們會盡一切的努力來完成目標，對於即將到來的2022賽季，我們充滿信心與動力，且迫不及待的想展開這趟旅程。」\r\n \r\nBikeExchange-Jayco車隊將會使用Giant品牌的自行車來面對所有的比賽，並搭配使用CADEX輪組系統，同時選手會配戴Giant Rev Pro 公路安全帽或Giant Pursuit TT 計時空力安全帽出賽，並在未來與Giant工程師一同開發、測試更多全新的自行車產品。', '2022-06-11', 1236951),
+(6, 'XTC Advanced SL 29世界冠軍特式版帥氣登場!', '來自哥倫比亞的「獅王」Leonardo Páez Léon(同Lion，為Páez小名)連續兩年拿下XC Marathon的世界冠軍，除了穿上代表世界冠軍的五色衫，當然也少不了一台冠軍特式車。\r\n \r\nPáez在2020年騎著XTC Advanced SL 29，於土耳其技壓群雄奪下世界冠軍，所以特式版的XTC Advanced SL 29車架以白色為底，再將代表世界冠軍的五色筆刷揮灑於上，襯托出XTC敏捷穿梭於賽道間的輕盈感；而後下叉上 #LionPaez的專屬Hashtag，以及座管處上象徵萬獸之王的雄獅標章，皆代表著這支冠軍特式版車架至高無上的榮耀。\r\n \r\n有興趣的粉絲能在FaceBook及Instagram上追蹤Páez，看他騎乘XTC Advanced SL 29冠軍特式版車架馳騁於賽道上喔。', '2022-06-13', 16601),
 (7, 'Liv Racing Team 正式發表 全新車衣再次出發', 'CCC-Liv一級職業女子車隊，今年繼續由Liv贊助，並改名Liv Racing重新換裝出發。將在1/10與新加入的比利時Cyclocross國家冠軍Lotte Kopecky發表最新的車隊版車衣設計，選手們將會換上由Liv設計、瑞士車衣品牌CUORE製作的茄紫色戰袍出戰2021賽季。\r\n \r\n「週日將會是我身為Liv Racing車隊一員的首場比賽，我將會在比賽中騎上最新的Brava Advanced與Liv Racing車衣。」Lotte Kopecky說到，「最新的車衣設計非常漂亮，時尚、簡潔又具有個性。」\r\nLiv做為Liv Racing車隊的贊助品牌，是為了貫徹品牌對女性騎士的承諾，從初學者到賽場上的選手，鼓勵更多女性參與這項運動。\r\n \r\n今年的車隊版車衣設計精神在於凸顯女性堅毅不拔的個性，搶眼的車衣設計將站在頂尖的世界舞台上，而大膽別致的野花就像是女性一樣，吸引所有人的目光。這份意涵，要獻給世界上所有的女性，以及Liv品牌的創辦人Bonnie Tu，共同創造一個美好的自行車環境。\r\n \r\n「我們非常榮幸能夠全力支持Liv Racing一級職業女子車隊，Liv一直以來投入許多資源來彌平自行車職業領域的男女差異以及提供更多女性機會。」Liv創辦人兼Giant Group董事長，Bonnie Tu說，「當我們在設計這件車衣時，我們的目標是如何在眾多選手中脫穎而出，並且顛覆傳統，同時與Liv的自行車相同，秉持專為女性且出自女性(For Women, By Women)的原則來設計這件車衣。亮眼的設計並不代表與其他人格格不入，我們想要傳達的是來自Liv內部的力量與經驗，就如同穿上它的選手一樣，受人景仰且注目。」\r\n至於車衣上搶眼到無法忽視的「無名的野花」是什麼？意指休耕時在沒有耕耘與灌溉的農地上，也能夠逆勢而生的堅毅野花。妳不需要是什麼有名的天堂鳥或玫瑰，妳就是妳，每一個獨一無二的妳！Liv深信自行車是平等、多元、自由、賦權與鼓舞人心的，Liv支持所有的女性，無論是第一天學會騎車的妳、正準備環義賽的妳、正打算嘗試第一場三鐵的妳，Liv以支持女性為品牌核心，研究、開發、設計、鼓舞、支持各樣的自行車，以成就各種狀態與需求的女人、女孩們。\r\nLiv Racing一級職業女子車隊將會穿上由CUORE提供的頂尖人身商品，能夠提升選手表現、來自各種路況的適當保護、優良的體溫調節特性，讓車隊在世界巡迴的比賽中遊刃有餘。「CUORE在自行車專業領域上已經有30年的豐富經驗，這套由Liv Racing車隊穿上的車衣，是以因應世界巡迴賽的高強度需求的前提下所設計的。」CUORE營運長Chris Munro解釋，「Liv所設計的車衣非常新穎，與車衣的功能及剪裁上非常相搭，我們非常高興能夠支持Liv Racing的選手們。」\r\n\r\nLiv Racing一級職業女子車隊將身著新車衣，首先在西班牙進行為期兩個月的訓練營，為2021賽季的第一場比賽Vuelta CV Feminas (2/18-2/21) 暖身,準備在新的一年大展身手。', '2022-06-17', 158),
 (8, '世界冠軍要來當一日小編啦!', '連續兩年拿下鐵人三項世界冠軍的Gustav Iden，將受邀擔任Giant Bicycles Facebook粉絲專頁的一日小編，並於台灣時間12/17晚上8點於Giant Bicycles粉絲專頁開直播與大家互動。\r\n \r\n來自挪威的Iden，於2019帶著「埔鹽順澤宮」宮帽奪下Ironman 70.3世錦賽冠軍後，在台灣掀起來一陣鐵人旋風，並於2019年底宣布與Giant攜手合作。實力與話題兼具的Iden，騎著Giant Trinity三鐵車，使用CADEX輪組，2020年於PTO鐵人三項擊敗世界排名前40的頂尖好手，再次奪得世界冠軍。\r\n \r\n連續兩年奪冠的Iden，也受邀於12/17擔任Giant Bicycles粉絲專頁的一日小編，並於台灣時間晚上8點開直播與粉絲互動，與大家分享他的訓練日常，對Iden有興趣的各位粉絲們，千萬不要錯過啦!', '2022-05-06', 1124),
 (9, 'Iden逆轉拿下PTO錦標賽冠軍', '台灣粉絲所熟悉的Iden在美國佛州舉辦的Challenge Daytona比賽中逆轉拿下冠軍， 此次比賽同時也是PTO (Professional Triathletes Organisation職業鐵人三項運動組織)2020年度的錦標賽，必須是世界排名前40的選手才能參加，而Iden目前排名雖然不在PTO前40名內，但因為2019 IRONMAN 70.3世錦賽奪冠的亮眼表現而獲得外卡資格，Iden也再次於高手雲集的賽事中證明自己的頂尖實力。\r\n \r\n這場總獎金超過100萬美元的賽事，在Daytona國際賽車場舉行，跟以往的比賽距離不同，選手們要依序完成2公里游泳、80公里的自行車(20圈賽道，每圈4公里)以及18公里的跑步(4圈賽道，每圈4.5公里)。捷安特贊助的兩位三鐵選手Iden與Sam Appleton都有參加這場比賽，兩人皆騎乘Trinity三鐵車，並搭配CADEX空力輪組。Sam相較於Iden在游泳與騎車有比較好的表現，在自行車項目完成後以第二名之姿進入最後的跑步賽段，最終拿下第六名。而大家所熟悉的Iden， 在完成游泳及自行車後，以第15名的表現、落後領先者1分36秒進入自己所擅長的跑步項目。Iden在剩最後兩圈時超越對手，並大幅拉開領先差距，最後以51秒的差距拿下勝利。\r\n \r\n談到這場勝利，以外卡資格奪冠的Iden說：「這次的比賽跟2019 IRONMAN 70.3世錦賽的風格完全不同，這次的賽道非常的規律(繞圈型式)，所以我其實不太確定自己能有什麼樣的表現。」「但很幸運的是，我在自行車項目採取的策略很成功，儘管大家不斷的在自行車項目超越我去追擊領先集團，但我依舊非常滿意自己在比賽當下的表現，最後我也再一次拿下這場不可思議的勝利。」', '2022-05-18', 66),
 (10, '全國自由車公路錦標賽 杜志濠計時賽再當最速男 吳之皓摘計時/公路雙亞軍', '2020全國自由車公路錦標賽於11月22日在台東縣及花蓮縣舉行，此次比賽分別於22日進行個人計時賽，23日進行個人公路賽，全國菁英好手匯聚一堂，全力角逐「全國冠軍」榮銜。\r\n11月22日上午男子菁英組分為五個梯次進行比賽，最後由杜志濠拿下全場最佳成績41分08.731秒，從57名出賽選手中脫穎而出。第二名由前勁車隊吳之皓以42分13.434秒完賽，第三名則由捷安特哥倫布車隊的虞子諒以42分21.189秒拿下。杜志濠賽後表示：「兩年前也跑過這個路線，今天算是挑戰兩年前的配速，前兩圈比較保守一點，最後一圈全力以赴，比自己兩年前進步了30秒，算是成功的一次驗收。」\r\n連同第四名捷安特哥倫布車隊的李廷威在內，本屆全錦賽計時賽前四名的選手皆騎乘計時版Trinity，可說是充分展現出Trinity當初在設計時，為追求極速而生的使命。另外，本屆計時賽冠軍杜志豪也特別指定使用CADEX空力輪組做為比賽輪使用，CADEX空力輪組不僅輕量，十足的剛性與低滾組的產品特色，順利的幫助杜志濠在計時賽中奪下冠軍。\r\n \r\n23日所舉行的公路賽，比賽路線途經台東縣及花蓮縣，男子菁英組及青年組選手由台東森林公園出發，沿著台九線花東縱谷公路北上，直到玉里轉進玉長公路，最後由台十一線返回台東森林公園終點，全長160公里。\r\n \r\n競爭激烈的男子菁英組，在前段逆風段不斷上演突圍與追趕的戲碼，一直到玉長公路前的零星進攻都無法成型，經過前段的逆風，與玉長公路的爬坡段考驗之後，大集團開始瘦身，而轉出玉長公路之後，長濱地區一陣風雨，加上轉變成順風的天候，集團前方頓時提高速度，此時領先集團成型，陳建良、吳之皓、巫帛宏、熊凱文、虞子諒率先成為五人領先集團，而計時賽冠軍杜志濠與去年冠軍盧紹軒兩人合作追出並加入前方五人，成為七人領先集團。在順風幫助之下，加上前面的長途耐力消耗，後方集團已經無法追回，領先七人中美利達諾飛客車隊有三位選手，包括尋求衛冕的盧紹軒以及巫帛宏、熊凱文，最後衝刺階段，台灣隊長巫帛宏化身破風手，最後階段杜志濠提前發動衝刺，而最後階段陳建良強勢衝出，成為2020的公路全國冠軍。至於前一日於計時賽摘銀的吳之皓，則騎著TCR再次於最後的衝刺拿下亞軍，在本屆全錦賽收下兩面銀牌。', '2022-05-25', 4534),
-(11, 'CADEX發表全新三鐵產品線 提供最佳鐵人三項競賽整合方案', ' 生產高階自行車零組件的品牌CADEX，推出了全新的三鐵產品線，包含CADEX Tri三鐵車架組和全新空力刀/碟輪组系統，而本次CADEX三鐵產品線的開發，無論是車架或輪组的設計、測試與驗證，皆與最頂尖的選手Kristian Blummenfelt合作，尤其Kristian使用了CADEX Tri原型三鐵車和原型輪组拿下IRONMAN世界冠軍，並贏得被視為不可能的SUB7挑戰，說明了CADEX全新三鐵產品線就是世界冠軍級別的競速利器。\r\n       CADEX Tri代表的是一個全新的三鐵整合方案，打破既有的傳統與常規，CADEX提供更容易調整的個人化設定，完美整合的賽事補給系統，能在真實賽事中獲得的空力效益及騎乘效率，CADEX甚至為選手解決了移地比賽的運輸問題。而空力輪组也已在多場頂尖賽事中獲得驗證，是CADEX打造出最快速的空力輪组。\r\n       在5月時，Kristian使用了CADEX Tri原型三鐵車和原型輪组在美國St. George出戰IRONMAN世錦賽，St. George的自行車賽道是出了名的困難，總計超過2000公尺的爬升，但Kristian在自行車項目展現相當好的狀態，最終拿下IRONMAN世界冠軍。一個月後，Kristian再次使用相同的裝備於德國挑戰SUB7計畫，成為了使上第一位在7小時內完成226超鐵距離的選手。\r\n\r\n耐久形空力\r\n       只能維持40或80公里的空力設定是不夠的，要贏得Ironman比賽或打破自己的最佳紀錄，就必須要能維持180公里的空力騎姿。而CADEX Tri在開發設計時的原則就是：不能只在風洞測試中有漂亮數據，而是要能在三鐵賽場上為選手帶來真實的空力效益。\r\n       追求空力的第一步，我們從車架做起，從前方看向CADEX TRI三鐵車，絕對會立刻被那獨特的前叉吸引，寬肩且如刀鋒般的前叉能使氣流順利通過，經風洞測試後的結果顯示，此設計能大幅減少氣流受干擾的程度，將三鐵車與騎士的風阻降到最低。\r\n       除了前叉之外，很少被大家考慮到的後叉也是空力設計的一部分，CADEX Tri的後叉寬度幾乎與前叉相同，而且不同於一般自行車的後上叉是由座管筆直的連接至後勾爪，CADEX Tri的後上叉是由後輪軸心以接近垂直的角度向上，經過一個俐落的轉折後，再水平的連接至座管。藉由此設計，不僅能將車架後叉的受風面積降至最低，以強化空力效益，更能提升車架剛性，完整的傳遞選手的輸出動能。\r\n\r\n賽事裝備完美整合\r\n       過去的選手會在三鐵車上自行安裝相關設備，包含前置水壺、上管袋等，以滿足各自的補給需求，但不可否認的是，這將影響原本車架的空力效果。而CADEX Tri在開發時，就已完整的考量三鐵選手在賽事中的補給需求，將補給系統完美的融入車架當中，為選手帶來絕對的優勢。\r\n       CADEX Tri獨特的車架造型設計 - 取消車架上管並加大下管 - 能將補給盒、水袋與維修工具完美整合於車架中，水袋吸管由頭管前方的空力罩向上延伸，使選手在補充水份時依舊能維持低風阻的空力騎姿，而位在下管中央的水袋補充孔，也使選手在賽事中能快速補充袋中的水量。\r\n       位於下管頂端的可拆式補給盒可放置多達10包32ml的能量膠(L尺寸車架)，表面的橡膠蓋可以幫助固定能量棒或能量膠，使選手在保持空力騎姿時依舊方便取用，而可拆式設計也讓選手能在賽後快速清洗整理。整合於車架內、接近五通非傳動側的維修工具盒，則能安裝多功能功具、內胎、挖胎棒、CO2氣瓶及充氣頭等維修工具。', '2022-06-30', 568),
-(12, 'GIANT發表全新 SURGE PRO自行車鞋', '  GIANT發表全新 SURGE PRO自行車鞋，旨在幫助頂尖選手於世界一級賽事中脫穎而出，透過頂尖選手們-包含三大賽冠軍Simon Yates-不斷的測試與驗證，全新SURGE PRO自行車鞋成為自行車騎士追求效率、舒適性以及輕量化的第一選擇。\r\n\r\n全新SURGE PRO有2大改款重點：「ExoBeam™動力傳遞軸」和「ExoWrap™足弓包覆」的技術升級，帶給騎士最佳的騎乘效率與360度全面貼合的舒適性。當BikeExchange-Jayco車隊主將Simon Yates與其他隊員在季前訓練營拿到SURGE PRO並開始測試使用後，他們毫無保留的表達出對全新SURGE PRO自行車鞋的喜好。\r\n\r\n  Simon Yates說：「在去年底的訓練營拿到SURGE PRO的時候我們就超興奮的，因為你能立即感受到他的輕量、踩踏效率和舒適性，自從拿到SURGE PRO之後，我就只穿著他訓練和比賽。」而全新 SURGE PRO自行車鞋也在三月時幫助Simon Yates拿下巴黎-尼斯大賽最終站的單站冠軍，成功鎖定總排第二的好成績，為他帶來無比的信心來面對即將展開的環義大賽。\r\n\r\n「看到Simon Yates能在最高層級的比賽展現出最佳水準，你就知道我們真的成功了!我們投入了大量的時間與努力，就是想為騎士提供最高水準的車鞋，而我們做到了。」GIANT全球產品經理Jeff Schneider說：「在最高層級的比賽中，任何一點的產品優勢都能為選手帶來巨大的改變，而對於Simon這樣的頂級選手來說，車鞋當然是在比賽中非常重要的關鍵之一。」\r\n \r\n全新「ExoBeam™動力傳遞軸」和「ExoWrap™足弓包覆」技術\r\n \r\n       全新的ExoBeam™動力傳遞軸是讓騎士享有最佳踩踏效率的最大關鍵，新一代不僅由單軸改為雙軸設計，鞋底板更是100%以超輕碳纖疊層的結構打造，大幅提升騎士踩踏時的動能傳遞，且在ExoBeam™動力傳遞軸巧妙的設計下，同時能提供騎士踩踏時一定的扭轉彈性，完美實現碳纖維鞋底超強剛性卻不死硬的性能表現。\r\n\r\n  其次，全新ExoWrap™足弓包覆技術則是能帶給騎士腳掌完美的貼合度，不同於一般市售車鞋通常只是拉緊鞋面，將腳掌下壓固定於鞋底板，SURGE PRO自行車鞋以改良後的ExoWrap™足弓包覆技術，搭配最高級的BOA®Li2雙旋鈕設計，在拉緊時能同時將車鞋內側與鞋面往騎士的腳掌收緊貼合，並透過BOA®Li2雙旋鈕給騎士最精密的微調空間，以達到360度全方位的貼合度與最佳的個人化調整。\r\n\r\n  而對於專業騎士也非常注重的舒適度，SURGE PRO將超薄、超透氣的微網布使用於鞋內合成纖維層和超耐磨的PU表層之間，並在鞋面搭配超大範圍的雷射透氣孔，大幅提升鞋內空氣循環的對流效果，長時間維持騎士雙足乾燥，達到最佳化的透氣性與鞋面彈性。', '2022-06-16', 5567),
-(13, 'ARX 24 - 小鐵人的最佳選擇', '當各位鐵人爸、鐵人媽忙著為自己的三鐵戰駒進行各式改裝，只為了追求更輕、更快、更帥的性能或視覺效果時，您是否也為您們家的小鐵人找到最適合小鐵人賽事的自行車了呢? ARX 24在台灣一上市便以輕、速、帥三大特點襲捲國內各項小鐵人賽事，成為國內小鐵人第一指名的自行車，究竟ARX 24背後有著什麼樣的關鍵設計，讓我們敢說ARX 24是青少年參加小鐵人賽事的最佳選擇呢?\r\n\r\n首先，同級最輕的重量表現，讓ARX 24在屬於競速性質的小鐵人賽事中占盡優勢。一般男性三鐵運動員體重大約60-90公斤，尚且為了自行車裝備上1、200公克的重量在錙銖比較，對於體重僅有約20-40公斤小鐵人來說，自行車的輕量化將更為重要。\r\n \r\n最後，ARX 24俐落簡潔的車架外型設計，更完全符合以速度為導向的小鐵人賽事形象，加上亮眼飽滿的車架塗裝，讓小鐵人一騎上ARX 24，馬上成為賽場上最耀眼的小鐵人。\r\nARX 24以ALUXX競速級鋁合金車架打造，整車僅9公斤的重量表現，比市面上其他青少年車款至少都再輕2-3公斤，這對於力量較小的小鐵人來說是非常巨大的優勢，從轉換區的取車、牽車開始，使用ARX 24的小鐵人就已開始享受輕量化所帶來的優勢，更不用說在自行賽道上「更輕即更快」的真理，使用ARX 24 將幫助小鐵人更輕鬆省力的完成自行車項目，迅速銜接跑步項目。\r\n\r\n其次，ARX 24在設計上以「速」為優先選擇，不僅要幫助小鐵人快速的完成自行車項目，使小鐵人輕鬆、迅速的轉換至最後的跑步項目，甚至連小鐵人平時的訓練方便性也依並融入設計的考量之中。\r\n\r\n1. 低風阻騎乘幾何\r\n自行車為對抗風阻的運動，ARX 24相較一般平把青少年車有更前傾的低風阻騎姿，不僅速度更快，也讓小鐵人更省力。\r\n\r\n2. 全地形8段變速\r\n直覺的指撥式8段變速把手，搭配前32T x 後12-32T全地形齒比，不論在比賽中面對上、下坡或要進行平路衝刺，小鐵人皆能快速調整至最適檔位，以最有力的雙腿進入最後的跑步項目。\r\n\r\n3. 依青少年身型量身打造\r\n為了追求成績或舒適度而進行FITTING的鐵人爸、鐵人媽比比皆是，但小鐵人是否也擁有了適合他們的騎姿了呢? ARX 24依青少年的肩寬打造較窄的把手，讓小鐵人擁有更靈敏的操控性，另外也依照青少年較小的坐骨寬設定窄的Q factor(兩邊曲柄最外側切線的距離)，使小鐵人擁有更順暢的踩踏效能。\r\n\r\n4. 載運拆裝，方便快速\r\nARX 24前/後輪及座管皆使用快拆裝置，符合小鐵人移地訓練、比賽等載運需求，方便拆裝，快速調整。\r\n', '2022-06-30', 7),
-(14, '2022年式Revolt全新大改款，強勢出騎、解鎖生活的野性樂趣', ' 全新2022年式Revolt以滿足當今市場上對礫石公路車(Gravel Bike)的性能要求為目標，捷安特工程師、設計師與Giant Factory Off-Road Team的選手共同合作開發，以頂尖的製造工藝和競賽的性能標準打造出全新Revolt，準備帶你征服更多樣的地形和路況，解鎖生活中更多的野性樂趣。\r\n\r\n       全新Revolt有著大家所熟悉的彎把公路車外型，多功能設計、順應升級和效率提升則是本次Revolt的3大改款重點，獨家FLIP CHIP可調式後勾爪則讓你1台車架即有2種幾何，針對不同的路況能採用不同的車架幾何與不同的胎寬選擇，即使再野的路，也能讓你放膽趣騎；獨家D-FUSE減震座管與把手則能減輕騎士在長時間騎乘後的疲勞與不適，是面對碎石路面不可或缺的關鍵技術；最後，更輕的車架重量提供騎士更好的騎乘效率，全新Revolt Advanced車架組較上一代減輕160公克，對於想追求極致表現的選手來說更可謂為一大優勢。\r\n\r\n多功能設計\r\n1. FLIP CHIP可調式後勾爪\r\n       本次Revolt改款後新增的FLIP CHIP可調式後勾爪，使騎士能夠依據騎乘的路況來選擇不同的幾何設定，透過翻轉FLIP CHIP裝置，能產生Short Position與Long Position兩種幾何，且騎士只需要使用內六角板手即可自行調整，對於騎乘風格與路線較多元的騎士來說是非常方便的一大特點。\r\n\r\n2. 可相容伸縮座管\r\n       全新車架設計新增了座管轉接座，除了原車標配的D字形D-FUSE減震座管，在移除座管轉接座後，騎士還能依騎乘需求安裝30.9mm的圓形座管或伸縮座管，以面對更多樣的騎乘路線。\r\n\r\n3. 多功能彎把\r\n       5度的上把位後傾角，讓騎士在進行長距離騎乘或進行長爬坡時能擁有更輕鬆的騎姿；8度的內旋角，使把手下把位稍向外擴，讓騎士在使用下把位面對碎石路面時有更高的穩定感。\r\n\r\n4. 預留水壺架&貨架孔位\r\n         為了滿足更多元、更豐富的騎乘形態，全新Revolt在車架上位騎士預留了安裝水壺架以及貨架的孔位，尤其最多能安裝多達6個水壺架，對於喜歡進行長途騎乘的騎士來說是非常貼心的設計。\r\n\r\n順應升級\r\n       騎乘礫石公路車，代表你可能會面對到各式各樣的路況，也許是河床邊的礫石路，或是充滿小碎石的混合路面，也因此順應性能的提升，讓騎士在騎乘過程中盡可能的不受震動干擾，也是本次Revolt改款的重點之一。\r\n\r\n1. 後上叉下移減震設計\r\n        將後上叉與座管之接觸點下移之後，座管之可變形量增加，能夠提升Revolt之吸震性能。\r\n2. 薄型後上叉吸震技術\r\n       新一代Revolt擁有比前一代更薄的後上叉，同樣能夠在吸震性上有顯著的提升。\r\n3. 獨家D-FUSE專利吸震座管\r\n       以複合式碳纖材質打造的D字形座管，能較一般傳統圓形座管提高2.4倍的變形與吸震能力，吸收騎乘時路面所造成的震動，有效降低因為震動而對身體造成的累積疲勞感。\r\n4. D-FUSE減震把手\r\n       將D-FUSE科技運用在把手上，能夠將吸震效果完美複製，減緩騎士的疲勞程度。\r\n\r\n效率提升\r\n       近年來礫石公路賽的競賽激烈程度有越來越像公路車賽的趨勢，所以選手們對礫石公路車的競賽性能要求也越來越高，新一代Revolt Advanced車架組較上一代減輕了160公克，在不犧牲剛性的情況下提升騎士的騎乘效率。\r\n\r\n2022年式Revolt系列在台灣共有3種車款選擇，分別是碳纖車架版本的 Revolt Advanced 0 、Revolt Advanced 2 以及鋁合金車架版本的 Revolt 2，分別提供XS、S、M、ML等尺寸可供選擇，各車款已全面到貨，賞車請洽各地區捷安特門市。', '2022-06-28', 4544),
-(15, 'LANGMA - 頂尖效率', '“我們的唯一目標就是打造出業界中最頂尖優異的公路車，而Langma就是我們今天的成果”，巨大集團行銷長Phoebe Liu表示：”全新的Langma設計是延續第一代Langma全能型公路車的優異表現，不論是爬坡或是一般的騎乘，皆能激發騎士的潛能”。更輕、更快、更強，就是新一代Langma的最佳註解。\r\n\r\n首先，新一代Langma在車架組的重量上較上一代減輕了60公克，值得特別注意的是，新一代Langma不像以往使用ISP一體式車架的設計，而是用更先進的碳纖製程及連續碳纖維技術打造出更輕的車架組，全新開發的超輕量全碳纖SLR座管搭配鈦螺絲，僅重141公克，讓騎士不僅能有更輕量的車架，還能同時享有方便調整座高的絕佳便利性。\r\n\r\n在與他牌的比較當中，全新Langma相比 Specialized S-WORKS Tarmac Disc車架組更輕了105公克，至於Trek Emonda SLR 9 Disc雖看似在重量上比Langma稍輕了32公克，但在接下來的剛性比較上卻是明顯的落後Langma許多。\r\n\r\n剛性之所以重要，是為了將騎乘時的能量耗損最小化，以達到最佳速度及效率。當車架面對外在受力時(可想像成抽車或是上坡時的用力踩踏)，形變量越大，則表示騎乘時會有越多的能量耗損。全新Langma在剛性的表現上大幅領先對手，提供騎士最佳的動能傳遞表現。\r\n\r\n因為自行車製造工藝與碳纖科技的不斷進步，若僅僅是單獨追求”輕量”或”剛性”等某一車架性能的極致，則可能出現超輕量卻剛性不佳、或是剛性很好卻過於笨重的車架問題，如何在輕量與剛性之間做出完美的平衡，對於新一代的公路競賽自行車來說將更為重要。Langma在與他牌的車款比較當中，以優秀的剛性與輕量化表現，在剛性/重量比的效能上遠勝過對手24%，說明新一代Langma正是新世代女性在競賽自行車的最佳選擇。', '2022-06-26', 0),
+(11, 'CADEX發表全新三鐵產品線 提供最佳鐵人三項競賽整合方案', ' 生產高階自行車零組件的品牌CADEX，推出了全新的三鐵產品線，包含CADEX Tri三鐵車架組和全新空力刀/碟輪组系統，而本次CADEX三鐵產品線的開發，無論是車架或輪组的設計、測試與驗證，皆與最頂尖的選手Kristian Blummenfelt合作，尤其Kristian使用了CADEX Tri原型三鐵車和原型輪组拿下IRONMAN世界冠軍，並贏得被視為不可能的SUB7挑戰，說明了CADEX全新三鐵產品線就是世界冠軍級別的競速利器。\r\n       CADEX Tri代表的是一個全新的三鐵整合方案，打破既有的傳統與常規，CADEX提供更容易調整的個人化設定，完美整合的賽事補給系統，能在真實賽事中獲得的空力效益及騎乘效率，CADEX甚至為選手解決了移地比賽的運輸問題。而空力輪组也已在多場頂尖賽事中獲得驗證，是CADEX打造出最快速的空力輪组。\r\n       在5月時，Kristian使用了CADEX Tri原型三鐵車和原型輪组在美國St. George出戰IRONMAN世錦賽，St. George的自行車賽道是出了名的困難，總計超過2000公尺的爬升，但Kristian在自行車項目展現相當好的狀態，最終拿下IRONMAN世界冠軍。一個月後，Kristian再次使用相同的裝備於德國挑戰SUB7計畫，成為了使上第一位在7小時內完成226超鐵距離的選手。\r\n\r\n耐久形空力\r\n       只能維持40或80公里的空力設定是不夠的，要贏得Ironman比賽或打破自己的最佳紀錄，就必須要能維持180公里的空力騎姿。而CADEX Tri在開發設計時的原則就是：不能只在風洞測試中有漂亮數據，而是要能在三鐵賽場上為選手帶來真實的空力效益。\r\n       追求空力的第一步，我們從車架做起，從前方看向CADEX TRI三鐵車，絕對會立刻被那獨特的前叉吸引，寬肩且如刀鋒般的前叉能使氣流順利通過，經風洞測試後的結果顯示，此設計能大幅減少氣流受干擾的程度，將三鐵車與騎士的風阻降到最低。\r\n       除了前叉之外，很少被大家考慮到的後叉也是空力設計的一部分，CADEX Tri的後叉寬度幾乎與前叉相同，而且不同於一般自行車的後上叉是由座管筆直的連接至後勾爪，CADEX Tri的後上叉是由後輪軸心以接近垂直的角度向上，經過一個俐落的轉折後，再水平的連接至座管。藉由此設計，不僅能將車架後叉的受風面積降至最低，以強化空力效益，更能提升車架剛性，完整的傳遞選手的輸出動能。\r\n\r\n賽事裝備完美整合\r\n       過去的選手會在三鐵車上自行安裝相關設備，包含前置水壺、上管袋等，以滿足各自的補給需求，但不可否認的是，這將影響原本車架的空力效果。而CADEX Tri在開發時，就已完整的考量三鐵選手在賽事中的補給需求，將補給系統完美的融入車架當中，為選手帶來絕對的優勢。\r\n       CADEX Tri獨特的車架造型設計 - 取消車架上管並加大下管 - 能將補給盒、水袋與維修工具完美整合於車架中，水袋吸管由頭管前方的空力罩向上延伸，使選手在補充水份時依舊能維持低風阻的空力騎姿，而位在下管中央的水袋補充孔，也使選手在賽事中能快速補充袋中的水量。\r\n       位於下管頂端的可拆式補給盒可放置多達10包32ml的能量膠(L尺寸車架)，表面的橡膠蓋可以幫助固定能量棒或能量膠，使選手在保持空力騎姿時依舊方便取用，而可拆式設計也讓選手能在賽後快速清洗整理。整合於車架內、接近五通非傳動側的維修工具盒，則能安裝多功能功具、內胎、挖胎棒、CO2氣瓶及充氣頭等維修工具。', '2022-06-30', 569),
+(12, 'GIANT發表全新 SURGE PRO自行車鞋', '  GIANT發表全新 SURGE PRO自行車鞋，旨在幫助頂尖選手於世界一級賽事中脫穎而出，透過頂尖選手們-包含三大賽冠軍Simon Yates-不斷的測試與驗證，全新SURGE PRO自行車鞋成為自行車騎士追求效率、舒適性以及輕量化的第一選擇。\r\n\r\n全新SURGE PRO有2大改款重點：「ExoBeam™動力傳遞軸」和「ExoWrap™足弓包覆」的技術升級，帶給騎士最佳的騎乘效率與360度全面貼合的舒適性。當BikeExchange-Jayco車隊主將Simon Yates與其他隊員在季前訓練營拿到SURGE PRO並開始測試使用後，他們毫無保留的表達出對全新SURGE PRO自行車鞋的喜好。\r\n\r\n  Simon Yates說：「在去年底的訓練營拿到SURGE PRO的時候我們就超興奮的，因為你能立即感受到他的輕量、踩踏效率和舒適性，自從拿到SURGE PRO之後，我就只穿著他訓練和比賽。」而全新 SURGE PRO自行車鞋也在三月時幫助Simon Yates拿下巴黎-尼斯大賽最終站的單站冠軍，成功鎖定總排第二的好成績，為他帶來無比的信心來面對即將展開的環義大賽。\r\n\r\n「看到Simon Yates能在最高層級的比賽展現出最佳水準，你就知道我們真的成功了!我們投入了大量的時間與努力，就是想為騎士提供最高水準的車鞋，而我們做到了。」GIANT全球產品經理Jeff Schneider說：「在最高層級的比賽中，任何一點的產品優勢都能為選手帶來巨大的改變，而對於Simon這樣的頂級選手來說，車鞋當然是在比賽中非常重要的關鍵之一。」\r\n \r\n全新「ExoBeam™動力傳遞軸」和「ExoWrap™足弓包覆」技術\r\n \r\n       全新的ExoBeam™動力傳遞軸是讓騎士享有最佳踩踏效率的最大關鍵，新一代不僅由單軸改為雙軸設計，鞋底板更是100%以超輕碳纖疊層的結構打造，大幅提升騎士踩踏時的動能傳遞，且在ExoBeam™動力傳遞軸巧妙的設計下，同時能提供騎士踩踏時一定的扭轉彈性，完美實現碳纖維鞋底超強剛性卻不死硬的性能表現。\r\n\r\n  其次，全新ExoWrap™足弓包覆技術則是能帶給騎士腳掌完美的貼合度，不同於一般市售車鞋通常只是拉緊鞋面，將腳掌下壓固定於鞋底板，SURGE PRO自行車鞋以改良後的ExoWrap™足弓包覆技術，搭配最高級的BOA®Li2雙旋鈕設計，在拉緊時能同時將車鞋內側與鞋面往騎士的腳掌收緊貼合，並透過BOA®Li2雙旋鈕給騎士最精密的微調空間，以達到360度全方位的貼合度與最佳的個人化調整。\r\n\r\n  而對於專業騎士也非常注重的舒適度，SURGE PRO將超薄、超透氣的微網布使用於鞋內合成纖維層和超耐磨的PU表層之間，並在鞋面搭配超大範圍的雷射透氣孔，大幅提升鞋內空氣循環的對流效果，長時間維持騎士雙足乾燥，達到最佳化的透氣性與鞋面彈性。', '2022-06-16', 5568),
+(13, 'ARX 24 - 小鐵人的最佳選擇', '當各位鐵人爸、鐵人媽忙著為自己的三鐵戰駒進行各式改裝，只為了追求更輕、更快、更帥的性能或視覺效果時，您是否也為您們家的小鐵人找到最適合小鐵人賽事的自行車了呢? ARX 24在台灣一上市便以輕、速、帥三大特點襲捲國內各項小鐵人賽事，成為國內小鐵人第一指名的自行車，究竟ARX 24背後有著什麼樣的關鍵設計，讓我們敢說ARX 24是青少年參加小鐵人賽事的最佳選擇呢?\r\n\r\n首先，同級最輕的重量表現，讓ARX 24在屬於競速性質的小鐵人賽事中占盡優勢。一般男性三鐵運動員體重大約60-90公斤，尚且為了自行車裝備上1、200公克的重量在錙銖比較，對於體重僅有約20-40公斤小鐵人來說，自行車的輕量化將更為重要。\r\n \r\n最後，ARX 24俐落簡潔的車架外型設計，更完全符合以速度為導向的小鐵人賽事形象，加上亮眼飽滿的車架塗裝，讓小鐵人一騎上ARX 24，馬上成為賽場上最耀眼的小鐵人。\r\nARX 24以ALUXX競速級鋁合金車架打造，整車僅9公斤的重量表現，比市面上其他青少年車款至少都再輕2-3公斤，這對於力量較小的小鐵人來說是非常巨大的優勢，從轉換區的取車、牽車開始，使用ARX 24的小鐵人就已開始享受輕量化所帶來的優勢，更不用說在自行賽道上「更輕即更快」的真理，使用ARX 24 將幫助小鐵人更輕鬆省力的完成自行車項目，迅速銜接跑步項目。\r\n\r\n其次，ARX 24在設計上以「速」為優先選擇，不僅要幫助小鐵人快速的完成自行車項目，使小鐵人輕鬆、迅速的轉換至最後的跑步項目，甚至連小鐵人平時的訓練方便性也依並融入設計的考量之中。\r\n\r\n1. 低風阻騎乘幾何\r\n自行車為對抗風阻的運動，ARX 24相較一般平把青少年車有更前傾的低風阻騎姿，不僅速度更快，也讓小鐵人更省力。\r\n\r\n2. 全地形8段變速\r\n直覺的指撥式8段變速把手，搭配前32T x 後12-32T全地形齒比，不論在比賽中面對上、下坡或要進行平路衝刺，小鐵人皆能快速調整至最適檔位，以最有力的雙腿進入最後的跑步項目。\r\n\r\n3. 依青少年身型量身打造\r\n為了追求成績或舒適度而進行FITTING的鐵人爸、鐵人媽比比皆是，但小鐵人是否也擁有了適合他們的騎姿了呢? ARX 24依青少年的肩寬打造較窄的把手，讓小鐵人擁有更靈敏的操控性，另外也依照青少年較小的坐骨寬設定窄的Q factor(兩邊曲柄最外側切線的距離)，使小鐵人擁有更順暢的踩踏效能。\r\n\r\n4. 載運拆裝，方便快速\r\nARX 24前/後輪及座管皆使用快拆裝置，符合小鐵人移地訓練、比賽等載運需求，方便拆裝，快速調整。\r\n', '2022-06-30', 9),
+(14, '2022年式Revolt全新大改款，強勢出騎、解鎖生活的野性樂趣', ' 全新2022年式Revolt以滿足當今市場上對礫石公路車(Gravel Bike)的性能要求為目標，捷安特工程師、設計師與Giant Factory Off-Road Team的選手共同合作開發，以頂尖的製造工藝和競賽的性能標準打造出全新Revolt，準備帶你征服更多樣的地形和路況，解鎖生活中更多的野性樂趣。\r\n\r\n       全新Revolt有著大家所熟悉的彎把公路車外型，多功能設計、順應升級和效率提升則是本次Revolt的3大改款重點，獨家FLIP CHIP可調式後勾爪則讓你1台車架即有2種幾何，針對不同的路況能採用不同的車架幾何與不同的胎寬選擇，即使再野的路，也能讓你放膽趣騎；獨家D-FUSE減震座管與把手則能減輕騎士在長時間騎乘後的疲勞與不適，是面對碎石路面不可或缺的關鍵技術；最後，更輕的車架重量提供騎士更好的騎乘效率，全新Revolt Advanced車架組較上一代減輕160公克，對於想追求極致表現的選手來說更可謂為一大優勢。\r\n\r\n多功能設計\r\n1. FLIP CHIP可調式後勾爪\r\n       本次Revolt改款後新增的FLIP CHIP可調式後勾爪，使騎士能夠依據騎乘的路況來選擇不同的幾何設定，透過翻轉FLIP CHIP裝置，能產生Short Position與Long Position兩種幾何，且騎士只需要使用內六角板手即可自行調整，對於騎乘風格與路線較多元的騎士來說是非常方便的一大特點。\r\n\r\n2. 可相容伸縮座管\r\n       全新車架設計新增了座管轉接座，除了原車標配的D字形D-FUSE減震座管，在移除座管轉接座後，騎士還能依騎乘需求安裝30.9mm的圓形座管或伸縮座管，以面對更多樣的騎乘路線。\r\n\r\n3. 多功能彎把\r\n       5度的上把位後傾角，讓騎士在進行長距離騎乘或進行長爬坡時能擁有更輕鬆的騎姿；8度的內旋角，使把手下把位稍向外擴，讓騎士在使用下把位面對碎石路面時有更高的穩定感。\r\n\r\n4. 預留水壺架&貨架孔位\r\n         為了滿足更多元、更豐富的騎乘形態，全新Revolt在車架上位騎士預留了安裝水壺架以及貨架的孔位，尤其最多能安裝多達6個水壺架，對於喜歡進行長途騎乘的騎士來說是非常貼心的設計。\r\n\r\n順應升級\r\n       騎乘礫石公路車，代表你可能會面對到各式各樣的路況，也許是河床邊的礫石路，或是充滿小碎石的混合路面，也因此順應性能的提升，讓騎士在騎乘過程中盡可能的不受震動干擾，也是本次Revolt改款的重點之一。\r\n\r\n1. 後上叉下移減震設計\r\n        將後上叉與座管之接觸點下移之後，座管之可變形量增加，能夠提升Revolt之吸震性能。\r\n2. 薄型後上叉吸震技術\r\n       新一代Revolt擁有比前一代更薄的後上叉，同樣能夠在吸震性上有顯著的提升。\r\n3. 獨家D-FUSE專利吸震座管\r\n       以複合式碳纖材質打造的D字形座管，能較一般傳統圓形座管提高2.4倍的變形與吸震能力，吸收騎乘時路面所造成的震動，有效降低因為震動而對身體造成的累積疲勞感。\r\n4. D-FUSE減震把手\r\n       將D-FUSE科技運用在把手上，能夠將吸震效果完美複製，減緩騎士的疲勞程度。\r\n\r\n效率提升\r\n       近年來礫石公路賽的競賽激烈程度有越來越像公路車賽的趨勢，所以選手們對礫石公路車的競賽性能要求也越來越高，新一代Revolt Advanced車架組較上一代減輕了160公克，在不犧牲剛性的情況下提升騎士的騎乘效率。\r\n\r\n2022年式Revolt系列在台灣共有3種車款選擇，分別是碳纖車架版本的 Revolt Advanced 0 、Revolt Advanced 2 以及鋁合金車架版本的 Revolt 2，分別提供XS、S、M、ML等尺寸可供選擇，各車款已全面到貨，賞車請洽各地區捷安特門市。', '2022-06-28', 4545),
+(15, 'LANGMA - 頂尖效率', '“我們的唯一目標就是打造出業界中最頂尖優異的公路車，而Langma就是我們今天的成果”，巨大集團行銷長Phoebe Liu表示：”全新的Langma設計是延續第一代Langma全能型公路車的優異表現，不論是爬坡或是一般的騎乘，皆能激發騎士的潛能”。更輕、更快、更強，就是新一代Langma的最佳註解。\r\n\r\n首先，新一代Langma在車架組的重量上較上一代減輕了60公克，值得特別注意的是，新一代Langma不像以往使用ISP一體式車架的設計，而是用更先進的碳纖製程及連續碳纖維技術打造出更輕的車架組，全新開發的超輕量全碳纖SLR座管搭配鈦螺絲，僅重141公克，讓騎士不僅能有更輕量的車架，還能同時享有方便調整座高的絕佳便利性。\r\n\r\n在與他牌的比較當中，全新Langma相比 Specialized S-WORKS Tarmac Disc車架組更輕了105公克，至於Trek Emonda SLR 9 Disc雖看似在重量上比Langma稍輕了32公克，但在接下來的剛性比較上卻是明顯的落後Langma許多。\r\n\r\n剛性之所以重要，是為了將騎乘時的能量耗損最小化，以達到最佳速度及效率。當車架面對外在受力時(可想像成抽車或是上坡時的用力踩踏)，形變量越大，則表示騎乘時會有越多的能量耗損。全新Langma在剛性的表現上大幅領先對手，提供騎士最佳的動能傳遞表現。\r\n\r\n因為自行車製造工藝與碳纖科技的不斷進步，若僅僅是單獨追求”輕量”或”剛性”等某一車架性能的極致，則可能出現超輕量卻剛性不佳、或是剛性很好卻過於笨重的車架問題，如何在輕量與剛性之間做出完美的平衡，對於新一代的公路競賽自行車來說將更為重要。Langma在與他牌的車款比較當中，以優秀的剛性與輕量化表現，在剛性/重量比的效能上遠勝過對手24%，說明新一代Langma正是新世代女性在競賽自行車的最佳選擇。', '2022-06-26', 1),
 (16, 'LANGMA - 美形設計', 'Liv致力於讓更多女性騎上自行車，所以不僅是將自行車依據女性的身材比例與肌力運作模式打造，Liv團隊在自行車的外觀設計上更是一點都不馬虎，就是希望每一台Liv的自行車都讓車主留下美好的第一印象。而今年6月全新發表的Langma，更是將Liv自行車的外形設計推向另一個高峰。\r\n\r\n首先在Langma整體造型上，以Liv一貫的設計語言-Tensio(逸動)，打造出流線的車架外形，完美呈現Langma 身為新世代女性公路競賽自行車的速度感，無論動與靜，Langma 皆展現出無比的生命力。\r\n\r\n有了流線的車架造形，接著就是塗裝顏料的選擇了，儘管Liv一直以來的塗裝設計已獲得不少車友的肯定，但Liv不以此為滿，今年特別選用了德Merck 集團的專利XIRALLIC® 和COLORSTREAM®顏料運用在Langma Advanced SL Disc以及Langma Advanced Pro Disc，賦予Langma 更為活潑的生命力。Xirallic® 顏料以強烈的閃爍效果聞名，出色的閃爍效果來自於以獨特製程得出的晶體，能與日光輝映出無與倫比的絢麗效果; COLORSTREAM®則屬於變色漆，迷人的色彩變換，即使在暗淡的光線下也能看見，透過不斷改變、互相流轉的多種細微的顏色變換，創造Langma無限的造型潛能。\r\n\r\n除了車架造形和塗料選擇，Liv團隊也不斷的精進塗裝技術，在Langma Advanced SL Disc的車款上，以輕透塗裝技術，在不影響Xirallic® 塗料閃爍效果的情況下，把象徵最高等級的碳纖車架質感完整呈現，既低調卻又奢華，對於追求極致輕量的車友來說，輕透塗裝更是最佳選擇。\r\n \r\n新一代的Langam在整體外形設計上不斷的突破，從車架造形、塗料的選用到塗裝技術，皆投入了非常大的心力，正是要讓每一個愛美的妳，對Langma留下最美好的第一印象。 New Langma全新上市，點這裡來查看Langma全系列車款。\r\n ', '2022-06-23', 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `newspicture`
+-- 資料表結構 `newspicture`
 --
 
 DROP TABLE IF EXISTS `newspicture`;
@@ -523,7 +537,7 @@ CREATE TABLE `newspicture` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `newspicture`
+-- 傾印資料表的資料 `newspicture`
 --
 
 INSERT INTO `newspicture` (`id`, `name`) VALUES
@@ -593,7 +607,7 @@ INSERT INTO `newspicture` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `news_picture`
+-- 資料表結構 `news_picture`
 --
 
 DROP TABLE IF EXISTS `news_picture`;
@@ -603,7 +617,7 @@ CREATE TABLE `news_picture` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `news_picture`
+-- 傾印資料表的資料 `news_picture`
 --
 
 INSERT INTO `news_picture` (`news_id`, `picture_id`) VALUES
@@ -672,51 +686,60 @@ INSERT INTO `news_picture` (`news_id`, `picture_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_list`
+-- 資料表結構 `order_list`
 --
 
 DROP TABLE IF EXISTS `order_list`;
 CREATE TABLE `order_list` (
   `order_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
-  `order_address` varchar(50) NOT NULL,
-  `total_amount` int(15) NOT NULL,
-  `order_status` int(3) NOT NULL,
   `order_create_time` datetime NOT NULL,
-  `remark` varchar(100) NOT NULL,
+  `order_status` int(10) NOT NULL,
   `payment_method_id` int(10) NOT NULL,
+  `payment_status_id` int(10) NOT NULL,
+  `delivery_id` int(10) NOT NULL,
+  `recipient` varchar(50) NOT NULL,
+  `product_total` int(15) NOT NULL,
+  `course_total` int(15) NOT NULL,
+  `activity_total` int(15) NOT NULL,
+  `total` int(15) NOT NULL,
+  `order_address` varchar(50) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `remark` varchar(100) NOT NULL,
   `coupon_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `order_list`
+-- 傾印資料表的資料 `order_list`
 --
 
-INSERT INTO `order_list` (`order_id`, `user_id`, `order_address`, `total_amount`, `order_status`, `order_create_time`, `remark`, `payment_method_id`, `coupon_id`) VALUES
-(1, 1, '322台北市中壢區新生路二段421號   ', 28028, 0, '2022-04-20 13:49:00', '店長服務親切，對於問題都能有專業的建議。', 1, 1),
-(2, 2, '320桃園市中壢區新生路二段421號', 52360, 0, '2022-04-14 07:29:55', '服務超級棒，下次要再購買腳踏車一定會在來。', 1, 1),
-(3, 3, '512 彰化縣永靖鄉多福路18號', 113498, 0, '2022-04-15 04:31:12', '很有耐心耐性跟專業知識！\r\n就算請教沒購買也是很有禮貌很Nice啊！\r\n最後也有購買，真的讓人很愉快的過程。', 1, 1),
-(4, 4, '981 花蓮縣玉里鎮自強四街10號', 279633, 1, '2022-04-20 12:15:55', '服務很好、價錢公道。', 4, 4),
-(5, 5, '511 彰化縣社頭鄉民生路28號', 135366, 0, '2022-04-01 05:33:13', '服務用心效率，價格合適。特別優質的店家，也熱心幫忙桃園市自由車選手學生。', 1, 1),
-(6, 6, '512 彰化縣永靖鄉忠心二路24號', 13741, 1, '2022-03-24 05:37:18', '服務超級棒', 5, 8),
-(7, 7, '302 新竹縣竹北市水瀧二街31號', 245476, 0, '2022-03-22 02:00:09', '專業的服務', 1, 1),
-(8, 8, '975 花蓮縣鳳林鎮平康路21號', 228690, 0, '2022-03-16 17:05:09', '親切的解說我喜歡 值得來此購車消費', 1, 1),
-(9, 9, '242 新北市新莊區公園路4號', 90300, 1, '2022-03-29 21:54:55', '以人為本、人生以生活為初衷', 2, 6),
-(10, 10, '504 彰化縣秀水鄉三越街15號', 1563241, 1, '2022-02-09 12:53:12', '多年來，一直都是我的MTB最佳保姆，真誠推薦', 1, 3),
-(11, 11, '357 苗栗縣通霄鎮崇仁路33號', 42210, 0, '2022-03-01 20:15:55', '技術本位是眾位車友的好選擇。', 6, 5),
-(12, 12, '976 花蓮縣光復鄉八德街35號', 121792, 1, '2022-02-28 20:55:55', '需要的零件搭配都可以 詢問。', 4, 8),
-(13, 13, '906 屏東縣高樹鄉大山二路25號', 77220, 0, '2022-02-20 21:54:55', '超值商品優質商家、服務一級棒！值得推薦大家', 1, 2),
-(14, 14, '334 桃園市八德區榮興南路9號', 26989, 1, '2022-01-19 21:52:03', '真誠推薦', 2, 1),
-(15, 15, '730 臺南市新營區府西路13號', 2136881, 0, '2022-02-16 20:11:23', '服務一級棒！', 1, 1),
-(16, 8, '621 嘉義縣民雄鄉中興一街7號', 156680, 0, '2021-12-31 19:15:07', '值得推薦', 1, 1),
-(17, 3, '320 桃園市中壢區仁美二街23號', 81664, 1, '2022-02-28 17:05:10', '會在回顧的好店', 2, 3),
-(18, 9, '108 臺北市萬華區民和街6號', 77693, 0, '2022-04-12 12:14:29', '人生最精彩的不是實現夢想的瞬間，而是堅持夢想的過程。', 5, 1),
-(19, 12, '832 高雄市林園區中正路30號', 18942, 0, '2022-03-04 05:43:15', '微小的幸福就在身邊，容易滿足就是天堂。', 1, 1);
+INSERT INTO `order_list` (`order_id`, `user_id`, `order_create_time`, `order_status`, `payment_method_id`, `payment_status_id`, `delivery_id`, `recipient`, `product_total`, `course_total`, `activity_total`, `total`, `order_address`, `phone`, `remark`, `coupon_id`) VALUES
+(24, 13, '2022-06-29 18:08:54', 1, 1, 2, 1, '潘奕辰', 34000, 0, 0, 34000, '臺南市永康區永忠路28號', '0945654789', '測試', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payment_method`
+-- 資料表結構 `order_status`
+--
+
+DROP TABLE IF EXISTS `order_status`;
+CREATE TABLE `order_status` (
+  `id` int(3) NOT NULL,
+  `order_status` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `order_status`
+--
+
+INSERT INTO `order_status` (`id`, `order_status`) VALUES
+(1, '處理中'),
+(2, '已完成');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `payment_method`
 --
 
 DROP TABLE IF EXISTS `payment_method`;
@@ -727,7 +750,7 @@ CREATE TABLE `payment_method` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `payment_method`
+-- 傾印資料表的資料 `payment_method`
 --
 
 INSERT INTO `payment_method` (`id`, `payment_method_name`, `valid`) VALUES
@@ -741,7 +764,27 @@ INSERT INTO `payment_method` (`id`, `payment_method_name`, `valid`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- 資料表結構 `payment_status`
+--
+
+DROP TABLE IF EXISTS `payment_status`;
+CREATE TABLE `payment_status` (
+  `id` int(2) NOT NULL,
+  `payment_status` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `payment_status`
+--
+
+INSERT INTO `payment_status` (`id`, `payment_status`) VALUES
+(1, '未付款'),
+(2, '已付款');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `product`
 --
 
 DROP TABLE IF EXISTS `product`;
@@ -761,7 +804,7 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `product`
+-- 傾印資料表的資料 `product`
 --
 
 INSERT INTO `product` (`product_id`, `product_name`, `product_images`, `product_price`, `product_update`, `product_category_id`, `product_brand_id`, `product_color`, `product_rating`, `product_description`, `product_detail_description`, `valid`) VALUES
@@ -850,7 +893,7 @@ INSERT INTO `product` (`product_id`, `product_name`, `product_images`, `product_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_brand`
+-- 資料表結構 `product_brand`
 --
 
 DROP TABLE IF EXISTS `product_brand`;
@@ -860,7 +903,7 @@ CREATE TABLE `product_brand` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `product_brand`
+-- 傾印資料表的資料 `product_brand`
 --
 
 INSERT INTO `product_brand` (`brand_id`, `brand_name`) VALUES
@@ -873,7 +916,7 @@ INSERT INTO `product_brand` (`brand_id`, `brand_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_category`
+-- 資料表結構 `product_category`
 --
 
 DROP TABLE IF EXISTS `product_category`;
@@ -883,7 +926,7 @@ CREATE TABLE `product_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `product_category`
+-- 傾印資料表的資料 `product_category`
 --
 
 INSERT INTO `product_category` (`product_category_id`, `product_category_name`) VALUES
@@ -894,7 +937,7 @@ INSERT INTO `product_category` (`product_category_id`, `product_category_name`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_check`
+-- 資料表結構 `product_check`
 --
 
 DROP TABLE IF EXISTS `product_check`;
@@ -904,7 +947,7 @@ CREATE TABLE `product_check` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `product_check`
+-- 傾印資料表的資料 `product_check`
 --
 
 INSERT INTO `product_check` (`product_check_id`, `product_check_name`) VALUES
@@ -952,7 +995,7 @@ INSERT INTO `product_check` (`product_check_id`, `product_check_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_color`
+-- 資料表結構 `product_color`
 --
 
 DROP TABLE IF EXISTS `product_color`;
@@ -964,7 +1007,7 @@ CREATE TABLE `product_color` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `product_color`
+-- 傾印資料表的資料 `product_color`
 --
 
 INSERT INTO `product_color` (`color_id`, `color_name`, `color_value`, `valid`) VALUES
@@ -985,193 +1028,28 @@ INSERT INTO `product_color` (`color_id`, `color_name`, `color_value`, `valid`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_order`
+-- 資料表結構 `product_order`
 --
 
 DROP TABLE IF EXISTS `product_order`;
 CREATE TABLE `product_order` (
-  `id` int(10) NOT NULL,
-  `product_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `order_count` int(10) NOT NULL
+  `product_id` int(11) NOT NULL,
+  `quantity` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `product_order`
+-- 傾印資料表的資料 `product_order`
 --
 
-INSERT INTO `product_order` (`id`, `product_id`, `order_id`, `order_count`) VALUES
-(9, 2, 1, 1),
-(10, 3, 1, 1),
-(11, 4, 1, 1),
-(12, 49, 2, 1),
-(13, 52, 2, 1),
-(14, 54, 2, 1),
-(15, 56, 2, 1),
-(16, 50, 3, 1),
-(17, 51, 3, 1),
-(18, 60, 3, 1),
-(19, 61, 3, 1),
-(20, 7, 4, 1),
-(21, 65, 4, 1),
-(22, 67, 4, 1),
-(23, 69, 4, 1),
-(24, 141, 4, 1),
-(25, 16, 5, 1),
-(26, 26, 5, 1),
-(27, 49, 5, 1),
-(32, 66, 7, 1),
-(33, 67, 7, 1),
-(34, 68, 7, 1),
-(35, 57, 8, 1),
-(36, 58, 8, 1),
-(37, 59, 8, 1),
-(38, 60, 8, 1),
-(39, 61, 8, 1),
-(40, 3, 9, 1),
-(41, 50, 9, 1),
-(42, 51, 9, 1),
-(43, 57, 9, 1),
-(44, 1, 10, 1),
-(45, 2, 10, 1),
-(46, 3, 10, 1),
-(47, 4, 10, 1),
-(48, 7, 10, 1),
-(49, 9, 10, 1),
-(50, 14, 10, 1),
-(51, 15, 10, 1),
-(52, 16, 10, 1),
-(53, 26, 10, 1),
-(54, 46, 10, 1),
-(55, 47, 10, 1),
-(56, 48, 10, 1),
-(57, 49, 10, 1),
-(58, 50, 10, 1),
-(59, 51, 10, 1),
-(60, 52, 10, 1),
-(61, 54, 10, 1),
-(62, 56, 10, 1),
-(63, 57, 10, 1),
-(64, 58, 10, 1),
-(65, 59, 10, 1),
-(66, 60, 10, 1),
-(67, 61, 10, 1),
-(68, 62, 10, 1),
-(69, 63, 10, 1),
-(70, 64, 10, 1),
-(71, 65, 10, 1),
-(72, 66, 10, 1),
-(73, 67, 10, 1),
-(74, 68, 10, 1),
-(75, 69, 10, 1),
-(76, 70, 10, 1),
-(77, 71, 10, 1),
-(78, 73, 10, 1),
-(79, 141, 10, 1),
-(80, 49, 11, 1),
-(81, 52, 11, 1),
-(82, 54, 11, 1),
-(83, 63, 12, 1),
-(84, 64, 12, 1),
-(85, 65, 12, 1),
-(86, 50, 13, 1),
-(87, 64, 13, 1),
-(88, 3, 19, 1),
-(89, 4, 19, 1),
-(90, 26, 18, 1),
-(91, 46, 18, 1),
-(92, 47, 18, 1),
-(93, 26, 17, 1),
-(94, 46, 17, 1),
-(95, 49, 17, 1),
-(96, 3, 14, 1),
-(97, 4, 14, 1),
-(98, 14, 14, 1),
-(99, 15, 14, 1),
-(102, 9, 16, 1),
-(103, 14, 16, 1),
-(104, 16, 16, 1),
-(105, 26, 16, 1),
-(106, 46, 16, 1),
-(107, 1, 15, 1),
-(108, 2, 15, 1),
-(109, 3, 15, 1),
-(110, 4, 15, 1),
-(111, 5, 15, 1),
-(112, 6, 15, 1),
-(113, 7, 15, 1),
-(114, 8, 15, 1),
-(115, 9, 15, 1),
-(116, 10, 15, 1),
-(117, 11, 15, 1),
-(118, 12, 15, 1),
-(119, 13, 15, 1),
-(120, 14, 15, 1),
-(121, 15, 15, 1),
-(122, 16, 15, 1),
-(123, 17, 15, 1),
-(124, 18, 15, 1),
-(125, 19, 15, 1),
-(126, 20, 15, 1),
-(127, 21, 15, 1),
-(128, 22, 15, 1),
-(129, 23, 15, 1),
-(130, 24, 15, 1),
-(131, 25, 15, 1),
-(132, 26, 15, 1),
-(133, 27, 15, 1),
-(134, 28, 15, 1),
-(135, 29, 15, 1),
-(136, 30, 15, 1),
-(137, 31, 15, 1),
-(138, 32, 15, 1),
-(139, 33, 15, 1),
-(140, 34, 15, 1),
-(141, 35, 15, 1),
-(142, 36, 15, 1),
-(143, 37, 15, 1),
-(144, 38, 15, 1),
-(145, 39, 15, 1),
-(146, 40, 15, 1),
-(147, 41, 15, 1),
-(148, 42, 15, 1),
-(149, 43, 15, 1),
-(150, 44, 15, 1),
-(151, 45, 15, 1),
-(152, 46, 15, 1),
-(153, 47, 15, 1),
-(154, 48, 15, 1),
-(155, 49, 15, 1),
-(156, 50, 15, 1),
-(157, 51, 15, 1),
-(158, 52, 15, 1),
-(159, 53, 15, 1),
-(160, 54, 15, 1),
-(161, 55, 15, 1),
-(162, 56, 15, 1),
-(163, 57, 15, 1),
-(164, 58, 15, 1),
-(165, 59, 15, 1),
-(166, 60, 15, 1),
-(167, 61, 15, 1),
-(168, 62, 15, 1),
-(169, 63, 15, 1),
-(170, 64, 15, 1),
-(171, 65, 15, 1),
-(172, 66, 15, 1),
-(173, 67, 15, 1),
-(174, 68, 15, 1),
-(175, 69, 15, 1),
-(176, 70, 15, 1),
-(177, 71, 15, 1),
-(178, 72, 15, 1),
-(179, 73, 15, 1),
-(180, 141, 15, 1);
+INSERT INTO `product_order` (`order_id`, `product_id`, `quantity`) VALUES
+(24, 1, 1),
+(24, 2, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_parts`
+-- 資料表結構 `product_parts`
 --
 
 DROP TABLE IF EXISTS `product_parts`;
@@ -1182,7 +1060,7 @@ CREATE TABLE `product_parts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `product_parts`
+-- 傾印資料表的資料 `product_parts`
 --
 
 INSERT INTO `product_parts` (`product_parts_id`, `product_parts`, `product_parts_images`) VALUES
@@ -1199,7 +1077,7 @@ INSERT INTO `product_parts` (`product_parts_id`, `product_parts`, `product_parts
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_product_check`
+-- 資料表結構 `product_product_check`
 --
 
 DROP TABLE IF EXISTS `product_product_check`;
@@ -1209,7 +1087,7 @@ CREATE TABLE `product_product_check` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `product_product_check`
+-- 傾印資料表的資料 `product_product_check`
 --
 
 INSERT INTO `product_product_check` (`product_id`, `product_check_id`) VALUES
@@ -1703,7 +1581,7 @@ INSERT INTO `product_product_check` (`product_id`, `product_check_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_product_color`
+-- 資料表結構 `product_product_color`
 --
 
 DROP TABLE IF EXISTS `product_product_color`;
@@ -1713,7 +1591,7 @@ CREATE TABLE `product_product_color` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `product_product_color`
+-- 傾印資料表的資料 `product_product_color`
 --
 
 INSERT INTO `product_product_color` (`product_id`, `product_color_id`) VALUES
@@ -1785,7 +1663,7 @@ INSERT INTO `product_product_color` (`product_id`, `product_color_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_product_parts`
+-- 資料表結構 `product_product_parts`
 --
 
 DROP TABLE IF EXISTS `product_product_parts`;
@@ -1795,7 +1673,7 @@ CREATE TABLE `product_product_parts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `product_product_parts`
+-- 傾印資料表的資料 `product_product_parts`
 --
 
 INSERT INTO `product_product_parts` (`product_id`, `product_parts_id`) VALUES
@@ -2197,7 +2075,7 @@ INSERT INTO `product_product_parts` (`product_id`, `product_parts_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- 資料表結構 `user`
 --
 
 DROP TABLE IF EXISTS `user`;
@@ -2216,7 +2094,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `user`
+-- 傾印資料表的資料 `user`
 --
 
 INSERT INTO `user` (`id`, `name`, `account`, `password`, `gender`, `birthday`, `address`, `email`, `phone_number`, `create_time`, `enable`) VALUES
@@ -2239,7 +2117,7 @@ INSERT INTO `user` (`id`, `name`, `account`, `password`, `gender`, `birthday`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- 資料表結構 `users`
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -2256,7 +2134,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- 傾印資料表的資料 `users`
 --
 
 INSERT INTO `users` (`user_id`, `name`, `password`, `email`, `phone`, `photo`, `create_time`, `verify_string`, `valid`) VALUES
@@ -2266,13 +2144,13 @@ INSERT INTO `users` (`user_id`, `name`, `password`, `email`, `phone`, `photo`, `
 (4, 'wade', '$2b$10$Cp59FFQc.ZOECBe7ztze6OSqOYJbpAt5/.S2l2aM38cYnuB8f1a6S', 'wade@test.com', '0956123478', '', '2022-06-27 13:55:45', '', 1),
 (5, 'mike', '$2b$10$1dXvdqt/A8kA7wBuwQQgYepKLPnBzEYw59.1JcPRuOXhI72KJav7G', 'mike@test.com', '0900000011', '', '2022-06-27 14:06:46', '', 1),
 (6, 'sara', '$2b$10$RG8cuw0fXw9ClCTOBbLeUOnwktD/XUozBW3zBaYdR/zZH0kNQGb8S', 'sara@test.com', '0956123456', '', '2022-06-27 14:20:05', '', 1),
-(13, 'Eason', '$2b$10$R.Atnurm.lXAznm.iAlareYTw4650No1tVhhcSna3fpiWglH/k8Qe', 'a28165965@gmail.com', '0933123456', '', '2022-06-29 14:02:07', 'q753c4zyIu', 0),
+(13, 'Eason', '$2b$10$R.Atnurm.lXAznm.iAlareYTw4650No1tVhhcSna3fpiWglH/k8Qe', 'a28165965@gmail.com', '0933123456', '1657009752440.png', '2022-06-29 14:02:07', 'q753c4zyIu', 0),
 (14, 'AAAA', '$2b$10$oZCARR7jbvRJOjClo1JA.en2iTxClMh8NVe8a08fU2MjkRxvqehiC', 'asdasdasd@gmail.com', '0977777777', '', '2022-06-30 11:16:41', 'kmoBuTJ292', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `venue`
+-- 資料表結構 `venue`
 --
 
 DROP TABLE IF EXISTS `venue`;
@@ -2282,7 +2160,7 @@ CREATE TABLE `venue` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `venue`
+-- 傾印資料表的資料 `venue`
 --
 
 INSERT INTO `venue` (`id`, `venue_name`) VALUES
@@ -2292,334 +2170,376 @@ INSERT INTO `venue` (`id`, `venue_name`) VALUES
 (4, '東部');
 
 --
--- Indexes for dumped tables
+-- 已傾印資料表的索引
 --
 
 --
--- Indexes for table `accessory`
+-- 資料表索引 `accessory`
 --
 ALTER TABLE `accessory`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `accessory_category`
+-- 資料表索引 `accessory_category`
 --
 ALTER TABLE `accessory_category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `activity`
+-- 資料表索引 `activity`
 --
 ALTER TABLE `activity`
   ADD PRIMARY KEY (`activity_id`);
 
 --
--- Indexes for table `activity_status`
+-- 資料表索引 `activity_order`
+--
+ALTER TABLE `activity_order`
+  ADD PRIMARY KEY (`order_id`,`activity_id`);
+
+--
+-- 資料表索引 `activity_status`
 --
 ALTER TABLE `activity_status`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `activity_venue`
---
-ALTER TABLE `activity_venue`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `classes`
+-- 資料表索引 `classes`
 --
 ALTER TABLE `classes`
   ADD PRIMARY KEY (`course_id`),
   ADD KEY `course_id` (`course_id`,`course_category_id`,`course_title`,`course_pictures`,`course_location_id`,`course_date`,`course_start_time`,`course_end_time`,`course_status_id`,`course_price`,`course_inventory`,`course_valid`);
 
 --
--- Indexes for table `coupons`
+-- 資料表索引 `coupons`
 --
 ALTER TABLE `coupons`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `course_category`
+-- 資料表索引 `course_category`
 --
 ALTER TABLE `course_category`
   ADD PRIMARY KEY (`course_category_id`);
 
 --
--- Indexes for table `course_contents`
+-- 資料表索引 `course_contents`
 --
 ALTER TABLE `course_contents`
   ADD PRIMARY KEY (`course_content_id`);
 
 --
--- Indexes for table `course_location`
+-- 資料表索引 `course_location`
 --
 ALTER TABLE `course_location`
   ADD PRIMARY KEY (`course_location_id`);
 
 --
--- Indexes for table `course_status`
+-- 資料表索引 `course_order`
+--
+ALTER TABLE `course_order`
+  ADD PRIMARY KEY (`order_id`,`course_id`);
+
+--
+-- 資料表索引 `course_status`
 --
 ALTER TABLE `course_status`
   ADD PRIMARY KEY (`course_status_id`);
 
 --
--- Indexes for table `news`
+-- 資料表索引 `customizeorder`
+--
+ALTER TABLE `customizeorder`
+  ADD PRIMARY KEY (`orderId`);
+
+--
+-- 資料表索引 `delivery`
+--
+ALTER TABLE `delivery`
+  ADD PRIMARY KEY (`delivery_id`);
+
+--
+-- 資料表索引 `news`
 --
 ALTER TABLE `news`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `newspicture`
+-- 資料表索引 `newspicture`
 --
 ALTER TABLE `newspicture`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `news_picture`
+-- 資料表索引 `news_picture`
 --
 ALTER TABLE `news_picture`
   ADD PRIMARY KEY (`news_id`,`picture_id`);
 
 --
--- Indexes for table `order_list`
+-- 資料表索引 `order_list`
 --
 ALTER TABLE `order_list`
   ADD PRIMARY KEY (`order_id`);
 
 --
--- Indexes for table `payment_method`
+-- 資料表索引 `order_status`
+--
+ALTER TABLE `order_status`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 資料表索引 `payment_method`
 --
 ALTER TABLE `payment_method`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `product`
+-- 資料表索引 `payment_status`
+--
+ALTER TABLE `payment_status`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 資料表索引 `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`product_id`);
 
 --
--- Indexes for table `product_brand`
+-- 資料表索引 `product_brand`
 --
 ALTER TABLE `product_brand`
   ADD PRIMARY KEY (`brand_id`);
 
 --
--- Indexes for table `product_category`
+-- 資料表索引 `product_category`
 --
 ALTER TABLE `product_category`
   ADD PRIMARY KEY (`product_category_id`);
 
 --
--- Indexes for table `product_check`
+-- 資料表索引 `product_check`
 --
 ALTER TABLE `product_check`
   ADD PRIMARY KEY (`product_check_id`);
 
 --
--- Indexes for table `product_color`
+-- 資料表索引 `product_color`
 --
 ALTER TABLE `product_color`
   ADD PRIMARY KEY (`color_id`);
 
 --
--- Indexes for table `product_order`
+-- 資料表索引 `product_order`
 --
 ALTER TABLE `product_order`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`product_id`,`order_id`);
 
 --
--- Indexes for table `product_parts`
+-- 資料表索引 `product_parts`
 --
 ALTER TABLE `product_parts`
   ADD PRIMARY KEY (`product_parts_id`);
 
 --
--- Indexes for table `product_product_check`
+-- 資料表索引 `product_product_check`
 --
 ALTER TABLE `product_product_check`
   ADD UNIQUE KEY `product_id` (`product_id`,`product_check_id`);
 
 --
--- Indexes for table `product_product_color`
+-- 資料表索引 `product_product_color`
 --
 ALTER TABLE `product_product_color`
   ADD PRIMARY KEY (`product_id`,`product_color_id`);
 
 --
--- Indexes for table `product_product_parts`
+-- 資料表索引 `product_product_parts`
 --
 ALTER TABLE `product_product_parts`
   ADD UNIQUE KEY `product_id` (`product_id`,`product_parts_id`);
 
 --
--- Indexes for table `user`
+-- 資料表索引 `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- 資料表索引 `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `venue`
+-- 資料表索引 `venue`
 --
 ALTER TABLE `venue`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
 --
 
 --
--- AUTO_INCREMENT for table `accessory`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `accessory`
 --
 ALTER TABLE `accessory`
   MODIFY `id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
--- AUTO_INCREMENT for table `accessory_category`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `accessory_category`
 --
 ALTER TABLE `accessory_category`
   MODIFY `id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `activity`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `activity`
 --
 ALTER TABLE `activity`
   MODIFY `activity_id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `activity_status`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `activity_status`
 --
 ALTER TABLE `activity_status`
   MODIFY `id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `activity_venue`
---
-ALTER TABLE `activity_venue`
-  MODIFY `id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `classes`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `classes`
 --
 ALTER TABLE `classes`
   MODIFY `course_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
--- AUTO_INCREMENT for table `coupons`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `coupons`
 --
 ALTER TABLE `coupons`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `course_category`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `course_category`
 --
 ALTER TABLE `course_category`
   MODIFY `course_category_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `course_contents`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `course_contents`
 --
 ALTER TABLE `course_contents`
   MODIFY `course_content_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `course_location`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `course_location`
 --
 ALTER TABLE `course_location`
   MODIFY `course_location_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `course_status`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `course_status`
 --
 ALTER TABLE `course_status`
   MODIFY `course_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `news`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `customizeorder`
+--
+ALTER TABLE `customizeorder`
+  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `delivery`
+--
+ALTER TABLE `delivery`
+  MODIFY `delivery_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `news`
 --
 ALTER TABLE `news`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `newspicture`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `newspicture`
 --
 ALTER TABLE `newspicture`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
--- AUTO_INCREMENT for table `order_list`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `order_list`
 --
 ALTER TABLE `order_list`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `payment_method`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `order_status`
+--
+ALTER TABLE `order_status`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `payment_method`
 --
 ALTER TABLE `payment_method`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `product`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `payment_status`
+--
+ALTER TABLE `payment_status`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `product`
 --
 ALTER TABLE `product`
   MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
--- AUTO_INCREMENT for table `product_brand`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `product_brand`
 --
 ALTER TABLE `product_brand`
   MODIFY `brand_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `product_category`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `product_category`
 --
 ALTER TABLE `product_category`
   MODIFY `product_category_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `product_check`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `product_check`
 --
 ALTER TABLE `product_check`
   MODIFY `product_check_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
--- AUTO_INCREMENT for table `product_color`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `product_color`
 --
 ALTER TABLE `product_color`
   MODIFY `color_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `product_order`
---
-ALTER TABLE `product_order`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
-
---
--- AUTO_INCREMENT for table `product_parts`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `product_parts`
 --
 ALTER TABLE `product_parts`
   MODIFY `product_parts_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `user`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(4) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `users`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `venue`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `venue`
 --
 ALTER TABLE `venue`
   MODIFY `id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
