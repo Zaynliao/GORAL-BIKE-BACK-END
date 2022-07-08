@@ -40,7 +40,7 @@ const uploader = multer({
       file.mimetype !== 'image/jpg' &&
       file.mimetype !== 'image/png'
     ) {
-      cb('這些是不被接受的格式', false);
+      cb({ message: '這些是不被接受的格式' }, false);
     } else {
       // cb(錯誤, 結果)
       cb(null, true);
@@ -50,6 +50,7 @@ const uploader = multer({
   // 一般不會上傳太大的圖片尺寸，以免到時候前端開啟得很慢
   limits: {
     // 1k = 1024
+    // 這樣是 200 kb
     fileSize: 200 * 1024,
   },
 });
@@ -97,15 +98,33 @@ router.post(
     // 使用者不一定有上傳圖片，所以要確認 req 是否有 file
     let photo = req.file ? req.file.filename : '';
 
-    let [members] = await pool.execute(
-      `UPDATE users 
-      SET photo = ?, 
-      name = ?, 
-      email = ?, 
-      phone = ?  
-      WHERE user_id = ?`,
-      [photo, req.body.name, req.body.email, req.body.phone, req.body.user_id]
-    );
+    if (photo) {
+      let [members] = await pool.execute(
+        `UPDATE users 
+          SET photo = ?, 
+          name = ?, 
+          email = ?, 
+          phone = ?  
+          WHERE user_id = ?`,
+        [photo, req.body.name, req.body.email, req.body.phone, req.body.user_id]
+      );
+    } else {
+      let [members] = await pool.execute(
+        `UPDATE users 
+          SET  
+          name = ?, 
+          email = ?, 
+          phone = ?  
+          WHERE user_id = ?`,
+        [req.body.name, req.body.email, req.body.phone, req.body.user_id]
+      );
+      let [member] = await pool.execute(
+        `SELECT * FROM users WHERE user_id = ?`,
+        [req.body.user_id]
+      );
+      photo = member[0].photo;
+    }
+
     let returnUser = {
       user_id: req.body.user_id,
       name: req.body.name,
@@ -114,8 +133,11 @@ router.post(
       photo: photo,
     };
     req.session.user = returnUser;
-    // console.log(members);
+    console.log(returnUser);
     res.json({ code: 0, msg: '更新資料成功' });
+  },
+  (error, req, res, next) => {
+    res.status(400).send(error);
   }
 );
 
