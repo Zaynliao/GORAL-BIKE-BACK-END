@@ -335,8 +335,8 @@ router.get('/favorite/product', async (req, res, next) => {
 
 router.get('/favorite/coupon', async (req, res, next) => {
   let [couponResults] = await pool.execute(
-    `SELECT * FROM coupons LEFT JOIN user_coupons ON user_coupons.coupons_id = coupons.id AND user_coupons.coupons_user_id = ? ORDER BY coupon_expiry_date ASC`,
-    [req.query.userId]
+    `SELECT * FROM coupons LEFT JOIN user_coupons ON user_coupons.coupons_id = coupons.id WHERE user_coupons.coupons_user_id = ? AND user_coupons.coupons_is = ?`,
+    [req.query.userId, req.query.couponsIs]
   );
 
   res.json({
