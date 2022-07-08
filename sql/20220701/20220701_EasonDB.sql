@@ -1,34 +1,18 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
--- 產生時間： 2022-07-07 15:31:01
+-- 產生時間： 2022-07-01 20:30:34
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 8.1.4
-========
--- 產生時間： 2022-07-05 12:08:33
--- 伺服器版本： 10.4.24-MariaDB
--- PHP 版本： 8.1.6
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 -- 資料庫: `goral_bike`
-========
--- 資料庫： `goral_bike`
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 --
 
 -- --------------------------------------------------------
@@ -37,6 +21,7 @@ SET time_zone = "+00:00";
 -- 資料表結構 `accessory`
 --
 
+DROP TABLE IF EXISTS `accessory`;
 CREATE TABLE `accessory` (
   `id` int(3) UNSIGNED NOT NULL,
   `accessory_name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -100,6 +85,7 @@ INSERT INTO `accessory` (`id`, `accessory_name`, `accessory_picture`, `accessory
 -- 資料表結構 `accessory_category`
 --
 
+DROP TABLE IF EXISTS `accessory_category`;
 CREATE TABLE `accessory_category` (
   `id` int(3) UNSIGNED NOT NULL,
   `accessory_category_name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -130,6 +116,7 @@ INSERT INTO `accessory_category` (`id`, `accessory_category_name`) VALUES
 -- 資料表結構 `activity`
 --
 
+DROP TABLE IF EXISTS `activity`;
 CREATE TABLE `activity` (
   `activity_id` int(3) UNSIGNED NOT NULL,
   `activity_score` int(3) NOT NULL,
@@ -182,10 +169,7 @@ INSERT INTO `activity` (`activity_id`, `activity_score`, `activity_venue_id`, `a
 -- 資料表結構 `activity_order`
 --
 
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 DROP TABLE IF EXISTS `activity_order`;
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `activity_order` (
   `order_id` int(11) NOT NULL,
   `activity_id` int(11) NOT NULL,
@@ -198,6 +182,7 @@ CREATE TABLE `activity_order` (
 -- 資料表結構 `activity_status`
 --
 
+DROP TABLE IF EXISTS `activity_status`;
 CREATE TABLE `activity_status` (
   `id` int(3) UNSIGNED NOT NULL,
   `activity_status_name` varchar(10) NOT NULL
@@ -218,10 +203,7 @@ INSERT INTO `activity_status` (`id`, `activity_status_name`) VALUES
 -- 資料表結構 `classes`
 --
 
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 DROP TABLE IF EXISTS `classes`;
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `classes` (
   `course_id` int(3) NOT NULL,
   `course_score` int(3) NOT NULL,
@@ -281,6 +263,7 @@ INSERT INTO `classes` (`course_id`, `course_score`, `course_category_id`, `cours
 -- 資料表結構 `coupons`
 --
 
+DROP TABLE IF EXISTS `coupons`;
 CREATE TABLE `coupons` (
   `id` int(5) NOT NULL,
   `coupon_name` varchar(50) NOT NULL,
@@ -313,6 +296,7 @@ INSERT INTO `coupons` (`id`, `coupon_name`, `coupon_code`, `coupon_content`, `co
 -- 資料表結構 `course_category`
 --
 
+DROP TABLE IF EXISTS `course_category`;
 CREATE TABLE `course_category` (
   `course_category_id` int(3) NOT NULL,
   `course_category_name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -332,6 +316,7 @@ INSERT INTO `course_category` (`course_category_id`, `course_category_name`) VAL
 -- 資料表結構 `course_contents`
 --
 
+DROP TABLE IF EXISTS `course_contents`;
 CREATE TABLE `course_contents` (
   `course_content_id` int(3) NOT NULL,
   `course_content_introduction` varchar(4000) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -362,6 +347,7 @@ INSERT INTO `course_contents` (`course_content_id`, `course_content_introduction
 -- 資料表結構 `course_location`
 --
 
+DROP TABLE IF EXISTS `course_location`;
 CREATE TABLE `course_location` (
   `course_location_id` int(3) NOT NULL,
   `course_venue_id` int(3) NOT NULL,
@@ -397,10 +383,7 @@ INSERT INTO `course_location` (`course_location_id`, `course_venue_id`, `course_
 -- 資料表結構 `course_order`
 --
 
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 DROP TABLE IF EXISTS `course_order`;
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `course_order` (
   `order_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
@@ -413,6 +396,7 @@ CREATE TABLE `course_order` (
 -- 資料表結構 `course_status`
 --
 
+DROP TABLE IF EXISTS `course_status`;
 CREATE TABLE `course_status` (
   `course_status_id` int(11) NOT NULL,
   `course_status_name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -430,72 +414,10 @@ INSERT INTO `course_status` (`course_status_id`, `course_status_name`) VALUES
 -- --------------------------------------------------------
 
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
--- 資料表結構 `customizeorder`
---
-
-DROP TABLE IF EXISTS `customizeorder`;
-CREATE TABLE `customizeorder` (
-  `orderId` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `phone` varchar(10) NOT NULL,
-  `mark` varchar(1000) DEFAULT NULL,
-  `Frame_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Saddle_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Metal_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `DerailleurRear_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Crankset_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Pedal_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Chain_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Cage_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Bottle_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Brakes_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `PaintBlack_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Wheels_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Computer_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `HandlebarTape_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Shifters_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Cassette_MAT` varchar(7) NOT NULL DEFAULT '#fff'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `customizeorder`
---
-
-INSERT INTO `customizeorder` (`orderId`, `name`, `email`, `phone`, `mark`, `Frame_MAT`, `Saddle_MAT`, `Metal_MAT`, `DerailleurRear_MAT`, `Crankset_MAT`, `Pedal_MAT`, `Chain_MAT`, `Cage_MAT`, `Bottle_MAT`, `Brakes_MAT`, `PaintBlack_MAT`, `Wheels_MAT`, `Computer_MAT`, `HandlebarTape_MAT`, `Shifters_MAT`, `Cassette_MAT`) VALUES
-(1, 'joe', 'joe123@gmail.com', '912345678', 'test', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(2, 'AAAA', 'asdasdasd@gmail.com', '2147483647', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(3, 'JJJJJJJJJJJJJJJJJJJJ', 'asdasdasd@gmail.com', '2147483647', '123456789', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
-(4, 'JJJJJJJJJJJJJJJJJJJJ', 'asdasdasd@gmail.com', '2147483647', '123456789', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
-(5, 'JJJJJJJJJJJJJJJJJJJJ', 'asdasdasd@gmail.com', '9888888888', '123456789', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
-(6, 'AAAAff', 'aaa@123.com', '9876543210', '測試用', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
-(7, 'aaaaaaa', 'asdasdasd@gmail.com', '9888888888', 'serfwerwerwer', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(8, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(9, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(10, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(11, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(12, 'asdasd', 'test15@mail.test', '9879879872', '115656464', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(13, 'asdasd', 'test15@mail.test', '9879879871', '1245623254545', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
-(14, 'asdasd', 'test15@mail.test', '9777777777', 'weqw', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
-(15, 'AAAA', 'test15@mail.test', '9888888888', '131322', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
-(16, 'asdasd', 'asdasdasd@gmail.com', '9888888888', 'ertret', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
-(17, 'asdasd', 'test15@mail.test', '9888888888', 'erwer', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
-(18, 'asda', 'ada@dasd.c', '223423412', '103232', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(19, 'AAAA', 'asdasdasd@gmail.com', '988888888', 'erwe51', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff');
-
--- --------------------------------------------------------
-
---
 -- 資料表結構 `delivery`
 --
 
 DROP TABLE IF EXISTS `delivery`;
-========
--- 資料表結構 `delivery`
---
-
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `delivery` (
   `delivery_id` int(11) NOT NULL,
   `delivery_method` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -512,48 +434,10 @@ INSERT INTO `delivery` (`delivery_id`, `delivery_method`) VALUES
 -- --------------------------------------------------------
 
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
-========
--- 資料表結構 `favorite_activity`
---
-
-CREATE TABLE `favorite_activity` (
-  `favorite_user_id` int(11) NOT NULL,
-  `favorite_activity_id` int(11) NOT NULL,
-  `favorite_is` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `favorite_course`
---
-
-CREATE TABLE `favorite_course` (
-  `favorite_user_id` int(11) NOT NULL,
-  `favorite_course_id` int(11) NOT NULL,
-  `favorite_is` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `favorite_product`
---
-
-CREATE TABLE `favorite_product` (
-  `favorite_user_id` int(11) NOT NULL,
-  `favorite_product_id` int(11) NOT NULL,
-  `favorite_is` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 -- 資料表結構 `news`
 --
 
+DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -567,22 +451,16 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`id`, `title`, `content`, `date`, `touch`) VALUES
-(1, '強勢回歸，Matthews睽違一年半再奪單站勝利', '31歲的Michael Matthews在騎著TCR ADVANCED SL DISC，並搭配使用CADEX輪組系統贏得首站勝利後，率先穿上Volta a Cataluyna的領騎衫。這位澳洲明星選手在兩天前的Milan-San Remo古典賽即展現自己相當好的狀態，雖然最終是以第四名的成績與頒獎台失之交臂，但依舊可以看出Michael Matthews已一掃去年的低潮，而他也立即以單站勝利向大家說明自己已強勢回歸。\n\n　　第一站的終點是一段相當具有挑戰性的爬坡終點，但Michael Matthews可能比任何人都要熟悉，因為他曾在2019年在同一地點獲得單站勝利。”我真的有好長一段時間沒贏過了，所以能回到熟悉的地方再一次的贏得勝利，對我來說真的意義重大。”\n\n　　在西班牙舉行的Volta a Cataluyna多日賽事將持續進行，系列賽將在週日於巴塞隆納結束。”我們有很棒的團隊來參與這場賽事，” Matthews說，”我能在這類型的賽段展現競爭力，Kaden Groves將主攻平路衝刺站，至於Simon Yates則是GC和爬坡站的第一人選，我們能再任何賽段展現強大的競爭力，而且我們有了一個很棒的開始。”', '2022-06-01', 37),
-(2, 'Simon Yates單飛進站，奪下巴黎-尼斯大賽最終站冠軍', 'Simon Yates本次在法國舉行的巴黎-尼斯大賽維持著相當好的狀態，不僅在第四站的計時賽拿下第五名的好成績，在爬坡賽站也展現出他身為頂級爬坡好手的實力，他騎著TCR Advanced SL，搭配CADEX 輪組系統，戴著Rev Pro MIPS公路安全帽，在第七天的皇后站Col de Turini獲得第三名，接著在最終站贏下單站冠軍。\n \n       最終站除了有五個分級坡考驗著選手，濕冷嚴峻的天氣對選手更是一大挑戰，Simon Yates克服了一切，並在最後一個坡段發起了致勝一擊。「剛開始爬坡時，Quintana 就開始加速。」Yates說，「他(Quintana)真的帶出了一個非常快速的節奏，但我腦中就只有想著單站冠軍，我不確定我是不是能在比賽中取得優勢，但如果不去嘗試就永遠不知道答案，所以我放手一搏、盡我所能的做出攻擊，儘管這不是賽前的戰術設定。」\n\n        Yates在賽前落後領先的Roglic 47秒的時間，最終站雖然在爬坡拉出25秒的優勢，但在最後的下坡路段，2位Jumbo-Visma選手的組合依舊占盡優勢。「我心中當然也想贏得總冠軍，但我在下坡段因為身型的關係確實比較吃虧一點，加上他們有雙人小組的搭配，所以要逆轉確實不容易。」Yates說，「今天天氣真的很嚴峻，但我過去也有在這邊比賽的經驗，所以我準備得相當充足。」\n\n       這也已經是Yates在巴黎-尼斯贏得的第四座單站冠軍，也是第二次總排第二名。「現在我拿了兩次總排第二，未來有機會也許我會再回來挑戰總冠軍，但無論如何，我很滿意我這一週的表現。」\n\n       這一場勝利也給了Yates相當大的自信心，接下來他將瞄準本賽季的最大目標，也就是將在五月展開的環義大利大賽。', '2022-06-02', 1876),
-(3, '狀態絕佳!Groenewegen奪下環沙烏地阿拉伯第五站冠軍及衝刺王紅衫', '今年加入BikeExchange-Jayco車隊的荷蘭籍衝刺手Groenewegen繼環沙烏地阿拉伯賽事第三站贏得他與車隊今年首勝之後，又再次展現他季初令人印象深刻的狀態。在他的隊友們完美的帶領下，28歲的Groenewegen騎著他的Propel Advanced SL Disc衝過終點線，擊敗對手Daniel McLay與Davide Ballerini，拿下第2勝。\r\n\r\n搭配 CADEX 65 輪組系統 與 Giant Pursuit 安全帽的Groenewegen賽後分享：「隊友們完成極佳的工作，盡全力協助我(破風、補給與帶衝)，我們在3個衝刺賽站拿下2勝，真的非常棒！」\r\n\r\n除了2站勝利外，幫助Groenewegen在第五站獲勝擊敗另兩名對手的隊友Luka Mezgec也在第四站拿下第二名的佳績。而第五站的勝利，也幫助Groenewegen奪下衝刺王紅衫，結束車隊勝利的一週。', '2022-06-08', 669),
-(4, 'Groenewegen奪下BikeExchange-Jayco車隊賽季首勝', 'Groenewegen 在環沙烏地阿拉伯的第三站使用Giant Propel Advanced SL自行車與CADEX 65輪組系統的搭配，擊敗了勁敵Daniel McLay與Caleb Ewan，贏得了第三站的單站冠軍。\r\n\r\n“我們設定了一個非常好的作戰計畫，而且大家都執行得非常好。” Groenewegen接著說:”這只是我今年的第二次終點衝刺，但感覺我們的團隊就好像已經合作了兩年一樣。”\r\n\r\n為期五天的環沙烏地阿拉伯賽，是UCI亞巡賽的賽事之一，而第3站的終點設在沙烏地阿拉伯的AIUIa舊城區，在賽事中選手面臨了強大陣風的挑戰，所以在比賽前段就以已經分裂出了好幾個集團，最後僅有27為選手留在領先集團，而Groenewegen與隊友Luka Mezgec就在其中。但最後在比賽結束前，第二集團追上了領先集團，以大約50 人的集團前往最後的集團衝刺。\r\n\r\n“這一站真的蠻瘋狂的，” Groenewegen說。” Luka Mezgec和我一起待在領先集團，但後來的逆風讓追趕集團趕上我們，所以大部分的選手都回到了集團，而我很高興我的隊友們能回到集團當中，幫助我們一起贏得最後的勝利。”', '2022-06-20', 139),
-(5, ' Iden逆轉拿下PTO錦標賽冠軍  2020-12-16 世界冠軍要來當一日小編啦!  2021-', 'Giant宣布與登記在UCI WorldTour級別的BikeExchange-Jayco車隊成為合作夥伴，重返世界一級賽場，Giant提供BikeExchange-Jayco男子車隊器材贊助，將目標放在三大賽、單日古典賽和其他頂級的公路車賽事，而女子隊則是由同集團女性自行車品牌Liv提供贊助。\r\n \r\n對於能與Giant成為合作夥伴，BikeExchange-Jayco車隊認為這是車隊即將展開的第11個賽季中非常重要的一步，新加入的八位選手將加入原先的團隊，包含曾拿下環西班牙大賽冠軍與站上環義大利大賽頒獎台的Simon Yates，以及曾經贏得環法大賽衝刺綠衫的Michael Matthews，衝刺、爬坡、計時和GC選手都一併到位，新的一年團隊戰力將更佳完整。\r\n \r\n巨大集團(Giant Group)行銷長Phoebe Liu說:「Giant在過去20年一直是站在職業公路賽事的最前端，很開心能與BikeExchange-Jayco車隊合作重返世界一級的賽場。在與頂尖職業車隊的合作下，我們能不斷的精進並提升自我，進而為全世界的自行車騎士帶來最佳的騎乘體驗。」\r\n \r\n2022年BikeExchange-Jayco車隊將有來自12個不同國家的29位選手，除了前述提到的Yates和Matthews，車隊也簽下了荷蘭籍的衝刺好手Dylan Groenewegen，生涯至今已累計58場勝利。其他幾位新成員包含美國國家計時冠軍Lawson Craddock和義大利國家計時冠軍Matteo Sobrero，以及Alex Balmer (瑞士), Jan Maas (荷蘭), Kelland O’Brien (澳洲), Jesus David Peña (哥倫比亞)和Campbell Stewart (紐西蘭)\r\n \r\nBikeExchange-Jayco車隊經理Brent Copeland說:「很開心Giant能加入我們，作為我們車隊的器材贊助夥伴，他們不僅是投入大量的時間與精力在研發最新、最好的產品與技術，Giant對於自行車的熱情更是讓我們有深切的感受，也是我們覺得最難能可貴的地方。能夠與Giant這種不遺餘力支持我們的品牌合作真的很重要，他們提供給車隊的資源讓我們感到興奮。我們的合作目標清楚明確，而我們會盡一切的努力來完成目標，對於即將到來的2022賽季，我們充滿信心與動力，且迫不及待的想展開這趟旅程。」\r\n \r\nBikeExchange-Jayco車隊將會使用Giant品牌的自行車來面對所有的比賽，並搭配使用CADEX輪組系統，同時選手會配戴Giant Rev Pro 公路安全帽或Giant Pursuit TT 計時空力安全帽出賽，並在未來與Giant工程師一同開發、測試更多全新的自行車產品。', '2022-06-11', 1236951),
-(6, 'XTC Advanced SL 29世界冠軍特式版帥氣登場!', '來自哥倫比亞的「獅王」Leonardo Páez Léon(同Lion，為Páez小名)連續兩年拿下XC Marathon的世界冠軍，除了穿上代表世界冠軍的五色衫，當然也少不了一台冠軍特式車。\r\n \r\nPáez在2020年騎著XTC Advanced SL 29，於土耳其技壓群雄奪下世界冠軍，所以特式版的XTC Advanced SL 29車架以白色為底，再將代表世界冠軍的五色筆刷揮灑於上，襯托出XTC敏捷穿梭於賽道間的輕盈感；而後下叉上 #LionPaez的專屬Hashtag，以及座管處上象徵萬獸之王的雄獅標章，皆代表著這支冠軍特式版車架至高無上的榮耀。\r\n \r\n有興趣的粉絲能在FaceBook及Instagram上追蹤Páez，看他騎乘XTC Advanced SL 29冠軍特式版車架馳騁於賽道上喔。', '2022-06-13', 16601),
-(7, 'Liv Racing Team 正式發表 全新車衣再次出發', 'CCC-Liv一級職業女子車隊，今年繼續由Liv贊助，並改名Liv Racing重新換裝出發。將在1/10與新加入的比利時Cyclocross國家冠軍Lotte Kopecky發表最新的車隊版車衣設計，選手們將會換上由Liv設計、瑞士車衣品牌CUORE製作的茄紫色戰袍出戰2021賽季。\r\n \r\n「週日將會是我身為Liv Racing車隊一員的首場比賽，我將會在比賽中騎上最新的Brava Advanced與Liv Racing車衣。」Lotte Kopecky說到，「最新的車衣設計非常漂亮，時尚、簡潔又具有個性。」\r\nLiv做為Liv Racing車隊的贊助品牌，是為了貫徹品牌對女性騎士的承諾，從初學者到賽場上的選手，鼓勵更多女性參與這項運動。\r\n \r\n今年的車隊版車衣設計精神在於凸顯女性堅毅不拔的個性，搶眼的車衣設計將站在頂尖的世界舞台上，而大膽別致的野花就像是女性一樣，吸引所有人的目光。這份意涵，要獻給世界上所有的女性，以及Liv品牌的創辦人Bonnie Tu，共同創造一個美好的自行車環境。\r\n \r\n「我們非常榮幸能夠全力支持Liv Racing一級職業女子車隊，Liv一直以來投入許多資源來彌平自行車職業領域的男女差異以及提供更多女性機會。」Liv創辦人兼Giant Group董事長，Bonnie Tu說，「當我們在設計這件車衣時，我們的目標是如何在眾多選手中脫穎而出，並且顛覆傳統，同時與Liv的自行車相同，秉持專為女性且出自女性(For Women, By Women)的原則來設計這件車衣。亮眼的設計並不代表與其他人格格不入，我們想要傳達的是來自Liv內部的力量與經驗，就如同穿上它的選手一樣，受人景仰且注目。」\r\n至於車衣上搶眼到無法忽視的「無名的野花」是什麼？意指休耕時在沒有耕耘與灌溉的農地上，也能夠逆勢而生的堅毅野花。妳不需要是什麼有名的天堂鳥或玫瑰，妳就是妳，每一個獨一無二的妳！Liv深信自行車是平等、多元、自由、賦權與鼓舞人心的，Liv支持所有的女性，無論是第一天學會騎車的妳、正準備環義賽的妳、正打算嘗試第一場三鐵的妳，Liv以支持女性為品牌核心，研究、開發、設計、鼓舞、支持各樣的自行車，以成就各種狀態與需求的女人、女孩們。\r\nLiv Racing一級職業女子車隊將會穿上由CUORE提供的頂尖人身商品，能夠提升選手表現、來自各種路況的適當保護、優良的體溫調節特性，讓車隊在世界巡迴的比賽中遊刃有餘。「CUORE在自行車專業領域上已經有30年的豐富經驗，這套由Liv Racing車隊穿上的車衣，是以因應世界巡迴賽的高強度需求的前提下所設計的。」CUORE營運長Chris Munro解釋，「Liv所設計的車衣非常新穎，與車衣的功能及剪裁上非常相搭，我們非常高興能夠支持Liv Racing的選手們。」\r\n\r\nLiv Racing一級職業女子車隊將身著新車衣，首先在西班牙進行為期兩個月的訓練營，為2021賽季的第一場比賽Vuelta CV Feminas (2/18-2/21) 暖身,準備在新的一年大展身手。', '2022-06-17', 158),
-(8, '世界冠軍要來當一日小編啦!', '連續兩年拿下鐵人三項世界冠軍的Gustav Iden，將受邀擔任Giant Bicycles Facebook粉絲專頁的一日小編，並於台灣時間12/17晚上8點於Giant Bicycles粉絲專頁開直播與大家互動。\r\n \r\n來自挪威的Iden，於2019帶著「埔鹽順澤宮」宮帽奪下Ironman 70.3世錦賽冠軍後，在台灣掀起來一陣鐵人旋風，並於2019年底宣布與Giant攜手合作。實力與話題兼具的Iden，騎著Giant Trinity三鐵車，使用CADEX輪組，2020年於PTO鐵人三項擊敗世界排名前40的頂尖好手，再次奪得世界冠軍。\r\n \r\n連續兩年奪冠的Iden，也受邀於12/17擔任Giant Bicycles粉絲專頁的一日小編，並於台灣時間晚上8點開直播與粉絲互動，與大家分享他的訓練日常，對Iden有興趣的各位粉絲們，千萬不要錯過啦!', '2022-05-06', 1124),
-(9, 'Iden逆轉拿下PTO錦標賽冠軍', '台灣粉絲所熟悉的Iden在美國佛州舉辦的Challenge Daytona比賽中逆轉拿下冠軍， 此次比賽同時也是PTO (Professional Triathletes Organisation職業鐵人三項運動組織)2020年度的錦標賽，必須是世界排名前40的選手才能參加，而Iden目前排名雖然不在PTO前40名內，但因為2019 IRONMAN 70.3世錦賽奪冠的亮眼表現而獲得外卡資格，Iden也再次於高手雲集的賽事中證明自己的頂尖實力。\r\n \r\n這場總獎金超過100萬美元的賽事，在Daytona國際賽車場舉行，跟以往的比賽距離不同，選手們要依序完成2公里游泳、80公里的自行車(20圈賽道，每圈4公里)以及18公里的跑步(4圈賽道，每圈4.5公里)。捷安特贊助的兩位三鐵選手Iden與Sam Appleton都有參加這場比賽，兩人皆騎乘Trinity三鐵車，並搭配CADEX空力輪組。Sam相較於Iden在游泳與騎車有比較好的表現，在自行車項目完成後以第二名之姿進入最後的跑步賽段，最終拿下第六名。而大家所熟悉的Iden， 在完成游泳及自行車後，以第15名的表現、落後領先者1分36秒進入自己所擅長的跑步項目。Iden在剩最後兩圈時超越對手，並大幅拉開領先差距，最後以51秒的差距拿下勝利。\r\n \r\n談到這場勝利，以外卡資格奪冠的Iden說：「這次的比賽跟2019 IRONMAN 70.3世錦賽的風格完全不同，這次的賽道非常的規律(繞圈型式)，所以我其實不太確定自己能有什麼樣的表現。」「但很幸運的是，我在自行車項目採取的策略很成功，儘管大家不斷的在自行車項目超越我去追擊領先集團，但我依舊非常滿意自己在比賽當下的表現，最後我也再一次拿下這場不可思議的勝利。」', '2022-05-18', 66),
-(10, '全國自由車公路錦標賽 杜志濠計時賽再當最速男 吳之皓摘計時/公路雙亞軍', '2020全國自由車公路錦標賽於11月22日在台東縣及花蓮縣舉行，此次比賽分別於22日進行個人計時賽，23日進行個人公路賽，全國菁英好手匯聚一堂，全力角逐「全國冠軍」榮銜。\r\n11月22日上午男子菁英組分為五個梯次進行比賽，最後由杜志濠拿下全場最佳成績41分08.731秒，從57名出賽選手中脫穎而出。第二名由前勁車隊吳之皓以42分13.434秒完賽，第三名則由捷安特哥倫布車隊的虞子諒以42分21.189秒拿下。杜志濠賽後表示：「兩年前也跑過這個路線，今天算是挑戰兩年前的配速，前兩圈比較保守一點，最後一圈全力以赴，比自己兩年前進步了30秒，算是成功的一次驗收。」\r\n連同第四名捷安特哥倫布車隊的李廷威在內，本屆全錦賽計時賽前四名的選手皆騎乘計時版Trinity，可說是充分展現出Trinity當初在設計時，為追求極速而生的使命。另外，本屆計時賽冠軍杜志豪也特別指定使用CADEX空力輪組做為比賽輪使用，CADEX空力輪組不僅輕量，十足的剛性與低滾組的產品特色，順利的幫助杜志濠在計時賽中奪下冠軍。\r\n \r\n23日所舉行的公路賽，比賽路線途經台東縣及花蓮縣，男子菁英組及青年組選手由台東森林公園出發，沿著台九線花東縱谷公路北上，直到玉里轉進玉長公路，最後由台十一線返回台東森林公園終點，全長160公里。\r\n \r\n競爭激烈的男子菁英組，在前段逆風段不斷上演突圍與追趕的戲碼，一直到玉長公路前的零星進攻都無法成型，經過前段的逆風，與玉長公路的爬坡段考驗之後，大集團開始瘦身，而轉出玉長公路之後，長濱地區一陣風雨，加上轉變成順風的天候，集團前方頓時提高速度，此時領先集團成型，陳建良、吳之皓、巫帛宏、熊凱文、虞子諒率先成為五人領先集團，而計時賽冠軍杜志濠與去年冠軍盧紹軒兩人合作追出並加入前方五人，成為七人領先集團。在順風幫助之下，加上前面的長途耐力消耗，後方集團已經無法追回，領先七人中美利達諾飛客車隊有三位選手，包括尋求衛冕的盧紹軒以及巫帛宏、熊凱文，最後衝刺階段，台灣隊長巫帛宏化身破風手，最後階段杜志濠提前發動衝刺，而最後階段陳建良強勢衝出，成為2020的公路全國冠軍。至於前一日於計時賽摘銀的吳之皓，則騎著TCR再次於最後的衝刺拿下亞軍，在本屆全錦賽收下兩面銀牌。', '2022-05-25', 4534),
-(11, 'CADEX發表全新三鐵產品線 提供最佳鐵人三項競賽整合方案', ' 生產高階自行車零組件的品牌CADEX，推出了全新的三鐵產品線，包含CADEX Tri三鐵車架組和全新空力刀/碟輪组系統，而本次CADEX三鐵產品線的開發，無論是車架或輪组的設計、測試與驗證，皆與最頂尖的選手Kristian Blummenfelt合作，尤其Kristian使用了CADEX Tri原型三鐵車和原型輪组拿下IRONMAN世界冠軍，並贏得被視為不可能的SUB7挑戰，說明了CADEX全新三鐵產品線就是世界冠軍級別的競速利器。\r\n       CADEX Tri代表的是一個全新的三鐵整合方案，打破既有的傳統與常規，CADEX提供更容易調整的個人化設定，完美整合的賽事補給系統，能在真實賽事中獲得的空力效益及騎乘效率，CADEX甚至為選手解決了移地比賽的運輸問題。而空力輪组也已在多場頂尖賽事中獲得驗證，是CADEX打造出最快速的空力輪组。\r\n       在5月時，Kristian使用了CADEX Tri原型三鐵車和原型輪组在美國St. George出戰IRONMAN世錦賽，St. George的自行車賽道是出了名的困難，總計超過2000公尺的爬升，但Kristian在自行車項目展現相當好的狀態，最終拿下IRONMAN世界冠軍。一個月後，Kristian再次使用相同的裝備於德國挑戰SUB7計畫，成為了使上第一位在7小時內完成226超鐵距離的選手。\r\n\r\n耐久形空力\r\n       只能維持40或80公里的空力設定是不夠的，要贏得Ironman比賽或打破自己的最佳紀錄，就必須要能維持180公里的空力騎姿。而CADEX Tri在開發設計時的原則就是：不能只在風洞測試中有漂亮數據，而是要能在三鐵賽場上為選手帶來真實的空力效益。\r\n       追求空力的第一步，我們從車架做起，從前方看向CADEX TRI三鐵車，絕對會立刻被那獨特的前叉吸引，寬肩且如刀鋒般的前叉能使氣流順利通過，經風洞測試後的結果顯示，此設計能大幅減少氣流受干擾的程度，將三鐵車與騎士的風阻降到最低。\r\n       除了前叉之外，很少被大家考慮到的後叉也是空力設計的一部分，CADEX Tri的後叉寬度幾乎與前叉相同，而且不同於一般自行車的後上叉是由座管筆直的連接至後勾爪，CADEX Tri的後上叉是由後輪軸心以接近垂直的角度向上，經過一個俐落的轉折後，再水平的連接至座管。藉由此設計，不僅能將車架後叉的受風面積降至最低，以強化空力效益，更能提升車架剛性，完整的傳遞選手的輸出動能。\r\n\r\n賽事裝備完美整合\r\n       過去的選手會在三鐵車上自行安裝相關設備，包含前置水壺、上管袋等，以滿足各自的補給需求，但不可否認的是，這將影響原本車架的空力效果。而CADEX Tri在開發時，就已完整的考量三鐵選手在賽事中的補給需求，將補給系統完美的融入車架當中，為選手帶來絕對的優勢。\r\n       CADEX Tri獨特的車架造型設計 - 取消車架上管並加大下管 - 能將補給盒、水袋與維修工具完美整合於車架中，水袋吸管由頭管前方的空力罩向上延伸，使選手在補充水份時依舊能維持低風阻的空力騎姿，而位在下管中央的水袋補充孔，也使選手在賽事中能快速補充袋中的水量。\r\n       位於下管頂端的可拆式補給盒可放置多達10包32ml的能量膠(L尺寸車架)，表面的橡膠蓋可以幫助固定能量棒或能量膠，使選手在保持空力騎姿時依舊方便取用，而可拆式設計也讓選手能在賽後快速清洗整理。整合於車架內、接近五通非傳動側的維修工具盒，則能安裝多功能功具、內胎、挖胎棒、CO2氣瓶及充氣頭等維修工具。', '2022-06-30', 569),
-(12, 'GIANT發表全新 SURGE PRO自行車鞋', '  GIANT發表全新 SURGE PRO自行車鞋，旨在幫助頂尖選手於世界一級賽事中脫穎而出，透過頂尖選手們-包含三大賽冠軍Simon Yates-不斷的測試與驗證，全新SURGE PRO自行車鞋成為自行車騎士追求效率、舒適性以及輕量化的第一選擇。\r\n\r\n全新SURGE PRO有2大改款重點：「ExoBeam™動力傳遞軸」和「ExoWrap™足弓包覆」的技術升級，帶給騎士最佳的騎乘效率與360度全面貼合的舒適性。當BikeExchange-Jayco車隊主將Simon Yates與其他隊員在季前訓練營拿到SURGE PRO並開始測試使用後，他們毫無保留的表達出對全新SURGE PRO自行車鞋的喜好。\r\n\r\n  Simon Yates說：「在去年底的訓練營拿到SURGE PRO的時候我們就超興奮的，因為你能立即感受到他的輕量、踩踏效率和舒適性，自從拿到SURGE PRO之後，我就只穿著他訓練和比賽。」而全新 SURGE PRO自行車鞋也在三月時幫助Simon Yates拿下巴黎-尼斯大賽最終站的單站冠軍，成功鎖定總排第二的好成績，為他帶來無比的信心來面對即將展開的環義大賽。\r\n\r\n「看到Simon Yates能在最高層級的比賽展現出最佳水準，你就知道我們真的成功了!我們投入了大量的時間與努力，就是想為騎士提供最高水準的車鞋，而我們做到了。」GIANT全球產品經理Jeff Schneider說：「在最高層級的比賽中，任何一點的產品優勢都能為選手帶來巨大的改變，而對於Simon這樣的頂級選手來說，車鞋當然是在比賽中非常重要的關鍵之一。」\r\n \r\n全新「ExoBeam™動力傳遞軸」和「ExoWrap™足弓包覆」技術\r\n \r\n       全新的ExoBeam™動力傳遞軸是讓騎士享有最佳踩踏效率的最大關鍵，新一代不僅由單軸改為雙軸設計，鞋底板更是100%以超輕碳纖疊層的結構打造，大幅提升騎士踩踏時的動能傳遞，且在ExoBeam™動力傳遞軸巧妙的設計下，同時能提供騎士踩踏時一定的扭轉彈性，完美實現碳纖維鞋底超強剛性卻不死硬的性能表現。\r\n\r\n  其次，全新ExoWrap™足弓包覆技術則是能帶給騎士腳掌完美的貼合度，不同於一般市售車鞋通常只是拉緊鞋面，將腳掌下壓固定於鞋底板，SURGE PRO自行車鞋以改良後的ExoWrap™足弓包覆技術，搭配最高級的BOA®Li2雙旋鈕設計，在拉緊時能同時將車鞋內側與鞋面往騎士的腳掌收緊貼合，並透過BOA®Li2雙旋鈕給騎士最精密的微調空間，以達到360度全方位的貼合度與最佳的個人化調整。\r\n\r\n  而對於專業騎士也非常注重的舒適度，SURGE PRO將超薄、超透氣的微網布使用於鞋內合成纖維層和超耐磨的PU表層之間，並在鞋面搭配超大範圍的雷射透氣孔，大幅提升鞋內空氣循環的對流效果，長時間維持騎士雙足乾燥，達到最佳化的透氣性與鞋面彈性。', '2022-06-16', 5568),
-(13, 'ARX 24 - 小鐵人的最佳選擇', '當各位鐵人爸、鐵人媽忙著為自己的三鐵戰駒進行各式改裝，只為了追求更輕、更快、更帥的性能或視覺效果時，您是否也為您們家的小鐵人找到最適合小鐵人賽事的自行車了呢? ARX 24在台灣一上市便以輕、速、帥三大特點襲捲國內各項小鐵人賽事，成為國內小鐵人第一指名的自行車，究竟ARX 24背後有著什麼樣的關鍵設計，讓我們敢說ARX 24是青少年參加小鐵人賽事的最佳選擇呢?\r\n\r\n首先，同級最輕的重量表現，讓ARX 24在屬於競速性質的小鐵人賽事中占盡優勢。一般男性三鐵運動員體重大約60-90公斤，尚且為了自行車裝備上1、200公克的重量在錙銖比較，對於體重僅有約20-40公斤小鐵人來說，自行車的輕量化將更為重要。\r\n \r\n最後，ARX 24俐落簡潔的車架外型設計，更完全符合以速度為導向的小鐵人賽事形象，加上亮眼飽滿的車架塗裝，讓小鐵人一騎上ARX 24，馬上成為賽場上最耀眼的小鐵人。\r\nARX 24以ALUXX競速級鋁合金車架打造，整車僅9公斤的重量表現，比市面上其他青少年車款至少都再輕2-3公斤，這對於力量較小的小鐵人來說是非常巨大的優勢，從轉換區的取車、牽車開始，使用ARX 24的小鐵人就已開始享受輕量化所帶來的優勢，更不用說在自行賽道上「更輕即更快」的真理，使用ARX 24 將幫助小鐵人更輕鬆省力的完成自行車項目，迅速銜接跑步項目。\r\n\r\n其次，ARX 24在設計上以「速」為優先選擇，不僅要幫助小鐵人快速的完成自行車項目，使小鐵人輕鬆、迅速的轉換至最後的跑步項目，甚至連小鐵人平時的訓練方便性也依並融入設計的考量之中。\r\n\r\n1. 低風阻騎乘幾何\r\n自行車為對抗風阻的運動，ARX 24相較一般平把青少年車有更前傾的低風阻騎姿，不僅速度更快，也讓小鐵人更省力。\r\n\r\n2. 全地形8段變速\r\n直覺的指撥式8段變速把手，搭配前32T x 後12-32T全地形齒比，不論在比賽中面對上、下坡或要進行平路衝刺，小鐵人皆能快速調整至最適檔位，以最有力的雙腿進入最後的跑步項目。\r\n\r\n3. 依青少年身型量身打造\r\n為了追求成績或舒適度而進行FITTING的鐵人爸、鐵人媽比比皆是，但小鐵人是否也擁有了適合他們的騎姿了呢? ARX 24依青少年的肩寬打造較窄的把手，讓小鐵人擁有更靈敏的操控性，另外也依照青少年較小的坐骨寬設定窄的Q factor(兩邊曲柄最外側切線的距離)，使小鐵人擁有更順暢的踩踏效能。\r\n\r\n4. 載運拆裝，方便快速\r\nARX 24前/後輪及座管皆使用快拆裝置，符合小鐵人移地訓練、比賽等載運需求，方便拆裝，快速調整。\r\n', '2022-06-30', 9),
-(14, '2022年式Revolt全新大改款，強勢出騎、解鎖生活的野性樂趣', ' 全新2022年式Revolt以滿足當今市場上對礫石公路車(Gravel Bike)的性能要求為目標，捷安特工程師、設計師與Giant Factory Off-Road Team的選手共同合作開發，以頂尖的製造工藝和競賽的性能標準打造出全新Revolt，準備帶你征服更多樣的地形和路況，解鎖生活中更多的野性樂趣。\r\n\r\n       全新Revolt有著大家所熟悉的彎把公路車外型，多功能設計、順應升級和效率提升則是本次Revolt的3大改款重點，獨家FLIP CHIP可調式後勾爪則讓你1台車架即有2種幾何，針對不同的路況能採用不同的車架幾何與不同的胎寬選擇，即使再野的路，也能讓你放膽趣騎；獨家D-FUSE減震座管與把手則能減輕騎士在長時間騎乘後的疲勞與不適，是面對碎石路面不可或缺的關鍵技術；最後，更輕的車架重量提供騎士更好的騎乘效率，全新Revolt Advanced車架組較上一代減輕160公克，對於想追求極致表現的選手來說更可謂為一大優勢。\r\n\r\n多功能設計\r\n1. FLIP CHIP可調式後勾爪\r\n       本次Revolt改款後新增的FLIP CHIP可調式後勾爪，使騎士能夠依據騎乘的路況來選擇不同的幾何設定，透過翻轉FLIP CHIP裝置，能產生Short Position與Long Position兩種幾何，且騎士只需要使用內六角板手即可自行調整，對於騎乘風格與路線較多元的騎士來說是非常方便的一大特點。\r\n\r\n2. 可相容伸縮座管\r\n       全新車架設計新增了座管轉接座，除了原車標配的D字形D-FUSE減震座管，在移除座管轉接座後，騎士還能依騎乘需求安裝30.9mm的圓形座管或伸縮座管，以面對更多樣的騎乘路線。\r\n\r\n3. 多功能彎把\r\n       5度的上把位後傾角，讓騎士在進行長距離騎乘或進行長爬坡時能擁有更輕鬆的騎姿；8度的內旋角，使把手下把位稍向外擴，讓騎士在使用下把位面對碎石路面時有更高的穩定感。\r\n\r\n4. 預留水壺架&貨架孔位\r\n         為了滿足更多元、更豐富的騎乘形態，全新Revolt在車架上位騎士預留了安裝水壺架以及貨架的孔位，尤其最多能安裝多達6個水壺架，對於喜歡進行長途騎乘的騎士來說是非常貼心的設計。\r\n\r\n順應升級\r\n       騎乘礫石公路車，代表你可能會面對到各式各樣的路況，也許是河床邊的礫石路，或是充滿小碎石的混合路面，也因此順應性能的提升，讓騎士在騎乘過程中盡可能的不受震動干擾，也是本次Revolt改款的重點之一。\r\n\r\n1. 後上叉下移減震設計\r\n        將後上叉與座管之接觸點下移之後，座管之可變形量增加，能夠提升Revolt之吸震性能。\r\n2. 薄型後上叉吸震技術\r\n       新一代Revolt擁有比前一代更薄的後上叉，同樣能夠在吸震性上有顯著的提升。\r\n3. 獨家D-FUSE專利吸震座管\r\n       以複合式碳纖材質打造的D字形座管，能較一般傳統圓形座管提高2.4倍的變形與吸震能力，吸收騎乘時路面所造成的震動，有效降低因為震動而對身體造成的累積疲勞感。\r\n4. D-FUSE減震把手\r\n       將D-FUSE科技運用在把手上，能夠將吸震效果完美複製，減緩騎士的疲勞程度。\r\n\r\n效率提升\r\n       近年來礫石公路賽的競賽激烈程度有越來越像公路車賽的趨勢，所以選手們對礫石公路車的競賽性能要求也越來越高，新一代Revolt Advanced車架組較上一代減輕了160公克，在不犧牲剛性的情況下提升騎士的騎乘效率。\r\n\r\n2022年式Revolt系列在台灣共有3種車款選擇，分別是碳纖車架版本的 Revolt Advanced 0 、Revolt Advanced 2 以及鋁合金車架版本的 Revolt 2，分別提供XS、S、M、ML等尺寸可供選擇，各車款已全面到貨，賞車請洽各地區捷安特門市。', '2022-06-28', 4545),
-(15, 'LANGMA - 頂尖效率', '“我們的唯一目標就是打造出業界中最頂尖優異的公路車，而Langma就是我們今天的成果”，巨大集團行銷長Phoebe Liu表示：”全新的Langma設計是延續第一代Langma全能型公路車的優異表現，不論是爬坡或是一般的騎乘，皆能激發騎士的潛能”。更輕、更快、更強，就是新一代Langma的最佳註解。\r\n\r\n首先，新一代Langma在車架組的重量上較上一代減輕了60公克，值得特別注意的是，新一代Langma不像以往使用ISP一體式車架的設計，而是用更先進的碳纖製程及連續碳纖維技術打造出更輕的車架組，全新開發的超輕量全碳纖SLR座管搭配鈦螺絲，僅重141公克，讓騎士不僅能有更輕量的車架，還能同時享有方便調整座高的絕佳便利性。\r\n\r\n在與他牌的比較當中，全新Langma相比 Specialized S-WORKS Tarmac Disc車架組更輕了105公克，至於Trek Emonda SLR 9 Disc雖看似在重量上比Langma稍輕了32公克，但在接下來的剛性比較上卻是明顯的落後Langma許多。\r\n\r\n剛性之所以重要，是為了將騎乘時的能量耗損最小化，以達到最佳速度及效率。當車架面對外在受力時(可想像成抽車或是上坡時的用力踩踏)，形變量越大，則表示騎乘時會有越多的能量耗損。全新Langma在剛性的表現上大幅領先對手，提供騎士最佳的動能傳遞表現。\r\n\r\n因為自行車製造工藝與碳纖科技的不斷進步，若僅僅是單獨追求”輕量”或”剛性”等某一車架性能的極致，則可能出現超輕量卻剛性不佳、或是剛性很好卻過於笨重的車架問題，如何在輕量與剛性之間做出完美的平衡，對於新一代的公路競賽自行車來說將更為重要。Langma在與他牌的車款比較當中，以優秀的剛性與輕量化表現，在剛性/重量比的效能上遠勝過對手24%，說明新一代Langma正是新世代女性在競賽自行車的最佳選擇。', '2022-06-26', 1),
-(16, 'LANGMA - 美形設計', 'Liv致力於讓更多女性騎上自行車，所以不僅是將自行車依據女性的身材比例與肌力運作模式打造，Liv團隊在自行車的外觀設計上更是一點都不馬虎，就是希望每一台Liv的自行車都讓車主留下美好的第一印象。而今年6月全新發表的Langma，更是將Liv自行車的外形設計推向另一個高峰。\r\n\r\n首先在Langma整體造型上，以Liv一貫的設計語言-Tensio(逸動)，打造出流線的車架外形，完美呈現Langma 身為新世代女性公路競賽自行車的速度感，無論動與靜，Langma 皆展現出無比的生命力。\r\n\r\n有了流線的車架造形，接著就是塗裝顏料的選擇了，儘管Liv一直以來的塗裝設計已獲得不少車友的肯定，但Liv不以此為滿，今年特別選用了德Merck 集團的專利XIRALLIC® 和COLORSTREAM®顏料運用在Langma Advanced SL Disc以及Langma Advanced Pro Disc，賦予Langma 更為活潑的生命力。Xirallic® 顏料以強烈的閃爍效果聞名，出色的閃爍效果來自於以獨特製程得出的晶體，能與日光輝映出無與倫比的絢麗效果; COLORSTREAM®則屬於變色漆，迷人的色彩變換，即使在暗淡的光線下也能看見，透過不斷改變、互相流轉的多種細微的顏色變換，創造Langma無限的造型潛能。\r\n\r\n除了車架造形和塗料選擇，Liv團隊也不斷的精進塗裝技術，在Langma Advanced SL Disc的車款上，以輕透塗裝技術，在不影響Xirallic® 塗料閃爍效果的情況下，把象徵最高等級的碳纖車架質感完整呈現，既低調卻又奢華，對於追求極致輕量的車友來說，輕透塗裝更是最佳選擇。\r\n \r\n新一代的Langam在整體外形設計上不斷的突破，從車架造形、塗料的選用到塗裝技術，皆投入了非常大的心力，正是要讓每一個愛美的妳，對Langma留下最美好的第一印象。 New Langma全新上市，點這裡來查看Langma全系列車款。\r\n ', '2022-06-23', 2);
+(1, '強勢回歸，Matthews睽違一年半再奪單站勝利', '31歲的Michael Matthews在騎著TCR ADVANCED SL DISC，並搭配使用CADEX輪組系統贏得首站勝利後，率先穿上Volta a Cataluyna的領騎衫。這位澳洲明星選手在兩天前的Milan-San Remo古典賽即展現自己相當好的狀態，雖然最終是以第四名的成績與頒獎台失之交臂，但依舊可以看出Michael Matthews已一掃去年的低潮，而他也立即以單站勝利向大家說明自己已強勢回歸。\n\n　　第一站的終點是一段相當具有挑戰性的爬坡終點，但Michael Matthews可能比任何人都要熟悉，因為他曾在2019年在同一地點獲得單站勝利。”我真的有好長一段時間沒贏過了，所以能回到熟悉的地方再一次的贏得勝利，對我來說真的意義重大。”\n\n　　在西班牙舉行的Volta a Cataluyna多日賽事將持續進行，系列賽將在週日於巴塞隆納結束。”我們有很棒的團隊來參與這場賽事，” Matthews說，”我能在這類型的賽段展現競爭力，Kaden Groves將主攻平路衝刺站，至於Simon Yates則是GC和爬坡站的第一人選，我們能再任何賽段展現強大的競爭力，而且我們有了一個很棒的開始。”', '2022-06-01', 31),
+(2, 'Simon Yates單飛進站，奪下巴黎-尼斯大賽最終站冠軍', 'Simon Yates本次在法國舉行的巴黎-尼斯大賽維持著相當好的狀態，不僅在第四站的計時賽拿下第五名的好成績，在爬坡賽站也展現出他身為頂級爬坡好手的實力，他騎著TCR Advanced SL，搭配CADEX 輪組系統，戴著Rev Pro MIPS公路安全帽，在第七天的皇后站Col de Turini獲得第三名，接著在最終站贏下單站冠軍。\n \n       最終站除了有五個分級坡考驗著選手，濕冷嚴峻的天氣對選手更是一大挑戰，Simon Yates克服了一切，並在最後一個坡段發起了致勝一擊。「剛開始爬坡時，Quintana 就開始加速。」Yates說，「他(Quintana)真的帶出了一個非常快速的節奏，但我腦中就只有想著單站冠軍，我不確定我是不是能在比賽中取得優勢，但如果不去嘗試就永遠不知道答案，所以我放手一搏、盡我所能的做出攻擊，儘管這不是賽前的戰術設定。」\n\n        Yates在賽前落後領先的Roglic 47秒的時間，最終站雖然在爬坡拉出25秒的優勢，但在最後的下坡路段，2位Jumbo-Visma選手的組合依舊占盡優勢。「我心中當然也想贏得總冠軍，但我在下坡段因為身型的關係確實比較吃虧一點，加上他們有雙人小組的搭配，所以要逆轉確實不容易。」Yates說，「今天天氣真的很嚴峻，但我過去也有在這邊比賽的經驗，所以我準備得相當充足。」\n\n       這也已經是Yates在巴黎-尼斯贏得的第四座單站冠軍，也是第二次總排第二名。「現在我拿了兩次總排第二，未來有機會也許我會再回來挑戰總冠軍，但無論如何，我很滿意我這一週的表現。」\n\n       這一場勝利也給了Yates相當大的自信心，接下來他將瞄準本賽季的最大目標，也就是將在五月展開的環義大利大賽。', '2022-06-02', 1870),
+(3, '狀態絕佳!Groenewegen奪下環沙烏地阿拉伯第五站冠軍及衝刺王紅衫', '今年加入BikeExchange-Jayco車隊的荷蘭籍衝刺手Groenewegen繼環沙烏地阿拉伯賽事第三站贏得他與車隊今年首勝之後，又再次展現他季初令人印象深刻的狀態。在他的隊友們完美的帶領下，28歲的Groenewegen騎著他的Propel Advanced SL Disc衝過終點線，擊敗對手Daniel McLay與Davide Ballerini，拿下第2勝。\r\n\r\n搭配 CADEX 65 輪組系統 與 Giant Pursuit 安全帽的Groenewegen賽後分享：「隊友們完成極佳的工作，盡全力協助我(破風、補給與帶衝)，我們在3個衝刺賽站拿下2勝，真的非常棒！」\r\n\r\n除了2站勝利外，幫助Groenewegen在第五站獲勝擊敗另兩名對手的隊友Luka Mezgec也在第四站拿下第二名的佳績。而第五站的勝利，也幫助Groenewegen奪下衝刺王紅衫，結束車隊勝利的一週。', '2022-06-08', 666),
+(4, 'Groenewegen奪下BikeExchange-Jayco車隊賽季首勝', 'Groenewegen 在環沙烏地阿拉伯的第三站使用Giant Propel Advanced SL自行車與CADEX 65輪組系統的搭配，擊敗了勁敵Daniel McLay與Caleb Ewan，贏得了第三站的單站冠軍。\r\n\r\n“我們設定了一個非常好的作戰計畫，而且大家都執行得非常好。” Groenewegen接著說:”這只是我今年的第二次終點衝刺，但感覺我們的團隊就好像已經合作了兩年一樣。”\r\n\r\n為期五天的環沙烏地阿拉伯賽，是UCI亞巡賽的賽事之一，而第3站的終點設在沙烏地阿拉伯的AIUIa舊城區，在賽事中選手面臨了強大陣風的挑戰，所以在比賽前段就以已經分裂出了好幾個集團，最後僅有27為選手留在領先集團，而Groenewegen與隊友Luka Mezgec就在其中。但最後在比賽結束前，第二集團追上了領先集團，以大約50 人的集團前往最後的集團衝刺。\r\n\r\n“這一站真的蠻瘋狂的，” Groenewegen說。” Luka Mezgec和我一起待在領先集團，但後來的逆風讓追趕集團趕上我們，所以大部分的選手都回到了集團，而我很高興我的隊友們能回到集團當中，幫助我們一起贏得最後的勝利。”', '2022-06-20', 99),
+(5, ' Iden逆轉拿下PTO錦標賽冠軍  2020-12-16 世界冠軍要來當一日小編啦!  2021-', 'Giant宣布與登記在UCI WorldTour級別的BikeExchange-Jayco車隊成為合作夥伴，重返世界一級賽場，Giant提供BikeExchange-Jayco男子車隊器材贊助，將目標放在三大賽、單日古典賽和其他頂級的公路車賽事，而女子隊則是由同集團女性自行車品牌Liv提供贊助。\r\n \r\n對於能與Giant成為合作夥伴，BikeExchange-Jayco車隊認為這是車隊即將展開的第11個賽季中非常重要的一步，新加入的八位選手將加入原先的團隊，包含曾拿下環西班牙大賽冠軍與站上環義大利大賽頒獎台的Simon Yates，以及曾經贏得環法大賽衝刺綠衫的Michael Matthews，衝刺、爬坡、計時和GC選手都一併到位，新的一年團隊戰力將更佳完整。\r\n \r\n巨大集團(Giant Group)行銷長Phoebe Liu說:「Giant在過去20年一直是站在職業公路賽事的最前端，很開心能與BikeExchange-Jayco車隊合作重返世界一級的賽場。在與頂尖職業車隊的合作下，我們能不斷的精進並提升自我，進而為全世界的自行車騎士帶來最佳的騎乘體驗。」\r\n \r\n2022年BikeExchange-Jayco車隊將有來自12個不同國家的29位選手，除了前述提到的Yates和Matthews，車隊也簽下了荷蘭籍的衝刺好手Dylan Groenewegen，生涯至今已累計58場勝利。其他幾位新成員包含美國國家計時冠軍Lawson Craddock和義大利國家計時冠軍Matteo Sobrero，以及Alex Balmer (瑞士), Jan Maas (荷蘭), Kelland O’Brien (澳洲), Jesus David Peña (哥倫比亞)和Campbell Stewart (紐西蘭)\r\n \r\nBikeExchange-Jayco車隊經理Brent Copeland說:「很開心Giant能加入我們，作為我們車隊的器材贊助夥伴，他們不僅是投入大量的時間與精力在研發最新、最好的產品與技術，Giant對於自行車的熱情更是讓我們有深切的感受，也是我們覺得最難能可貴的地方。能夠與Giant這種不遺餘力支持我們的品牌合作真的很重要，他們提供給車隊的資源讓我們感到興奮。我們的合作目標清楚明確，而我們會盡一切的努力來完成目標，對於即將到來的2022賽季，我們充滿信心與動力，且迫不及待的想展開這趟旅程。」\r\n \r\nBikeExchange-Jayco車隊將會使用Giant品牌的自行車來面對所有的比賽，並搭配使用CADEX輪組系統，同時選手會配戴Giant Rev Pro 公路安全帽或Giant Pursuit TT 計時空力安全帽出賽，並在未來與Giant工程師一同開發、測試更多全新的自行車產品。', '2022-06-11', 123456),
+(6, 'XTC Advanced SL 29世界冠軍特式版帥氣登場!', '來自哥倫比亞的「獅王」Leonardo Páez Léon(同Lion，為Páez小名)連續兩年拿下XC Marathon的世界冠軍，除了穿上代表世界冠軍的五色衫，當然也少不了一台冠軍特式車。\r\n \r\nPáez在2020年騎著XTC Advanced SL 29，於土耳其技壓群雄奪下世界冠軍，所以特式版的XTC Advanced SL 29車架以白色為底，再將代表世界冠軍的五色筆刷揮灑於上，襯托出XTC敏捷穿梭於賽道間的輕盈感；而後下叉上 #LionPaez的專屬Hashtag，以及座管處上象徵萬獸之王的雄獅標章，皆代表著這支冠軍特式版車架至高無上的榮耀。\r\n \r\n有興趣的粉絲能在FaceBook及Instagram上追蹤Páez，看他騎乘XTC Advanced SL 29冠軍特式版車架馳騁於賽道上喔。', '2022-06-13', 5554),
+(7, 'Liv Racing Team 正式發表 全新車衣再次出發', 'CCC-Liv一級職業女子車隊，今年繼續由Liv贊助，並改名Liv Racing重新換裝出發。將在1/10與新加入的比利時Cyclocross國家冠軍Lotte Kopecky發表最新的車隊版車衣設計，選手們將會換上由Liv設計、瑞士車衣品牌CUORE製作的茄紫色戰袍出戰2021賽季。\r\n \r\n「週日將會是我身為Liv Racing車隊一員的首場比賽，我將會在比賽中騎上最新的Brava Advanced與Liv Racing車衣。」Lotte Kopecky說到，「最新的車衣設計非常漂亮，時尚、簡潔又具有個性。」\r\nLiv做為Liv Racing車隊的贊助品牌，是為了貫徹品牌對女性騎士的承諾，從初學者到賽場上的選手，鼓勵更多女性參與這項運動。\r\n \r\n今年的車隊版車衣設計精神在於凸顯女性堅毅不拔的個性，搶眼的車衣設計將站在頂尖的世界舞台上，而大膽別致的野花就像是女性一樣，吸引所有人的目光。這份意涵，要獻給世界上所有的女性，以及Liv品牌的創辦人Bonnie Tu，共同創造一個美好的自行車環境。\r\n \r\n「我們非常榮幸能夠全力支持Liv Racing一級職業女子車隊，Liv一直以來投入許多資源來彌平自行車職業領域的男女差異以及提供更多女性機會。」Liv創辦人兼Giant Group董事長，Bonnie Tu說，「當我們在設計這件車衣時，我們的目標是如何在眾多選手中脫穎而出，並且顛覆傳統，同時與Liv的自行車相同，秉持專為女性且出自女性(For Women, By Women)的原則來設計這件車衣。亮眼的設計並不代表與其他人格格不入，我們想要傳達的是來自Liv內部的力量與經驗，就如同穿上它的選手一樣，受人景仰且注目。」\r\n至於車衣上搶眼到無法忽視的「無名的野花」是什麼？意指休耕時在沒有耕耘與灌溉的農地上，也能夠逆勢而生的堅毅野花。妳不需要是什麼有名的天堂鳥或玫瑰，妳就是妳，每一個獨一無二的妳！Liv深信自行車是平等、多元、自由、賦權與鼓舞人心的，Liv支持所有的女性，無論是第一天學會騎車的妳、正準備環義賽的妳、正打算嘗試第一場三鐵的妳，Liv以支持女性為品牌核心，研究、開發、設計、鼓舞、支持各樣的自行車，以成就各種狀態與需求的女人、女孩們。\r\nLiv Racing一級職業女子車隊將會穿上由CUORE提供的頂尖人身商品，能夠提升選手表現、來自各種路況的適當保護、優良的體溫調節特性，讓車隊在世界巡迴的比賽中遊刃有餘。「CUORE在自行車專業領域上已經有30年的豐富經驗，這套由Liv Racing車隊穿上的車衣，是以因應世界巡迴賽的高強度需求的前提下所設計的。」CUORE營運長Chris Munro解釋，「Liv所設計的車衣非常新穎，與車衣的功能及剪裁上非常相搭，我們非常高興能夠支持Liv Racing的選手們。」\r\n\r\nLiv Racing一級職業女子車隊將身著新車衣，首先在西班牙進行為期兩個月的訓練營，為2021賽季的第一場比賽Vuelta CV Feminas (2/18-2/21) 暖身,準備在新的一年大展身手。', '2022-06-17', 135),
+(8, '世界冠軍要來當一日小編啦!', '連續兩年拿下鐵人三項世界冠軍的Gustav Iden，將受邀擔任Giant Bicycles Facebook粉絲專頁的一日小編，並於台灣時間12/17晚上8點於Giant Bicycles粉絲專頁開直播與大家互動。\r\n \r\n來自挪威的Iden，於2019帶著「埔鹽順澤宮」宮帽奪下Ironman 70.3世錦賽冠軍後，在台灣掀起來一陣鐵人旋風，並於2019年底宣布與Giant攜手合作。實力與話題兼具的Iden，騎著Giant Trinity三鐵車，使用CADEX輪組，2020年於PTO鐵人三項擊敗世界排名前40的頂尖好手，再次奪得世界冠軍。\r\n \r\n連續兩年奪冠的Iden，也受邀於12/17擔任Giant Bicycles粉絲專頁的一日小編，並於台灣時間晚上8點開直播與粉絲互動，與大家分享他的訓練日常，對Iden有興趣的各位粉絲們，千萬不要錯過啦!', '2022-05-06', 74747),
+(9, 'Iden逆轉拿下PTO錦標賽冠軍', '台灣粉絲所熟悉的Iden在美國佛州舉辦的Challenge Daytona比賽中逆轉拿下冠軍， 此次比賽同時也是PTO (Professional Triathletes Organisation職業鐵人三項運動組織)2020年度的錦標賽，必須是世界排名前40的選手才能參加，而Iden目前排名雖然不在PTO前40名內，但因為2019 IRONMAN 70.3世錦賽奪冠的亮眼表現而獲得外卡資格，Iden也再次於高手雲集的賽事中證明自己的頂尖實力。\r\n \r\n這場總獎金超過100萬美元的賽事，在Daytona國際賽車場舉行，跟以往的比賽距離不同，選手們要依序完成2公里游泳、80公里的自行車(20圈賽道，每圈4公里)以及18公里的跑步(4圈賽道，每圈4.5公里)。捷安特贊助的兩位三鐵選手Iden與Sam Appleton都有參加這場比賽，兩人皆騎乘Trinity三鐵車，並搭配CADEX空力輪組。Sam相較於Iden在游泳與騎車有比較好的表現，在自行車項目完成後以第二名之姿進入最後的跑步賽段，最終拿下第六名。而大家所熟悉的Iden， 在完成游泳及自行車後，以第15名的表現、落後領先者1分36秒進入自己所擅長的跑步項目。Iden在剩最後兩圈時超越對手，並大幅拉開領先差距，最後以51秒的差距拿下勝利。\r\n \r\n談到這場勝利，以外卡資格奪冠的Iden說：「這次的比賽跟2019 IRONMAN 70.3世錦賽的風格完全不同，這次的賽道非常的規律(繞圈型式)，所以我其實不太確定自己能有什麼樣的表現。」「但很幸運的是，我在自行車項目採取的策略很成功，儘管大家不斷的在自行車項目超越我去追擊領先集團，但我依舊非常滿意自己在比賽當下的表現，最後我也再一次拿下這場不可思議的勝利。」', '2022-05-18', 7477),
+(10, '全國自由車公路錦標賽 杜志濠計時賽再當最速男 吳之皓摘計時/公路雙亞軍', '2020全國自由車公路錦標賽於11月22日在台東縣及花蓮縣舉行，此次比賽分別於22日進行個人計時賽，23日進行個人公路賽，全國菁英好手匯聚一堂，全力角逐「全國冠軍」榮銜。\r\n11月22日上午男子菁英組分為五個梯次進行比賽，最後由杜志濠拿下全場最佳成績41分08.731秒，從57名出賽選手中脫穎而出。第二名由前勁車隊吳之皓以42分13.434秒完賽，第三名則由捷安特哥倫布車隊的虞子諒以42分21.189秒拿下。杜志濠賽後表示：「兩年前也跑過這個路線，今天算是挑戰兩年前的配速，前兩圈比較保守一點，最後一圈全力以赴，比自己兩年前進步了30秒，算是成功的一次驗收。」\r\n連同第四名捷安特哥倫布車隊的李廷威在內，本屆全錦賽計時賽前四名的選手皆騎乘計時版Trinity，可說是充分展現出Trinity當初在設計時，為追求極速而生的使命。另外，本屆計時賽冠軍杜志豪也特別指定使用CADEX空力輪組做為比賽輪使用，CADEX空力輪組不僅輕量，十足的剛性與低滾組的產品特色，順利的幫助杜志濠在計時賽中奪下冠軍。\r\n \r\n23日所舉行的公路賽，比賽路線途經台東縣及花蓮縣，男子菁英組及青年組選手由台東森林公園出發，沿著台九線花東縱谷公路北上，直到玉里轉進玉長公路，最後由台十一線返回台東森林公園終點，全長160公里。\r\n \r\n競爭激烈的男子菁英組，在前段逆風段不斷上演突圍與追趕的戲碼，一直到玉長公路前的零星進攻都無法成型，經過前段的逆風，與玉長公路的爬坡段考驗之後，大集團開始瘦身，而轉出玉長公路之後，長濱地區一陣風雨，加上轉變成順風的天候，集團前方頓時提高速度，此時領先集團成型，陳建良、吳之皓、巫帛宏、熊凱文、虞子諒率先成為五人領先集團，而計時賽冠軍杜志濠與去年冠軍盧紹軒兩人合作追出並加入前方五人，成為七人領先集團。在順風幫助之下，加上前面的長途耐力消耗，後方集團已經無法追回，領先七人中美利達諾飛客車隊有三位選手，包括尋求衛冕的盧紹軒以及巫帛宏、熊凱文，最後衝刺階段，台灣隊長巫帛宏化身破風手，最後階段杜志濠提前發動衝刺，而最後階段陳建良強勢衝出，成為2020的公路全國冠軍。至於前一日於計時賽摘銀的吳之皓，則騎著TCR再次於最後的衝刺拿下亞軍，在本屆全錦賽收下兩面銀牌。', '2022-05-25', 4525);
 
 -- --------------------------------------------------------
 
@@ -590,6 +468,7 @@ INSERT INTO `news` (`id`, `title`, `content`, `date`, `touch`) VALUES
 -- 資料表結構 `newspicture`
 --
 
+DROP TABLE IF EXISTS `newspicture`;
 CREATE TABLE `newspicture` (
   `id` int(11) NOT NULL,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
@@ -634,34 +513,7 @@ INSERT INTO `newspicture` (`id`, `name`) VALUES
 (36, '126384211_151851430002268_7647593435213710851_o.jpg'),
 (37, '125546058_151851443335600_7100530608106816969_o.jpg'),
 (38, '126146414_151851526668925_7461926132980838882_o.jpg'),
-(39, '126196924_152430609944350_6546204065210623768_o.jpg'),
-(40, 'Web-2022CadexTri上市banner.jpg'),
-(41, '座艙設定-min.jpg'),
-(42, '前叉設計-min.jpg'),
-(43, '賽事裝備完美整合-min.jpg'),
-(44, '740X400.png'),
-(45, 'Surge_Pro_Product_Stylized_White_05-min.jpg'),
-(46, 'Yates 2-min.jpg'),
-(47, 'ExoBeam-min.jpg'),
-(48, 'KT-MY22 ARX24小鐵版-01.jpg'),
-(49, 'KT-MY22 ARX24小鐵版-02.jpg'),
-(50, 'KT-MY22 ARX24小鐵版-03.jpg'),
-(51, 'KT-MY22 ARX24小鐵版-04.jpg'),
-(52, 'KT-MY22 Revolt AD 0-02.jpg'),
-(53, 'KT-MY22 Revolt AD 0-05.jpg'),
-(54, 'KT-MY22 Revolt AD 0-06.jpg'),
-(55, 'KT-MY22 Revolt AD 0-07.jpg'),
-(56, 'KT-MY22 Revolt AD 0-04.jpg'),
-(57, 'KT-MY22 Revolt AD 0-03.jpg'),
-(58, 'News-2021Langma效率-02.jpg'),
-(59, 'News-2021Langma效率-03.jpg'),
-(60, 'News-2021Langma效率-04.jpg'),
-(61, 'News-2021Langma效率-05.jpg'),
-(62, 'News-2021Langma效率-06.jpg'),
-(63, 'News-2021Langma美形-3.jpg'),
-(64, 'News-2021Langma美形-4.jpg'),
-(65, 'News-2021Langma美形-5.jpg'),
-(66, 'News-2021Langma美形-6.jpg');
+(39, '126196924_152430609944350_6546204065210623768_o.jpg');
 
 -- --------------------------------------------------------
 
@@ -669,6 +521,7 @@ INSERT INTO `newspicture` (`id`, `name`) VALUES
 -- 資料表結構 `news_picture`
 --
 
+DROP TABLE IF EXISTS `news_picture`;
 CREATE TABLE `news_picture` (
   `news_id` int(10) NOT NULL,
   `picture_id` int(10) NOT NULL
@@ -713,33 +566,7 @@ INSERT INTO `news_picture` (`news_id`, `picture_id`) VALUES
 (10, 36),
 (10, 37),
 (10, 38),
-(10, 39),
-(11, 40),
-(11, 41),
-(11, 42),
-(11, 43),
-(12, 45),
-(12, 46),
-(12, 47),
-(13, 48),
-(13, 49),
-(13, 50),
-(13, 51),
-(14, 52),
-(14, 53),
-(14, 54),
-(14, 55),
-(14, 56),
-(14, 57),
-(15, 58),
-(15, 59),
-(15, 60),
-(15, 61),
-(15, 62),
-(16, 63),
-(16, 64),
-(16, 65),
-(16, 66);
+(10, 39);
 
 -- --------------------------------------------------------
 
@@ -747,6 +574,7 @@ INSERT INTO `news_picture` (`news_id`, `picture_id`) VALUES
 -- 資料表結構 `order_list`
 --
 
+DROP TABLE IF EXISTS `order_list`;
 CREATE TABLE `order_list` (
   `order_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
@@ -779,10 +607,7 @@ INSERT INTO `order_list` (`order_id`, `user_id`, `order_create_time`, `order_sta
 -- 資料表結構 `order_status`
 --
 
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 DROP TABLE IF EXISTS `order_status`;
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `order_status` (
   `id` int(3) NOT NULL,
   `order_status` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -802,6 +627,7 @@ INSERT INTO `order_status` (`id`, `order_status`) VALUES
 -- 資料表結構 `payment_method`
 --
 
+DROP TABLE IF EXISTS `payment_method`;
 CREATE TABLE `payment_method` (
   `id` int(2) NOT NULL,
   `payment_method_name` varchar(100) NOT NULL,
@@ -826,10 +652,7 @@ INSERT INTO `payment_method` (`id`, `payment_method_name`, `valid`) VALUES
 -- 資料表結構 `payment_status`
 --
 
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 DROP TABLE IF EXISTS `payment_status`;
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `payment_status` (
   `id` int(2) NOT NULL,
   `payment_status` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -849,6 +672,7 @@ INSERT INTO `payment_status` (`id`, `payment_status`) VALUES
 -- 資料表結構 `product`
 --
 
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `product_id` int(5) NOT NULL,
   `product_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -870,8 +694,8 @@ INSERT INTO `product` (`product_id`, `product_name`, `product_images`, `product_
 (1, '挑戰者300', '挑戰者300.jpg', 18800, '2022-04-22', 1, 1, 'Teal', 1, 1),
 (2, '公爵500 ', '公爵500.jpg', 11800, '2022-04-12', 1, 1, 'Black', 2, 1),
 (3, '探索者100\r\n', '探索者100.jpg\r\n', 11800, '2022-04-06', 1, 1, 'Red', 4, 1),
-(4, '公爵300', '公爵300.jpg', 12800, '2022-04-20', 1, 1, 'Teal', 4, 1),
-(5, '勇士500-D', '勇士500-D.jpg', 9500, '2022-04-26', 1, 1, 'Teal', 1, 1),
+(4, '公爵300', '公爵300.jpg', 12800, '2022-04-20', 1, 1, 'Teel', 4, 1),
+(5, '勇士500-D', '勇士500-D.jpg', 9500, '2022-04-26', 1, 1, 'Teel', 1, 1),
 (6, '勇士500-V', '勇士500-V.jpg', 8500, '2022-04-26', 1, 1, 'Black', 3, 1),
 (7, '勇士300-DS', '勇士300-DS.jpg', 8500, '2022-04-01', 1, 1, 'Black', 3, 1),
 (8, '勇士300-V', '勇士300-V.jpg', 7500, '2022-04-26', 1, 1, 'White', 5, 1),
@@ -948,6 +772,7 @@ INSERT INTO `product` (`product_id`, `product_name`, `product_images`, `product_
 -- 資料表結構 `product_brand`
 --
 
+DROP TABLE IF EXISTS `product_brand`;
 CREATE TABLE `product_brand` (
   `brand_id` int(4) NOT NULL,
   `brand_name` varchar(100) NOT NULL
@@ -970,6 +795,7 @@ INSERT INTO `product_brand` (`brand_id`, `brand_name`) VALUES
 -- 資料表結構 `product_category`
 --
 
+DROP TABLE IF EXISTS `product_category`;
 CREATE TABLE `product_category` (
   `product_category_id` int(3) NOT NULL,
   `product_category_name` varchar(20) NOT NULL
@@ -987,66 +813,10 @@ INSERT INTO `product_category` (`product_category_id`, `product_category_name`) 
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `product_check`
---
-
-CREATE TABLE `product_check` (
-  `product_check_id` int(5) NOT NULL,
-  `product_check_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `product_check`
---
-
-INSERT INTO `product_check` (`product_check_id`, `product_check_name`) VALUES
-(1, '採用三種不同管壁厚薄度打造的全鋁合金車體'),
-(2, '可鎖定前、後避震'),
-(3, '配備升降座桿'),
-(4, 'FLOAT LINK浮動連桿避震平台'),
-(5, 'Shimano 1X 傳動系統'),
-(6, '29er輪組'),
-(7, '輕量CF3碳纖維車體，29er輪徑'),
-(8, 'RockShox Reba 100mm避震前叉，支援遠端鎖定'),
-(9, '相容無內胎系統的輪組，低滾動阻力的Maxxis車胎'),
-(10, 'Shimano XT\\SLX 12s 傳動系統，油壓碟煞'),
-(11, '車架支援升降座桿走線配置'),
-(12, '碳纖維座桿'),
-(13, 'XC\\Marathon 騎乘幾何'),
-(14, 'Manitou Markhor 100mm避震前叉，支援遠端鎖定'),
-(15, 'Shimano XT\\Deore 12s 傳動系統，油壓碟煞'),
-(16, '隱藏式走線設計'),
-(17, '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車體；29er輪徑'),
-(18, 'Shimano Deore 11s 傳動系統；油壓碟煞系統'),
-(19, 'SMART ENTRY 內走線設計'),
-(20, '平整焊接、雙重管壁厚度打造的全鋁合金車體；29er輪徑'),
-(21, '較為直挺的騎乘幾何，騎乘操控舒適無負擔'),
-(22, 'Shimano XT 12s 傳動系統；XT油壓碟煞系統'),
-(23, 'Shimano XT\\SLX 2x12 傳動系統'),
-(24, 'Shimano油壓碟煞系統'),
-(25, '採用三種不同管壁厚薄度打造的全鋁合金車體，林道騎乘幾何最佳化'),
-(26, 'FLOAT LINK浮動連桿避震平台，後避震行程為120mm設定；130mm避震前叉'),
-(27, '可鎖定前、後避震'),
-(28, 'Shimano 1X 傳動系統'),
-(29, '配備升降座桿'),
-(30, '29er輪組'),
-(31, 'RockShox\'s SID SL 100mm避震前叉，支援遠端鎖定'),
-(32, 'Reynolds碳纖維輪組，低滾動阻力的Maxxis車胎'),
-(33, 'Shimano XT 12s 傳動系統，XT制動'),
-(34, '碳纖維S-FLEX高吸震座桿'),
-(35, '雙重管壁厚度打造的堅固耐用全鋁合金車體'),
-(36, '140 mm 避震前叉'),
-(37, '長延伸量(Reach)，頭管、立管角度最佳化，林道玩樂騎乘幾何'),
-(38, '29er輪徑，2.4”車胎(車架可支援至2.5”)'),
-(39, '超低跨高車架設計，搭配長行程伸降座桿'),
-(40, '車架具備諸多擴充鎖孔；內走線設計');
-
--- --------------------------------------------------------
-
---
 -- 資料表結構 `product_color`
 --
 
+DROP TABLE IF EXISTS `product_color`;
 CREATE TABLE `product_color` (
   `color_id` int(4) NOT NULL,
   `color_name` varchar(22) NOT NULL,
@@ -1079,6 +849,7 @@ INSERT INTO `product_color` (`color_id`, `color_name`, `color_value`, `valid`) V
 -- 資料表結構 `product_order`
 --
 
+DROP TABLE IF EXISTS `product_order`;
 CREATE TABLE `product_order` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -1096,1031 +867,10 @@ INSERT INTO `product_order` (`order_id`, `product_id`, `quantity`) VALUES
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `product_parts`
---
-
-CREATE TABLE `product_parts` (
-  `product_parts_id` int(5) NOT NULL,
-  `product_parts` varchar(50) NOT NULL,
-  `product_parts_images` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `product_parts`
---
-
-INSERT INTO `product_parts` (`product_parts_id`, `product_parts`, `product_parts_images`) VALUES
-(1, 'RACELITE 61 ALUMINIUM', 'RACELITE 61 ALUMINIUM.png'),
-(2, 'X-TAPER HEADTUBE', 'X-TAPER HEADTUBE.png'),
-(3, 'SMOOTH WELDING', 'SMOOTH WELDING.png'),
-(4, 'INTERNAL CABLE ROUTING', 'INTERNAL CABLE ROUTING.png'),
-(5, 'DOWN TUBE EXIT', 'DOWN TUBE EXIT.png'),
-(6, 'K-MOUNT', 'K-MOUNT.png'),
-(7, 'C-MOUNT', 'C-MOUNT.png'),
-(8, 'TECHNO FORMING SYSTEM', 'TECHNO FORMING SYSTEM.png'),
-(9, 'F-MOUNT', 'F-MOUNT.png');
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `product_product_check`
---
-
-CREATE TABLE `product_product_check` (
-  `product_id` int(5) NOT NULL,
-  `product_check_id` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `product_product_check`
---
-
-INSERT INTO `product_product_check` (`product_id`, `product_check_id`) VALUES
-(1, 1),
-(1, 8),
-(1, 14),
-(1, 19),
-(1, 21),
-(1, 24),
-(2, 3),
-(2, 4),
-(2, 12),
-(2, 16),
-(2, 20),
-(2, 22),
-(3, 4),
-(3, 6),
-(3, 11),
-(3, 12),
-(3, 17),
-(3, 21),
-(4, 2),
-(4, 6),
-(4, 8),
-(4, 12),
-(4, 14),
-(4, 15),
-(5, 5),
-(5, 8),
-(5, 9),
-(5, 16),
-(5, 20),
-(5, 22),
-(6, 1),
-(6, 2),
-(6, 5),
-(6, 13),
-(6, 16),
-(6, 23),
-(7, 5),
-(7, 9),
-(7, 11),
-(7, 12),
-(7, 21),
-(7, 23),
-(8, 3),
-(8, 5),
-(8, 8),
-(8, 9),
-(8, 14),
-(8, 17),
-(9, 7),
-(9, 13),
-(9, 14),
-(9, 15),
-(9, 16),
-(9, 22),
-(10, 3),
-(10, 7),
-(10, 10),
-(10, 12),
-(10, 18),
-(10, 23),
-(11, 1),
-(11, 4),
-(11, 6),
-(11, 11),
-(11, 22),
-(11, 24),
-(12, 3),
-(12, 4),
-(12, 8),
-(12, 13),
-(12, 15),
-(12, 20),
-(13, 4),
-(13, 8),
-(13, 13),
-(13, 17),
-(13, 21),
-(13, 24),
-(14, 4),
-(14, 8),
-(14, 9),
-(14, 15),
-(14, 20),
-(14, 23),
-(15, 2),
-(15, 5),
-(15, 12),
-(15, 15),
-(15, 22),
-(15, 23),
-(16, 3),
-(16, 4),
-(16, 11),
-(16, 12),
-(16, 14),
-(16, 22),
-(17, 2),
-(17, 3),
-(17, 4),
-(17, 5),
-(17, 9),
-(17, 19),
-(18, 3),
-(18, 6),
-(18, 7),
-(18, 9),
-(18, 16),
-(18, 21),
-(19, 5),
-(19, 9),
-(19, 11),
-(19, 14),
-(19, 15),
-(19, 22),
-(20, 2),
-(20, 3),
-(20, 9),
-(20, 13),
-(20, 16),
-(20, 22),
-(21, 2),
-(21, 7),
-(21, 9),
-(21, 14),
-(21, 15),
-(21, 17),
-(22, 3),
-(22, 7),
-(22, 8),
-(22, 18),
-(22, 19),
-(22, 22),
-(23, 1),
-(23, 6),
-(23, 7),
-(23, 15),
-(23, 16),
-(23, 18),
-(24, 2),
-(24, 8),
-(24, 10),
-(24, 12),
-(24, 17),
-(24, 23),
-(25, 3),
-(25, 14),
-(25, 16),
-(25, 17),
-(25, 21),
-(25, 23),
-(26, 3),
-(26, 10),
-(26, 12),
-(26, 13),
-(26, 21),
-(26, 22),
-(27, 16),
-(27, 17),
-(27, 18),
-(27, 21),
-(27, 22),
-(27, 23),
-(28, 1),
-(28, 5),
-(28, 7),
-(28, 10),
-(28, 14),
-(28, 20),
-(29, 9),
-(29, 10),
-(29, 12),
-(29, 13),
-(29, 14),
-(29, 23),
-(30, 3),
-(30, 6),
-(30, 7),
-(30, 9),
-(30, 19),
-(30, 20),
-(31, 3),
-(31, 5),
-(31, 7),
-(31, 8),
-(31, 18),
-(31, 22),
-(32, 15),
-(32, 18),
-(32, 20),
-(32, 21),
-(32, 23),
-(32, 24),
-(33, 9),
-(33, 11),
-(33, 14),
-(33, 15),
-(33, 20),
-(33, 22),
-(34, 2),
-(34, 16),
-(34, 17),
-(34, 18),
-(34, 23),
-(34, 24),
-(35, 12),
-(35, 13),
-(35, 15),
-(35, 17),
-(35, 21),
-(35, 23),
-(36, 5),
-(36, 6),
-(36, 7),
-(36, 11),
-(36, 18),
-(36, 23),
-(37, 8),
-(37, 9),
-(37, 10),
-(37, 13),
-(37, 19),
-(37, 22),
-(38, 2),
-(38, 7),
-(38, 8),
-(38, 9),
-(38, 16),
-(38, 19),
-(39, 6),
-(39, 11),
-(39, 16),
-(39, 19),
-(39, 20),
-(39, 24),
-(40, 6),
-(40, 7),
-(40, 9),
-(40, 10),
-(40, 17),
-(40, 23),
-(41, 7),
-(41, 14),
-(41, 15),
-(41, 20),
-(41, 21),
-(41, 23),
-(42, 1),
-(42, 3),
-(42, 4),
-(42, 5),
-(42, 18),
-(42, 22),
-(43, 2),
-(43, 4),
-(43, 5),
-(43, 15),
-(43, 18),
-(43, 19),
-(44, 4),
-(44, 7),
-(44, 8),
-(44, 12),
-(44, 17),
-(44, 23),
-(45, 4),
-(45, 9),
-(45, 11),
-(45, 12),
-(45, 18),
-(45, 24),
-(46, 3),
-(46, 7),
-(46, 8),
-(46, 13),
-(46, 15),
-(46, 17),
-(47, 4),
-(47, 6),
-(47, 7),
-(47, 10),
-(47, 11),
-(47, 20),
-(48, 1),
-(48, 2),
-(48, 5),
-(48, 17),
-(48, 20),
-(48, 22),
-(49, 5),
-(49, 14),
-(49, 16),
-(49, 17),
-(49, 23),
-(49, 24),
-(50, 2),
-(50, 4),
-(50, 6),
-(50, 11),
-(50, 12),
-(50, 14),
-(51, 2),
-(51, 3),
-(51, 7),
-(51, 8),
-(51, 13),
-(51, 22),
-(52, 3),
-(52, 5),
-(52, 9),
-(52, 15),
-(52, 17),
-(52, 19),
-(53, 7),
-(53, 9),
-(53, 12),
-(53, 13),
-(53, 17),
-(53, 23),
-(54, 2),
-(54, 3),
-(54, 5),
-(54, 9),
-(54, 11),
-(54, 14),
-(55, 2),
-(55, 10),
-(55, 12),
-(55, 13),
-(55, 18),
-(55, 21),
-(56, 5),
-(56, 7),
-(56, 10),
-(56, 15),
-(56, 16),
-(56, 21),
-(57, 5),
-(57, 6),
-(57, 7),
-(57, 9),
-(57, 14),
-(57, 23),
-(58, 5),
-(58, 9),
-(58, 10),
-(58, 13),
-(58, 15),
-(58, 16),
-(59, 4),
-(59, 5),
-(59, 7),
-(59, 10),
-(59, 15),
-(59, 17),
-(60, 2),
-(60, 7),
-(60, 13),
-(60, 15),
-(60, 17),
-(60, 23),
-(61, 8),
-(61, 9),
-(61, 13),
-(61, 14),
-(61, 17),
-(61, 23),
-(62, 5),
-(62, 7),
-(62, 9),
-(62, 14),
-(62, 19),
-(62, 20),
-(63, 3),
-(63, 6),
-(63, 9),
-(63, 13),
-(63, 16),
-(63, 19),
-(64, 5),
-(64, 6),
-(64, 7),
-(64, 12),
-(64, 13),
-(64, 23),
-(65, 1),
-(65, 7),
-(65, 13),
-(65, 17),
-(65, 20),
-(65, 22),
-(66, 3),
-(66, 6),
-(66, 7),
-(66, 17),
-(66, 21),
-(66, 23),
-(67, 2),
-(67, 8),
-(67, 13),
-(67, 16),
-(67, 17),
-(67, 22),
-(68, 3),
-(68, 6),
-(68, 9),
-(68, 16),
-(68, 17),
-(68, 24),
-(69, 4),
-(69, 7),
-(69, 8),
-(69, 15),
-(69, 16),
-(69, 20),
-(70, 12),
-(70, 14),
-(70, 18),
-(70, 20),
-(70, 21),
-(70, 22),
-(71, 11),
-(71, 14),
-(71, 16),
-(71, 18),
-(71, 19),
-(71, 23),
-(72, 1),
-(72, 9),
-(72, 10),
-(72, 17),
-(72, 20),
-(72, 24),
-(73, 3),
-(73, 4),
-(73, 7),
-(73, 14),
-(73, 15),
-(73, 18),
-(141, 1),
-(141, 2),
-(141, 3),
-(141, 4),
-(141, 5),
-(141, 6),
-(142, 1),
-(142, 2),
-(142, 3),
-(142, 4),
-(142, 5),
-(142, 6),
-(143, 1),
-(143, 2),
-(143, 3),
-(143, 4),
-(143, 5),
-(143, 6),
-(144, 1),
-(144, 2),
-(144, 3),
-(144, 4),
-(144, 5),
-(144, 6),
-(145, 1),
-(145, 2),
-(145, 3),
-(145, 4),
-(145, 5),
-(145, 6),
-(146, 1),
-(146, 2),
-(146, 3),
-(146, 4),
-(146, 5),
-(146, 6),
-(147, 1),
-(147, 2),
-(147, 3),
-(147, 4),
-(147, 5),
-(147, 6),
-(148, 1),
-(148, 2),
-(148, 3),
-(148, 4),
-(148, 5),
-(148, 6);
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `product_product_color`
---
-
-CREATE TABLE `product_product_color` (
-  `product_id` int(5) NOT NULL,
-  `product_color_id` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `product_product_color`
---
-
-INSERT INTO `product_product_color` (`product_id`, `product_color_id`) VALUES
-(141, 1),
-(141, 2),
-(141, 3),
-(141, 5),
-(141, 6),
-(141, 7),
-(141, 8),
-(141, 10),
-(142, 1),
-(142, 2),
-(142, 3),
-(142, 5),
-(142, 6),
-(142, 7),
-(142, 8),
-(142, 10),
-(143, 1),
-(143, 2),
-(143, 3),
-(143, 5),
-(143, 6),
-(143, 7),
-(143, 8),
-(143, 10),
-(144, 1),
-(144, 2),
-(144, 3),
-(144, 5),
-(144, 6),
-(144, 7),
-(144, 8),
-(144, 10),
-(145, 1),
-(145, 2),
-(145, 3),
-(145, 5),
-(145, 6),
-(145, 7),
-(145, 8),
-(145, 10),
-(146, 1),
-(146, 2),
-(146, 3),
-(146, 5),
-(146, 6),
-(146, 7),
-(146, 8),
-(146, 10),
-(147, 1),
-(147, 2),
-(147, 3),
-(147, 5),
-(147, 6),
-(147, 7),
-(147, 8),
-(147, 10),
-(148, 1),
-(148, 2),
-(148, 3),
-(148, 5),
-(148, 6),
-(148, 7),
-(148, 8),
-(148, 10);
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `product_product_parts`
---
-
-CREATE TABLE `product_product_parts` (
-  `product_id` int(6) NOT NULL,
-  `product_parts_id` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `product_product_parts`
---
-
-INSERT INTO `product_product_parts` (`product_id`, `product_parts_id`) VALUES
-(1, 1),
-(1, 3),
-(1, 4),
-(1, 6),
-(1, 7),
-(1, 8),
-(2, 3),
-(3, 1),
-(3, 2),
-(3, 3),
-(3, 5),
-(3, 6),
-(3, 9),
-(4, 3),
-(5, 1),
-(5, 4),
-(6, 1),
-(6, 2),
-(6, 3),
-(6, 4),
-(6, 5),
-(6, 6),
-(6, 7),
-(6, 8),
-(6, 9),
-(7, 1),
-(7, 4),
-(7, 6),
-(7, 9),
-(8, 9),
-(9, 1),
-(9, 2),
-(9, 4),
-(9, 6),
-(9, 7),
-(10, 1),
-(10, 7),
-(10, 8),
-(11, 5),
-(11, 7),
-(11, 8),
-(12, 1),
-(12, 4),
-(13, 1),
-(13, 3),
-(13, 4),
-(13, 5),
-(13, 7),
-(13, 8),
-(13, 9),
-(14, 7),
-(15, 1),
-(15, 2),
-(15, 3),
-(15, 4),
-(15, 5),
-(15, 6),
-(15, 7),
-(15, 8),
-(16, 1),
-(16, 2),
-(16, 3),
-(16, 4),
-(16, 5),
-(16, 6),
-(16, 7),
-(16, 8),
-(16, 9),
-(17, 1),
-(17, 2),
-(17, 3),
-(17, 4),
-(17, 6),
-(17, 7),
-(17, 8),
-(17, 9),
-(18, 1),
-(18, 2),
-(18, 4),
-(18, 5),
-(18, 6),
-(18, 7),
-(18, 8),
-(18, 9),
-(19, 3),
-(19, 4),
-(19, 5),
-(19, 7),
-(19, 9),
-(20, 2),
-(20, 3),
-(20, 6),
-(20, 7),
-(21, 1),
-(21, 2),
-(21, 4),
-(21, 5),
-(21, 9),
-(22, 1),
-(22, 2),
-(22, 3),
-(22, 4),
-(22, 6),
-(22, 8),
-(22, 9),
-(23, 1),
-(23, 2),
-(23, 3),
-(23, 4),
-(23, 5),
-(23, 6),
-(23, 8),
-(23, 9),
-(24, 1),
-(24, 3),
-(24, 5),
-(24, 6),
-(24, 9),
-(25, 1),
-(25, 2),
-(25, 3),
-(25, 4),
-(25, 5),
-(25, 6),
-(25, 7),
-(25, 8),
-(25, 9),
-(26, 6),
-(26, 7),
-(26, 8),
-(27, 1),
-(27, 2),
-(27, 3),
-(27, 4),
-(27, 5),
-(27, 6),
-(27, 7),
-(27, 8),
-(27, 9),
-(28, 1),
-(28, 2),
-(28, 3),
-(28, 4),
-(28, 5),
-(28, 6),
-(28, 7),
-(28, 8),
-(28, 9),
-(29, 7),
-(30, 2),
-(30, 5),
-(30, 6),
-(30, 8),
-(31, 2),
-(31, 4),
-(31, 5),
-(31, 6),
-(31, 7),
-(31, 8),
-(32, 2),
-(33, 3),
-(33, 4),
-(33, 7),
-(33, 8),
-(34, 1),
-(34, 2),
-(34, 3),
-(34, 4),
-(34, 5),
-(34, 6),
-(34, 7),
-(34, 8),
-(34, 9),
-(35, 1),
-(35, 2),
-(35, 3),
-(35, 4),
-(35, 5),
-(35, 6),
-(35, 7),
-(35, 8),
-(35, 9),
-(36, 1),
-(36, 3),
-(36, 5),
-(36, 8),
-(36, 9),
-(37, 2),
-(37, 9),
-(38, 1),
-(39, 1),
-(39, 9),
-(40, 1),
-(40, 2),
-(40, 3),
-(40, 4),
-(40, 6),
-(40, 7),
-(40, 8),
-(40, 9),
-(41, 4),
-(41, 7),
-(42, 1),
-(42, 2),
-(42, 6),
-(42, 8),
-(42, 9),
-(43, 1),
-(43, 2),
-(43, 3),
-(43, 4),
-(43, 5),
-(43, 7),
-(43, 8),
-(43, 9),
-(44, 2),
-(44, 3),
-(44, 5),
-(44, 8),
-(45, 1),
-(45, 2),
-(45, 3),
-(45, 4),
-(45, 7),
-(45, 8),
-(45, 9),
-(46, 2),
-(46, 3),
-(46, 5),
-(46, 6),
-(46, 7),
-(46, 8),
-(47, 4),
-(47, 5),
-(47, 7),
-(48, 4),
-(49, 5),
-(49, 6),
-(50, 1),
-(50, 2),
-(50, 3),
-(50, 4),
-(50, 5),
-(50, 6),
-(50, 8),
-(50, 9),
-(51, 6),
-(52, 2),
-(52, 3),
-(52, 5),
-(52, 7),
-(53, 7),
-(54, 1),
-(54, 2),
-(54, 7),
-(54, 8),
-(55, 1),
-(55, 3),
-(55, 4),
-(55, 5),
-(55, 7),
-(55, 9),
-(56, 1),
-(56, 3),
-(56, 4),
-(56, 5),
-(56, 6),
-(56, 7),
-(56, 9),
-(57, 4),
-(57, 6),
-(57, 7),
-(57, 8),
-(57, 9),
-(58, 1),
-(58, 2),
-(58, 3),
-(58, 4),
-(58, 5),
-(58, 6),
-(58, 7),
-(58, 8),
-(58, 9),
-(59, 1),
-(59, 2),
-(59, 3),
-(59, 4),
-(59, 9),
-(60, 2),
-(60, 3),
-(60, 9),
-(61, 1),
-(61, 2),
-(61, 5),
-(61, 6),
-(61, 9),
-(62, 1),
-(62, 5),
-(62, 6),
-(62, 7),
-(62, 8),
-(63, 1),
-(63, 2),
-(63, 3),
-(63, 4),
-(63, 5),
-(63, 6),
-(63, 7),
-(63, 8),
-(63, 9),
-(64, 6),
-(65, 4),
-(65, 5),
-(66, 1),
-(66, 2),
-(66, 4),
-(66, 6),
-(66, 7),
-(67, 1),
-(67, 4),
-(68, 4),
-(68, 6),
-(68, 8),
-(69, 1),
-(69, 2),
-(69, 3),
-(69, 6),
-(69, 7),
-(69, 8),
-(70, 5),
-(71, 1),
-(71, 2),
-(71, 4),
-(71, 5),
-(71, 6),
-(71, 7),
-(71, 8),
-(71, 9),
-(72, 1),
-(72, 3),
-(72, 5),
-(72, 8),
-(73, 2),
-(73, 5),
-(73, 8),
-(73, 9),
-(141, 1),
-(141, 4),
-(141, 5),
-(141, 6),
-(141, 7),
-(141, 8),
-(142, 1),
-(142, 4),
-(142, 5),
-(142, 6),
-(142, 7),
-(142, 8),
-(143, 1),
-(143, 4),
-(143, 5),
-(143, 6),
-(143, 7),
-(143, 8),
-(144, 1),
-(144, 4),
-(144, 5),
-(144, 6),
-(144, 7),
-(144, 8),
-(145, 1),
-(145, 4),
-(145, 5),
-(145, 6),
-(145, 7),
-(145, 8),
-(146, 1),
-(146, 4),
-(146, 5),
-(146, 6),
-(146, 7),
-(146, 8),
-(147, 1),
-(147, 4),
-(147, 5),
-(147, 6),
-(147, 7),
-(147, 8),
-(148, 1),
-(148, 4),
-(148, 5),
-(148, 6),
-(148, 7),
-(148, 8);
-
--- --------------------------------------------------------
-
---
 -- 資料表結構 `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(4) UNSIGNED NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2162,6 +912,7 @@ INSERT INTO `user` (`id`, `name`, `account`, `password`, `gender`, `birthday`, `
 -- 資料表結構 `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `user_id` int(8) NOT NULL,
   `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2185,8 +936,7 @@ INSERT INTO `users` (`user_id`, `name`, `password`, `email`, `phone`, `photo`, `
 (4, 'wade', '$2b$10$Cp59FFQc.ZOECBe7ztze6OSqOYJbpAt5/.S2l2aM38cYnuB8f1a6S', 'wade@test.com', '0956123478', '', '2022-06-27 13:55:45', '', 1),
 (5, 'mike', '$2b$10$1dXvdqt/A8kA7wBuwQQgYepKLPnBzEYw59.1JcPRuOXhI72KJav7G', 'mike@test.com', '0900000011', '', '2022-06-27 14:06:46', '', 1),
 (6, 'sara', '$2b$10$RG8cuw0fXw9ClCTOBbLeUOnwktD/XUozBW3zBaYdR/zZH0kNQGb8S', 'sara@test.com', '0956123456', '', '2022-06-27 14:20:05', '', 1),
-(13, 'Eason', '$2b$10$R.Atnurm.lXAznm.iAlareYTw4650No1tVhhcSna3fpiWglH/k8Qe', 'a28165965@gmail.com', '0933123456', '1657009752440.png', '2022-06-29 14:02:07', 'q753c4zyIu', 0),
-(14, 'AAAA', '$2b$10$oZCARR7jbvRJOjClo1JA.en2iTxClMh8NVe8a08fU2MjkRxvqehiC', 'asdasdasd@gmail.com', '0977777777', '', '2022-06-30 11:16:41', 'kmoBuTJ292', 0);
+(13, 'Eason', '$2b$10$Riw6.GrKtYmaT7iebqcJf.Tzk3DxINLJ5RHo0yilO4JT.M.L5nhpy', 'a28165965@gmail.com', '0956123456', '', '2022-06-28 17:46:45', 'gV4mztiA8M', 1);
 
 -- --------------------------------------------------------
 
@@ -2194,6 +944,7 @@ INSERT INTO `users` (`user_id`, `name`, `password`, `email`, `phone`, `photo`, `
 -- 資料表結構 `venue`
 --
 
+DROP TABLE IF EXISTS `venue`;
 CREATE TABLE `venue` (
   `id` int(3) UNSIGNED NOT NULL,
   `venue_name` varchar(10) NOT NULL
@@ -2287,42 +1038,12 @@ ALTER TABLE `course_status`
   ADD PRIMARY KEY (`course_status_id`);
 
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
--- 資料表索引 `customizeorder`
---
-ALTER TABLE `customizeorder`
-  ADD PRIMARY KEY (`orderId`);
-
---
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 -- 資料表索引 `delivery`
 --
 ALTER TABLE `delivery`
   ADD PRIMARY KEY (`delivery_id`);
 
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
-========
--- 資料表索引 `favorite_activity`
---
-ALTER TABLE `favorite_activity`
-  ADD PRIMARY KEY (`favorite_user_id`,`favorite_activity_id`);
-
---
--- 資料表索引 `favorite_course`
---
-ALTER TABLE `favorite_course`
-  ADD PRIMARY KEY (`favorite_user_id`,`favorite_course_id`);
-
---
--- 資料表索引 `favorite_product`
---
-ALTER TABLE `favorite_product`
-  ADD PRIMARY KEY (`favorite_user_id`,`favorite_product_id`);
-
---
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 -- 資料表索引 `news`
 --
 ALTER TABLE `news`
@@ -2383,12 +1104,6 @@ ALTER TABLE `product_category`
   ADD PRIMARY KEY (`product_category_id`);
 
 --
--- 資料表索引 `product_check`
---
-ALTER TABLE `product_check`
-  ADD PRIMARY KEY (`product_check_id`);
-
---
 -- 資料表索引 `product_color`
 --
 ALTER TABLE `product_color`
@@ -2399,30 +1114,6 @@ ALTER TABLE `product_color`
 --
 ALTER TABLE `product_order`
   ADD PRIMARY KEY (`product_id`,`order_id`);
-
---
--- 資料表索引 `product_parts`
---
-ALTER TABLE `product_parts`
-  ADD PRIMARY KEY (`product_parts_id`);
-
---
--- 資料表索引 `product_product_check`
---
-ALTER TABLE `product_product_check`
-  ADD UNIQUE KEY `product_id` (`product_id`,`product_check_id`);
-
---
--- 資料表索引 `product_product_color`
---
-ALTER TABLE `product_product_color`
-  ADD PRIMARY KEY (`product_id`,`product_color_id`);
-
---
--- 資料表索引 `product_product_parts`
---
-ALTER TABLE `product_product_parts`
-  ADD UNIQUE KEY `product_id` (`product_id`,`product_parts_id`);
 
 --
 -- 資料表索引 `user`
@@ -2507,15 +1198,6 @@ ALTER TABLE `course_status`
   MODIFY `course_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
--- 使用資料表自動遞增(AUTO_INCREMENT) `customizeorder`
---
-ALTER TABLE `customizeorder`
-  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 -- 使用資料表自動遞增(AUTO_INCREMENT) `delivery`
 --
 ALTER TABLE `delivery`
@@ -2525,13 +1207,13 @@ ALTER TABLE `delivery`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `newspicture`
 --
 ALTER TABLE `newspicture`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `order_list`
@@ -2553,29 +1235,17 @@ ALTER TABLE `payment_method`
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `payment_status`
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 --
 ALTER TABLE `payment_status`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `product`
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
---
-ALTER TABLE `payment_status`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
-========
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product`
 --
 ALTER TABLE `product`
   MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product_brand`
 --
 ALTER TABLE `product_brand`
@@ -2588,22 +1258,10 @@ ALTER TABLE `product_category`
   MODIFY `product_category_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `product_check`
---
-ALTER TABLE `product_check`
-  MODIFY `product_check_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
-
---
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product_color`
 --
 ALTER TABLE `product_color`
   MODIFY `color_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- 使用資料表自動遞增(AUTO_INCREMENT) `product_parts`
---
-ALTER TABLE `product_parts`
-  MODIFY `product_parts_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user`
@@ -2615,7 +1273,7 @@ ALTER TABLE `user`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `venue`
@@ -2623,7 +1281,3 @@ ALTER TABLE `users`
 ALTER TABLE `venue`
   MODIFY `id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

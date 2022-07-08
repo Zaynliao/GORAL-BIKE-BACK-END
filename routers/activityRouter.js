@@ -8,32 +8,31 @@ const pool = require('../utils/db'); // 引入 db
 ///------------------------------------------------------------------------------------- /activity
 
 router.get('/', async (req, res, next) => {
-  let searchWord = req.query.search || ''; // 取得關鍵字
-  let statu = req.query.statu || ''; // 取得目前狀態
-  let category = req.query.category || ''; // 取得分類
-  let sortMethod = req.query.sortMethod || 'hotSort'; // 取得排序方法
+  // -------------- 取得 /api/course 的 query string
+  let searchWord = req.query.search || ''; // 關鍵字
+  let statu = req.query.statu || ''; // 報名狀態
+  let category = req.query.category || ''; // 難度
+  let sortMethod = req.query.sortMethod || 'newSort'; // 排序方法
   let cardStyle = req.query.cardStyle || 'row'; // 陳列方式
+  let page = req.query.page || 1; // 當前頁數
+  let userId = req.query.userId || ''; // userId
+  let sortActivityMethodString = '';
   {
     switch (sortMethod) {
       case 'hotSort':
-        sortMethodString = `ORDER BY activity.activity_persons DESC`;
+        sortActivityMethodString = `ORDER BY activity.activity_persons DESC`;
         break;
       case 'newSort':
-        sortMethodString = `ORDER BY activity.activity_date DESC`;
+        sortActivityMethodString = `ORDER BY activity.activity_date DESC`;
         break;
       case 'cheapSort':
-        sortMethodString = `ORDER BY activity.activity_fee ASC`;
+        sortActivityMethodString = `ORDER BY activity.activity_fee ASC`;
         break;
       case 'expensiveSort':
-        sortMethodString = `ORDER BY activity.activity_fee DESC`;
+        sortActivityMethodString = `ORDER BY activity.activity_fee DESC`;
         break;
     }
   }
-
-  let page = req.query.page || 1; // 取得目前在第幾頁
-
-  const perPage = cardStyle === 'row' ? 3 : 6; // 一頁幾筆
-  const offset = (page - 1) * perPage; // 計算每頁跳過幾筆顯示
 
   // ------------------------------------ 取得報名狀態類別
 
@@ -119,6 +118,8 @@ router.get('/', async (req, res, next) => {
 
   // ------------------------------------ 判斷是否篩選
 
+  let loginQuery = '';
+  let loginParams = [];
   let query = '';
   let conditionParams = [];
   if (statu) {
@@ -147,22 +148,43 @@ router.get('/', async (req, res, next) => {
     conditionParams.push(dateRange[0], dateRange[1]);
   }
 
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_activity ON favorite_activity.favorite_activity_id = activity.activity_id AND favorite_activity.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
+
   // console.log(query);
   // console.log(conditionParams);
   // ------------------------------------ 篩選過的資料
   let [filterResult] = await pool.execute(
-    `SELECT * FROM activity, activity_status, venue WHERE activity.activity_valid = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id ${query} ${sortMethodString} `,
+    `SELECT * FROM activity WHERE activity_valid = ?  ${query} ${sortActivityMethodString} `,
     [1, ...conditionParams]
   );
   // ------------------------------------ 分頁資料
-
+  const perPage = cardStyle === 'row' ? 3 : 6; // 一頁幾筆
+  const offset = (page - 1) * perPage; // 計算每頁跳過幾筆顯示
   let [pageResults] = await pool.execute(
-    `SELECT * FROM activity, activity_status, venue WHERE activity.activity_valid = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id ${query} ${sortMethodString} LIMIT ? OFFSET ?`,
-    [1, ...conditionParams, perPage, offset]
+    `SELECT * FROM activity
+    LEFT JOIN activity_status ON activity.activity_status_id = activity_status.id
+    LEFT JOIN venue ON activity.activity_venue_id = venue.id
+    ${loginQuery} WHERE activity_valid = ? ${query} ${sortActivityMethodString} LIMIT ? OFFSET ?`,
+    [...loginParams, 1, ...conditionParams, perPage, offset]
   );
 
   const total = filterResult.length; // 總筆數
   const lastPage = Math.ceil(total / perPage); // 總頁數
+
+  // --------------------------------------- 推薦 Swiper
+
+  let [goodResults] = await pool.execute(
+    `SELECT * FROM activity 
+    ${loginQuery} 
+    WHERE activity_valid = ? `,
+    [...loginParams, 1]
+  );
+
+  // -------------------------------------- 首頁
+  let [activityResults] = await pool.execute(`SELECT * FROM activity`);
 
   res.json({
     pagination: { total, lastPage, page }, // 頁碼有關的資料
@@ -172,6 +194,7 @@ router.get('/', async (req, res, next) => {
     dateRange: { finalStartDate, finalEndDate }, // 時間範圍
     categoryGroup: newCategory, // 類別
     data: pageResults, // 主資料
+    hitData: goodResults, // 推薦活動
   });
 });
 
@@ -179,6 +202,7 @@ router.get('/activityHomepage', async (req, res, next) => {
   let [activityResults] = await pool.execute(
     `SELECT activity_id,activity_pictures FROM activity`
   );
+  // console.log(activityResults);
   res.json(activityResults);
 });
 
@@ -186,10 +210,20 @@ router.get('/activityHomepage', async (req, res, next) => {
 
 router.get('/:courseId', async (req, res, next) => {
   // req.params | 取得網址上的參數
-  // req.params.stockId
+  let userId = req.query.userId || '';
+  let loginQuery = '';
+  let loginParams = [];
+  if (userId) {
+    loginQuery += ` LEFT JOIN favorite_activity ON favorite_activity.favorite_activity_id = activity.activity_id AND favorite_activity.favorite_user_id = ?`;
+    loginParams.push(userId);
+  }
   let [data] = await pool.execute(
-    'SELECT * FROM activity, activity_status, venue WHERE activity.activity_id = ? AND activity.activity_venue_id = venue.id AND activity.activity_status_id = activity_status.id',
-    [req.params.courseId]
+    `SELECT * FROM activity 
+    LEFT JOIN activity_status ON activity.activity_status_id = activity_status.id
+    LEFT JOIN venue ON activity.activity_venue_id = venue.id
+    ${loginQuery} 
+    WHERE activity_id = ?`,
+    [...loginParams, req.params.courseId]
   );
 
   res.json({
