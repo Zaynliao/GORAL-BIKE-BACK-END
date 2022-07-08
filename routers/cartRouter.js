@@ -19,9 +19,12 @@ router.post('/', async (req, res, next) => {
       course_total,
       activity_total,
       total,
+      discount_price,
+      discount_total,
       product_item,
       course_item,
       activity_item,
+      coupon_id,
     } = req.body;
 
     const { recipient, delivery, address, phone, note } = recipientInfo;
@@ -36,12 +39,15 @@ router.post('/', async (req, res, next) => {
       course_total,
       activity_total,
       total,
+      discount_price,
+      discount_total,
+      coupon_id,
       recipient,
       delivery_id,
       order_address,
       phone,
       remark)
-      VALUE (?,NOW(),?,?,?,?,?,?,?,?,?,?,?,?)`,
+      VALUE (?,NOW(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         user_id,
         order_status_id,
@@ -51,6 +57,9 @@ router.post('/', async (req, res, next) => {
         course_total,
         activity_total,
         total,
+        discount_price,
+        discount_total,
+        coupon_id,
         recipient,
         delivery,
         address,
@@ -89,6 +98,12 @@ router.post('/', async (req, res, next) => {
         );
       }
     }
+
+    const [updateCoupon] = await pool.execute(
+      `UPDATE user_coupons SET coupons_is = ? WHERE coupons_user_id = ? AND coupons_id = ?`,
+      [0, user_id, coupon_id]
+    );
+
     return res.json({ code: 200, msg: '訂單已成立' });
   } catch (error) {
     console.log(error);
