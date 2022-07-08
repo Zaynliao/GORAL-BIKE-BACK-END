@@ -24,6 +24,7 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
+// http://localhost:3001/api/order/detail/25
 router.get('/detail/:orderId', async (req, res) => {
   const orderId = req.params.orderId;
 
@@ -98,12 +99,30 @@ router.get('/detail/:orderId', async (req, res) => {
       };
     });
   }
+
+  let [couponData] = await pool.execute(`SELECT * FROM coupons WHERE id = ?`, [
+    orderDetail[0].coupon_id,
+  ]);
+
+  couponData =
+    couponData.length > 0
+      ? couponData[0]
+      : {
+          id: 0,
+          coupon_name: '未使用優惠卷',
+          coupon_content: '',
+          coupon_expiry_date: '',
+          coupon_discount: 0,
+          valid: 0,
+        };
+
   res.json({
     code: 200,
     data: orderDetail,
     productData: orderProductDetail,
     courseData: orderCourseDetail,
     activityData: orderActivityDetail,
+    couponData: couponData,
   });
 });
 
