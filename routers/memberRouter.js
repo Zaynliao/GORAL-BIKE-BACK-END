@@ -175,29 +175,47 @@ router.post('/password/update', async (req, res) => {
 router.post('/favorite/update', async (req, res, next) => {
   let favoriteMethod = req.body.favoriteMethod; // 收藏的方法 : product/course/activity
 
-  // 收藏目標 id 不為空才做
+  try {
+    // 收藏目標 id 不為空才做
+    if (req.body.courseId !== '') {
+      // 檢查是否有收藏的資料
+      let [checkFavorite] = await pool.execute(
+        `SELECT * FROM favorite_${favoriteMethod} WHERE favorite_user_id = ? AND favorite_${favoriteMethod}_id = ?`,
+        [req.body.userId, req.body.courseId]
+      );
+
+      // 有收藏資料則刪除收藏資料 -> 有愛心變成沒愛心
+      if (checkFavorite.length > 0) {
+        let [deleteFavorite] = await pool.execute(
+          `DELETE FROM favorite_${favoriteMethod} WHERE favorite_user_id = ? AND favorite_${favoriteMethod}_id = ?`,
+          [req.body.userId, req.body.courseId]
+        );
+      } else {
+        // 沒收藏資料則新增收藏資料 -> 沒愛心變成有愛心
+        let [insertFavorite] = await pool.execute(
+          `INSERT INTO favorite_${favoriteMethod} (favorite_user_id, favorite_${favoriteMethod}_id) VALUES (?, ?)`,
+          [req.body.userId, req.body.courseId]
+        );
+      }
+    }
+    res.json({ result: '更新收藏資料成功' });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ code: 3006, result: error.message });
+  }
+});
+
+router.post('/favorite/check', async (req, res, next) => {
+  let favoriteMethod = req.body.favoriteMethod;
   if (req.body.courseId !== '') {
     // 檢查是否有收藏的資料
     let [checkFavorite] = await pool.execute(
       `SELECT * FROM favorite_${favoriteMethod} WHERE favorite_user_id = ? AND favorite_${favoriteMethod}_id = ?`,
       [req.body.userId, req.body.courseId]
     );
-
-    // 有收藏資料則刪除收藏資料 -> 有愛心變成沒愛心
-    if (checkFavorite.length > 0) {
-      let [deleteFavorite] = await pool.execute(
-        `DELETE FROM favorite_${favoriteMethod} WHERE favorite_user_id = ? AND favorite_${favoriteMethod}_id = ?`,
-        [req.body.userId, req.body.courseId]
-      );
-    } else {
-      // 沒收藏資料則新增收藏資料 -> 沒愛心變成有愛心
-      let [insertFavorite] = await pool.execute(
-        `INSERT INTO favorite_${favoriteMethod} (favorite_user_id, favorite_${favoriteMethod}_id) VALUES (?, ?)`,
-        [req.body.userId, req.body.courseId]
-      );
-    }
+    console.log(checkFavorite);
+    res.json({ data: checkFavorite });
   }
-  res.json({ result: '更新收藏資料成功' });
 });
 
 router.get('/favorite/course', async (req, res, next) => {
