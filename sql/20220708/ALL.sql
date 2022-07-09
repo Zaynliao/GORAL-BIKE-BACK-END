@@ -1,34 +1,18 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
--- 產生時間： 2022-07-07 15:31:01
+-- 產生時間： 2022-07-08 19:05:23
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 8.1.4
-========
--- 產生時間： 2022-07-05 12:08:33
--- 伺服器版本： 10.4.24-MariaDB
--- PHP 版本： 8.1.6
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 -- 資料庫: `goral_bike`
-========
--- 資料庫： `goral_bike`
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 --
 
 -- --------------------------------------------------------
@@ -37,6 +21,7 @@ SET time_zone = "+00:00";
 -- 資料表結構 `accessory`
 --
 
+DROP TABLE IF EXISTS `accessory`;
 CREATE TABLE `accessory` (
   `id` int(3) UNSIGNED NOT NULL,
   `accessory_name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -100,6 +85,7 @@ INSERT INTO `accessory` (`id`, `accessory_name`, `accessory_picture`, `accessory
 -- 資料表結構 `accessory_category`
 --
 
+DROP TABLE IF EXISTS `accessory_category`;
 CREATE TABLE `accessory_category` (
   `id` int(3) UNSIGNED NOT NULL,
   `accessory_category_name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -130,6 +116,7 @@ INSERT INTO `accessory_category` (`id`, `accessory_category_name`) VALUES
 -- 資料表結構 `activity`
 --
 
+DROP TABLE IF EXISTS `activity`;
 CREATE TABLE `activity` (
   `activity_id` int(3) UNSIGNED NOT NULL,
   `activity_score` int(3) NOT NULL,
@@ -182,10 +169,7 @@ INSERT INTO `activity` (`activity_id`, `activity_score`, `activity_venue_id`, `a
 -- 資料表結構 `activity_order`
 --
 
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 DROP TABLE IF EXISTS `activity_order`;
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `activity_order` (
   `order_id` int(11) NOT NULL,
   `activity_id` int(11) NOT NULL,
@@ -198,6 +182,7 @@ CREATE TABLE `activity_order` (
 -- 資料表結構 `activity_status`
 --
 
+DROP TABLE IF EXISTS `activity_status`;
 CREATE TABLE `activity_status` (
   `id` int(3) UNSIGNED NOT NULL,
   `activity_status_name` varchar(10) NOT NULL
@@ -218,10 +203,7 @@ INSERT INTO `activity_status` (`id`, `activity_status_name`) VALUES
 -- 資料表結構 `classes`
 --
 
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 DROP TABLE IF EXISTS `classes`;
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `classes` (
   `course_id` int(3) NOT NULL,
   `course_score` int(3) NOT NULL,
@@ -281,10 +263,10 @@ INSERT INTO `classes` (`course_id`, `course_score`, `course_category_id`, `cours
 -- 資料表結構 `coupons`
 --
 
+DROP TABLE IF EXISTS `coupons`;
 CREATE TABLE `coupons` (
   `id` int(5) NOT NULL,
   `coupon_name` varchar(50) NOT NULL,
-  `coupon_code` varchar(50) NOT NULL,
   `coupon_content` varchar(100) NOT NULL,
   `coupon_expiry_date` date NOT NULL,
   `coupon_discount` int(3) NOT NULL DEFAULT 0,
@@ -295,17 +277,17 @@ CREATE TABLE `coupons` (
 -- 傾印資料表的資料 `coupons`
 --
 
-INSERT INTO `coupons` (`id`, `coupon_name`, `coupon_code`, `coupon_content`, `coupon_expiry_date`, `coupon_discount`, `valid`) VALUES
-(1, 'First bike mania 23% off', '47f3b6CCm4MAD4xz3DR8', 'Get 23% off of your first bike', '2022-05-25', 77, 1),
-(2, 'First bike mania 35% off', 'x5ZxrDgBqP6KWPhx382p', 'Get 35% off of your first bike', '2022-05-25', 65, 1),
-(3, 'First bike mania 12% off', 'LdJPsUhbDkDFuyHpCR8g', 'Get 12% off of your first bike', '2022-05-25', 88, 1),
-(4, 'First bike mania 15% off', 'rXzEYWUH4QwNBkRZ55Mb', 'Get 15% off of your first bike', '2022-05-25', 85, 1),
-(5, 'First bike mania 30% off', 'FYFSPeFQ7tt2pB8dZCKj', 'Get 30% off of your first bike', '2022-05-25', 70, 1),
-(6, 'Into the desert 25% off', '2mXZbrCnHzywVyMXdDQa', 'Get 25% off on your first trip into the desert', '2022-06-25', 75, 1),
-(7, 'Into the desert 60% off', 'vF7wSVkFabw38tCG5gRn', 'Get 60% off on your first trip into the desert', '2022-06-25', 40, 1),
-(8, 'Into the desert 56% off', '9CAxFBBgcBuKr2ZgSdAt', 'Get 56% off on your first trip into the desert', '2022-06-25', 44, 1),
-(9, 'Into the desert 45% off', 'cGaLPmag75XpqtbQNL2Z', 'Get 45% off on your first trip into the desert', '2022-06-25', 55, 1),
-(10, 'Into the desert 68% off', 'vEJVTrr9z8GG8xxwbhTV', 'Get 68% off on your first trip into the desert', '2022-06-25', 32, 1);
+INSERT INTO `coupons` (`id`, `coupon_name`, `coupon_content`, `coupon_expiry_date`, `coupon_discount`, `valid`) VALUES
+(1, '首次購買券', '初次見面，單筆訂單 77 折', '2032-05-31', 77, 1),
+(2, '久久回顧券', '好久不見，單筆訂單 95 折', '2022-07-13', 95, 1),
+(3, '國家紀念券', '放假快樂，單筆訂單 88 折', '2022-01-08', 88, 1),
+(4, '父親快樂券', '父親節快樂，單筆訂單 88 折', '2021-08-15', 88, 1),
+(5, '恭喜發財券', '新年快樂，單筆訂單 88 折', '2022-02-27', 88, 1),
+(6, '母親快樂券', '母親節快樂，單筆訂單 88 折', '2022-05-21', 88, 1),
+(7, '兒童快樂券', '善待兒童，世界和平，單筆訂單 88 折', '2022-04-08', 88, 1),
+(8, '購物快樂券', '1111 購物節是狂歡的時節，單筆訂單 88 折', '2022-06-25', 88, 1),
+(9, '忠誠顧客券', '累積 5 筆交易即可得到，單筆訂單 5 折', '2032-06-30', 50, 1),
+(10, '生日快樂券', '生日是值得慶祝的一天，單筆訂單 6 折', '2022-06-25', 60, 1);
 
 -- --------------------------------------------------------
 
@@ -313,6 +295,7 @@ INSERT INTO `coupons` (`id`, `coupon_name`, `coupon_code`, `coupon_content`, `co
 -- 資料表結構 `course_category`
 --
 
+DROP TABLE IF EXISTS `course_category`;
 CREATE TABLE `course_category` (
   `course_category_id` int(3) NOT NULL,
   `course_category_name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -332,6 +315,7 @@ INSERT INTO `course_category` (`course_category_id`, `course_category_name`) VAL
 -- 資料表結構 `course_contents`
 --
 
+DROP TABLE IF EXISTS `course_contents`;
 CREATE TABLE `course_contents` (
   `course_content_id` int(3) NOT NULL,
   `course_content_introduction` varchar(4000) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -362,6 +346,7 @@ INSERT INTO `course_contents` (`course_content_id`, `course_content_introduction
 -- 資料表結構 `course_location`
 --
 
+DROP TABLE IF EXISTS `course_location`;
 CREATE TABLE `course_location` (
   `course_location_id` int(3) NOT NULL,
   `course_venue_id` int(3) NOT NULL,
@@ -397,10 +382,7 @@ INSERT INTO `course_location` (`course_location_id`, `course_venue_id`, `course_
 -- 資料表結構 `course_order`
 --
 
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 DROP TABLE IF EXISTS `course_order`;
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `course_order` (
   `order_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
@@ -413,6 +395,7 @@ CREATE TABLE `course_order` (
 -- 資料表結構 `course_status`
 --
 
+DROP TABLE IF EXISTS `course_status`;
 CREATE TABLE `course_status` (
   `course_status_id` int(11) NOT NULL,
   `course_status_name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -430,59 +413,65 @@ INSERT INTO `course_status` (`course_status_id`, `course_status_name`) VALUES
 -- --------------------------------------------------------
 
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 -- 資料表結構 `customizeorder`
 --
 
 DROP TABLE IF EXISTS `customizeorder`;
 CREATE TABLE `customizeorder` (
   `orderId` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `phone` varchar(10) NOT NULL,
+  `userID` int(11) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` varchar(50) NOT NULL,
   `mark` varchar(1000) DEFAULT NULL,
-  `Frame_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Saddle_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Metal_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `DerailleurRear_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Crankset_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Pedal_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Chain_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Cage_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Bottle_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Brakes_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `PaintBlack_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Wheels_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Computer_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `HandlebarTape_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Shifters_MAT` varchar(7) NOT NULL DEFAULT '#fff',
-  `Cassette_MAT` varchar(7) NOT NULL DEFAULT '#fff'
+  `Frame_MAT` varchar(50) DEFAULT NULL,
+  `Saddle_MAT` varchar(50) DEFAULT NULL,
+  `Metal_MAT` varchar(50) DEFAULT NULL,
+  `DerailleurRear_MAT` varchar(50) DEFAULT NULL,
+  `Crankset_MAT` varchar(50) DEFAULT NULL,
+  `Pedal_MAT` varchar(50) DEFAULT NULL,
+  `Chain_MAT` varchar(50) DEFAULT NULL,
+  `Cage_MAT` varchar(50) DEFAULT NULL,
+  `Bottle_MAT` varchar(50) DEFAULT NULL,
+  `Brakes_MAT` varchar(50) DEFAULT NULL,
+  `PaintBlack_MAT` varchar(50) DEFAULT NULL,
+  `Wheels_MAT` varchar(50) DEFAULT NULL,
+  `Computer_MAT` varchar(50) DEFAULT NULL,
+  `HandlebarTape_MAT` varchar(50) DEFAULT NULL,
+  `Shifters_MAT` varchar(50) DEFAULT NULL,
+  `Cassette_MAT` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `customizeorder`
 --
 
-INSERT INTO `customizeorder` (`orderId`, `name`, `email`, `phone`, `mark`, `Frame_MAT`, `Saddle_MAT`, `Metal_MAT`, `DerailleurRear_MAT`, `Crankset_MAT`, `Pedal_MAT`, `Chain_MAT`, `Cage_MAT`, `Bottle_MAT`, `Brakes_MAT`, `PaintBlack_MAT`, `Wheels_MAT`, `Computer_MAT`, `HandlebarTape_MAT`, `Shifters_MAT`, `Cassette_MAT`) VALUES
-(1, 'joe', 'joe123@gmail.com', '912345678', 'test', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(2, 'AAAA', 'asdasdasd@gmail.com', '2147483647', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(3, 'JJJJJJJJJJJJJJJJJJJJ', 'asdasdasd@gmail.com', '2147483647', '123456789', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
-(4, 'JJJJJJJJJJJJJJJJJJJJ', 'asdasdasd@gmail.com', '2147483647', '123456789', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
-(5, 'JJJJJJJJJJJJJJJJJJJJ', 'asdasdasd@gmail.com', '9888888888', '123456789', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
-(6, 'AAAAff', 'aaa@123.com', '9876543210', '測試用', '#d50000', '#095dff', '#fff', '#fff', '#00ff9c', '#fff', '#0012ff', '#fff', '#fff', '#fff', '#351111', '#4e2323', '#fff', '#8f1c5a', '#fff', '#fff'),
-(7, 'aaaaaaa', 'asdasdasd@gmail.com', '9888888888', 'serfwerwerwer', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(8, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(9, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(10, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(11, 'AAAA', 'asdasdasd@gmail.com', '9888888888', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(12, 'asdasd', 'test15@mail.test', '9879879872', '115656464', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(13, 'asdasd', 'test15@mail.test', '9879879871', '1245623254545', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
-(14, 'asdasd', 'test15@mail.test', '9777777777', 'weqw', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
-(15, 'AAAA', 'test15@mail.test', '9888888888', '131322', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
-(16, 'asdasd', 'asdasdasd@gmail.com', '9888888888', 'ertret', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
-(17, 'asdasd', 'test15@mail.test', '9888888888', 'erwer', '#0042c1', '#308689', '#892a2a', '#9d2470', '#b13acf', '#a53bab', '#37bf9b', '#220202', '#3f7249', '#fff', '#b61567', '#911d1d', '#fff', '#30a05a', '#fff', '#fff'),
-(18, 'asda', 'ada@dasd.c', '223423412', '103232', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
-(19, 'AAAA', 'asdasdasd@gmail.com', '988888888', 'erwe51', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff');
+INSERT INTO `customizeorder` (`orderId`, `userID`, `name`, `email`, `phone`, `mark`, `Frame_MAT`, `Saddle_MAT`, `Metal_MAT`, `DerailleurRear_MAT`, `Crankset_MAT`, `Pedal_MAT`, `Chain_MAT`, `Cage_MAT`, `Bottle_MAT`, `Brakes_MAT`, `PaintBlack_MAT`, `Wheels_MAT`, `Computer_MAT`, `HandlebarTape_MAT`, `Shifters_MAT`, `Cassette_MAT`) VALUES
+(1, 16, 'sadas', 'janet91995@gmail.com', '912345678', '', '#123456', '#aaa', '#777', '#888', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(2, NULL, 'asd', 'janet91995@gmail.com', '912345678', '', '#fff', '#777', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(3, NULL, 'esfws', 'yove9438@gmail.com', '912345678', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(4, 16, '123', 'janet91995@gmail.com', '912345678', '', '#261179', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#402929', '#fff', '#fff', '#fff', '#fff'),
+(5, 16, 'asd', 'janet91995@gmail.com', '912345678', '', '#325b5f', '#112741', '#fff', '#fff', '#030c02', '#fff', '#fff', '#fff', '#fff', '#fff', '#ff0000', '#1cff00', '#fff', '#326276', '#fff', '#fff'),
+(6, 16, '123123', 'janet91995@gmail.com', '912345678', '', '#411818', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(7, 15, '123123', 'a123@gmail.com', '912345677', '', '#07346e', '#814848', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#4b2323', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(8, 15, '123123', 'a123@gmail.com', '912345678', '11231545', '#39b19f', '#16092f', '#aaa', '#bbb', '#fef', '#bbb', '#111', '#222', '#333', '#444', '#555', '#666', '#777', '#888', '#999', '#000'),
+(9, 15, '123123', 'a123@gmail.com', '912345678', '', '#3f4c67', '#750c4b', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(10, 15, '123123', 'a123@gmail.com', '912345678', '', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(11, 15, '123123', 'a123@gmail.com', '912345679', '123', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(12, 15, '123123', 'a123@gmail.com', '912345675', '', '#9b3030', '#de0000', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(13, 15, '123123', 'a123@gmail.com', '912345672', '', '#309c3b', '#1c4ac1', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#05f716', '#fff', '#fff', '#fff', '#fff'),
+(14, 15, '123123', 'a123@gmail.com', '912345679', 'qwe', '#e0e500', '#621e1e', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#975656', '#fff', '#2f1556', '#fff', '#fff'),
+(15, 16, 'asd', 'janet91995@gmail.com', '912345678', '', '#351cd2', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#8d4848', '#fff', '#fff', '#fff', '#fff'),
+(16, 16, 'asd', 'janet91995@gmail.com', '912345678', '123', '#5044a2', '#aaa', '#777', '#888', '#fff', '#fff', '#fff', '#811919', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(17, 0, 'asd', 'yove9438@gmail.com', '912345678', '123', '#6a2b2b', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(18, 16, 'asd', 'janet91995@gmail.com', '912345678', '', '#3b3560', '#aaa', '#777', '#888', '#fff', '#fff', '#fff', '#811919', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(19, 16, 'asd', 'janet91995@gmail.com', '912345678', '', '#3b3560', '#aaa', '#777', '#888', '#fff', '#fff', '#fff', '#811919', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(20, 0, 'ad123', 'asdasdasd@gmail.com', '977777777', 'asd', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(21, 0, 'AAAA', 'asdasdasd@gmail.com', '977777777', '', '#32a653', '#17d08e', '#12ffd4', '#3dbabe', '#fff', '#790a0a', '#ff00fc', '#fff', '#fff', '#2eab46', '#1e2c6a', '#511beb', '#fff', '#b93798', '#fff', '#fff'),
+(22, 17, '桃醫宣', 'guaduckgua@gmail.com', '978978978', '', '#2d3196', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(23, 17, '桃醫宣', 'guaduckgua@gmail.com', '978978978', '', '#2d9667', '#378dc4', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#1dbc2d', '#fff', '#fff', '#fff', '#fff'),
+(24, 17, '桃醫宣', 'guaduckgua@gmail.com', '978978978', '', '#2f7287', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff'),
+(25, 17, '桃醫宣', 'guaduckgua@gmail.com', '978978978', '', '#2d3196', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#26a693', '#fff', '#fff', '#fff', '#fff');
 
 -- --------------------------------------------------------
 
@@ -491,11 +480,6 @@ INSERT INTO `customizeorder` (`orderId`, `name`, `email`, `phone`, `mark`, `Fram
 --
 
 DROP TABLE IF EXISTS `delivery`;
-========
--- 資料表結構 `delivery`
---
-
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `delivery` (
   `delivery_id` int(11) NOT NULL,
   `delivery_method` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -512,16 +496,27 @@ INSERT INTO `delivery` (`delivery_id`, `delivery_method`) VALUES
 -- --------------------------------------------------------
 
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
-========
 -- 資料表結構 `favorite_activity`
 --
 
+DROP TABLE IF EXISTS `favorite_activity`;
 CREATE TABLE `favorite_activity` (
   `favorite_user_id` int(11) NOT NULL,
   `favorite_activity_id` int(11) NOT NULL,
   `favorite_is` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `favorite_activity`
+--
+
+INSERT INTO `favorite_activity` (`favorite_user_id`, `favorite_activity_id`, `favorite_is`) VALUES
+(16, 10, 0),
+(16, 16, 0),
+(16, 17, 0),
+(17, 10, 0),
+(17, 16, 0),
+(17, 17, 0);
 
 -- --------------------------------------------------------
 
@@ -529,11 +524,22 @@ CREATE TABLE `favorite_activity` (
 -- 資料表結構 `favorite_course`
 --
 
+DROP TABLE IF EXISTS `favorite_course`;
 CREATE TABLE `favorite_course` (
   `favorite_user_id` int(11) NOT NULL,
   `favorite_course_id` int(11) NOT NULL,
   `favorite_is` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `favorite_course`
+--
+
+INSERT INTO `favorite_course` (`favorite_user_id`, `favorite_course_id`, `favorite_is`) VALUES
+(16, 45, 0),
+(16, 46, 0),
+(17, 45, 0),
+(17, 46, 0);
 
 -- --------------------------------------------------------
 
@@ -541,19 +547,27 @@ CREATE TABLE `favorite_course` (
 -- 資料表結構 `favorite_product`
 --
 
+DROP TABLE IF EXISTS `favorite_product`;
 CREATE TABLE `favorite_product` (
   `favorite_user_id` int(11) NOT NULL,
   `favorite_product_id` int(11) NOT NULL,
   `favorite_is` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- 傾印資料表的資料 `favorite_product`
+--
+
+INSERT INTO `favorite_product` (`favorite_user_id`, `favorite_product_id`, `favorite_is`) VALUES
+(16, 148, 0);
+
 -- --------------------------------------------------------
 
 --
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 -- 資料表結構 `news`
 --
 
+DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -577,7 +591,7 @@ INSERT INTO `news` (`id`, `title`, `content`, `date`, `touch`) VALUES
 (8, '世界冠軍要來當一日小編啦!', '連續兩年拿下鐵人三項世界冠軍的Gustav Iden，將受邀擔任Giant Bicycles Facebook粉絲專頁的一日小編，並於台灣時間12/17晚上8點於Giant Bicycles粉絲專頁開直播與大家互動。\r\n \r\n來自挪威的Iden，於2019帶著「埔鹽順澤宮」宮帽奪下Ironman 70.3世錦賽冠軍後，在台灣掀起來一陣鐵人旋風，並於2019年底宣布與Giant攜手合作。實力與話題兼具的Iden，騎著Giant Trinity三鐵車，使用CADEX輪組，2020年於PTO鐵人三項擊敗世界排名前40的頂尖好手，再次奪得世界冠軍。\r\n \r\n連續兩年奪冠的Iden，也受邀於12/17擔任Giant Bicycles粉絲專頁的一日小編，並於台灣時間晚上8點開直播與粉絲互動，與大家分享他的訓練日常，對Iden有興趣的各位粉絲們，千萬不要錯過啦!', '2022-05-06', 1124),
 (9, 'Iden逆轉拿下PTO錦標賽冠軍', '台灣粉絲所熟悉的Iden在美國佛州舉辦的Challenge Daytona比賽中逆轉拿下冠軍， 此次比賽同時也是PTO (Professional Triathletes Organisation職業鐵人三項運動組織)2020年度的錦標賽，必須是世界排名前40的選手才能參加，而Iden目前排名雖然不在PTO前40名內，但因為2019 IRONMAN 70.3世錦賽奪冠的亮眼表現而獲得外卡資格，Iden也再次於高手雲集的賽事中證明自己的頂尖實力。\r\n \r\n這場總獎金超過100萬美元的賽事，在Daytona國際賽車場舉行，跟以往的比賽距離不同，選手們要依序完成2公里游泳、80公里的自行車(20圈賽道，每圈4公里)以及18公里的跑步(4圈賽道，每圈4.5公里)。捷安特贊助的兩位三鐵選手Iden與Sam Appleton都有參加這場比賽，兩人皆騎乘Trinity三鐵車，並搭配CADEX空力輪組。Sam相較於Iden在游泳與騎車有比較好的表現，在自行車項目完成後以第二名之姿進入最後的跑步賽段，最終拿下第六名。而大家所熟悉的Iden， 在完成游泳及自行車後，以第15名的表現、落後領先者1分36秒進入自己所擅長的跑步項目。Iden在剩最後兩圈時超越對手，並大幅拉開領先差距，最後以51秒的差距拿下勝利。\r\n \r\n談到這場勝利，以外卡資格奪冠的Iden說：「這次的比賽跟2019 IRONMAN 70.3世錦賽的風格完全不同，這次的賽道非常的規律(繞圈型式)，所以我其實不太確定自己能有什麼樣的表現。」「但很幸運的是，我在自行車項目採取的策略很成功，儘管大家不斷的在自行車項目超越我去追擊領先集團，但我依舊非常滿意自己在比賽當下的表現，最後我也再一次拿下這場不可思議的勝利。」', '2022-05-18', 66),
 (10, '全國自由車公路錦標賽 杜志濠計時賽再當最速男 吳之皓摘計時/公路雙亞軍', '2020全國自由車公路錦標賽於11月22日在台東縣及花蓮縣舉行，此次比賽分別於22日進行個人計時賽，23日進行個人公路賽，全國菁英好手匯聚一堂，全力角逐「全國冠軍」榮銜。\r\n11月22日上午男子菁英組分為五個梯次進行比賽，最後由杜志濠拿下全場最佳成績41分08.731秒，從57名出賽選手中脫穎而出。第二名由前勁車隊吳之皓以42分13.434秒完賽，第三名則由捷安特哥倫布車隊的虞子諒以42分21.189秒拿下。杜志濠賽後表示：「兩年前也跑過這個路線，今天算是挑戰兩年前的配速，前兩圈比較保守一點，最後一圈全力以赴，比自己兩年前進步了30秒，算是成功的一次驗收。」\r\n連同第四名捷安特哥倫布車隊的李廷威在內，本屆全錦賽計時賽前四名的選手皆騎乘計時版Trinity，可說是充分展現出Trinity當初在設計時，為追求極速而生的使命。另外，本屆計時賽冠軍杜志豪也特別指定使用CADEX空力輪組做為比賽輪使用，CADEX空力輪組不僅輕量，十足的剛性與低滾組的產品特色，順利的幫助杜志濠在計時賽中奪下冠軍。\r\n \r\n23日所舉行的公路賽，比賽路線途經台東縣及花蓮縣，男子菁英組及青年組選手由台東森林公園出發，沿著台九線花東縱谷公路北上，直到玉里轉進玉長公路，最後由台十一線返回台東森林公園終點，全長160公里。\r\n \r\n競爭激烈的男子菁英組，在前段逆風段不斷上演突圍與追趕的戲碼，一直到玉長公路前的零星進攻都無法成型，經過前段的逆風，與玉長公路的爬坡段考驗之後，大集團開始瘦身，而轉出玉長公路之後，長濱地區一陣風雨，加上轉變成順風的天候，集團前方頓時提高速度，此時領先集團成型，陳建良、吳之皓、巫帛宏、熊凱文、虞子諒率先成為五人領先集團，而計時賽冠軍杜志濠與去年冠軍盧紹軒兩人合作追出並加入前方五人，成為七人領先集團。在順風幫助之下，加上前面的長途耐力消耗，後方集團已經無法追回，領先七人中美利達諾飛客車隊有三位選手，包括尋求衛冕的盧紹軒以及巫帛宏、熊凱文，最後衝刺階段，台灣隊長巫帛宏化身破風手，最後階段杜志濠提前發動衝刺，而最後階段陳建良強勢衝出，成為2020的公路全國冠軍。至於前一日於計時賽摘銀的吳之皓，則騎著TCR再次於最後的衝刺拿下亞軍，在本屆全錦賽收下兩面銀牌。', '2022-05-25', 4534),
-(11, 'CADEX發表全新三鐵產品線 提供最佳鐵人三項競賽整合方案', ' 生產高階自行車零組件的品牌CADEX，推出了全新的三鐵產品線，包含CADEX Tri三鐵車架組和全新空力刀/碟輪组系統，而本次CADEX三鐵產品線的開發，無論是車架或輪组的設計、測試與驗證，皆與最頂尖的選手Kristian Blummenfelt合作，尤其Kristian使用了CADEX Tri原型三鐵車和原型輪组拿下IRONMAN世界冠軍，並贏得被視為不可能的SUB7挑戰，說明了CADEX全新三鐵產品線就是世界冠軍級別的競速利器。\r\n       CADEX Tri代表的是一個全新的三鐵整合方案，打破既有的傳統與常規，CADEX提供更容易調整的個人化設定，完美整合的賽事補給系統，能在真實賽事中獲得的空力效益及騎乘效率，CADEX甚至為選手解決了移地比賽的運輸問題。而空力輪组也已在多場頂尖賽事中獲得驗證，是CADEX打造出最快速的空力輪组。\r\n       在5月時，Kristian使用了CADEX Tri原型三鐵車和原型輪组在美國St. George出戰IRONMAN世錦賽，St. George的自行車賽道是出了名的困難，總計超過2000公尺的爬升，但Kristian在自行車項目展現相當好的狀態，最終拿下IRONMAN世界冠軍。一個月後，Kristian再次使用相同的裝備於德國挑戰SUB7計畫，成為了使上第一位在7小時內完成226超鐵距離的選手。\r\n\r\n耐久形空力\r\n       只能維持40或80公里的空力設定是不夠的，要贏得Ironman比賽或打破自己的最佳紀錄，就必須要能維持180公里的空力騎姿。而CADEX Tri在開發設計時的原則就是：不能只在風洞測試中有漂亮數據，而是要能在三鐵賽場上為選手帶來真實的空力效益。\r\n       追求空力的第一步，我們從車架做起，從前方看向CADEX TRI三鐵車，絕對會立刻被那獨特的前叉吸引，寬肩且如刀鋒般的前叉能使氣流順利通過，經風洞測試後的結果顯示，此設計能大幅減少氣流受干擾的程度，將三鐵車與騎士的風阻降到最低。\r\n       除了前叉之外，很少被大家考慮到的後叉也是空力設計的一部分，CADEX Tri的後叉寬度幾乎與前叉相同，而且不同於一般自行車的後上叉是由座管筆直的連接至後勾爪，CADEX Tri的後上叉是由後輪軸心以接近垂直的角度向上，經過一個俐落的轉折後，再水平的連接至座管。藉由此設計，不僅能將車架後叉的受風面積降至最低，以強化空力效益，更能提升車架剛性，完整的傳遞選手的輸出動能。\r\n\r\n賽事裝備完美整合\r\n       過去的選手會在三鐵車上自行安裝相關設備，包含前置水壺、上管袋等，以滿足各自的補給需求，但不可否認的是，這將影響原本車架的空力效果。而CADEX Tri在開發時，就已完整的考量三鐵選手在賽事中的補給需求，將補給系統完美的融入車架當中，為選手帶來絕對的優勢。\r\n       CADEX Tri獨特的車架造型設計 - 取消車架上管並加大下管 - 能將補給盒、水袋與維修工具完美整合於車架中，水袋吸管由頭管前方的空力罩向上延伸，使選手在補充水份時依舊能維持低風阻的空力騎姿，而位在下管中央的水袋補充孔，也使選手在賽事中能快速補充袋中的水量。\r\n       位於下管頂端的可拆式補給盒可放置多達10包32ml的能量膠(L尺寸車架)，表面的橡膠蓋可以幫助固定能量棒或能量膠，使選手在保持空力騎姿時依舊方便取用，而可拆式設計也讓選手能在賽後快速清洗整理。整合於車架內、接近五通非傳動側的維修工具盒，則能安裝多功能功具、內胎、挖胎棒、CO2氣瓶及充氣頭等維修工具。', '2022-06-30', 569),
+(11, 'CADEX發表全新三鐵產品線 提供最佳鐵人三項競賽整合方案', ' 生產高階自行車零組件的品牌CADEX，推出了全新的三鐵產品線，包含CADEX Tri三鐵車架組和全新空力刀/碟輪组系統，而本次CADEX三鐵產品線的開發，無論是車架或輪组的設計、測試與驗證，皆與最頂尖的選手Kristian Blummenfelt合作，尤其Kristian使用了CADEX Tri原型三鐵車和原型輪组拿下IRONMAN世界冠軍，並贏得被視為不可能的SUB7挑戰，說明了CADEX全新三鐵產品線就是世界冠軍級別的競速利器。\r\n       CADEX Tri代表的是一個全新的三鐵整合方案，打破既有的傳統與常規，CADEX提供更容易調整的個人化設定，完美整合的賽事補給系統，能在真實賽事中獲得的空力效益及騎乘效率，CADEX甚至為選手解決了移地比賽的運輸問題。而空力輪组也已在多場頂尖賽事中獲得驗證，是CADEX打造出最快速的空力輪组。\r\n       在5月時，Kristian使用了CADEX Tri原型三鐵車和原型輪组在美國St. George出戰IRONMAN世錦賽，St. George的自行車賽道是出了名的困難，總計超過2000公尺的爬升，但Kristian在自行車項目展現相當好的狀態，最終拿下IRONMAN世界冠軍。一個月後，Kristian再次使用相同的裝備於德國挑戰SUB7計畫，成為了使上第一位在7小時內完成226超鐵距離的選手。\r\n\r\n耐久形空力\r\n       只能維持40或80公里的空力設定是不夠的，要贏得Ironman比賽或打破自己的最佳紀錄，就必須要能維持180公里的空力騎姿。而CADEX Tri在開發設計時的原則就是：不能只在風洞測試中有漂亮數據，而是要能在三鐵賽場上為選手帶來真實的空力效益。\r\n       追求空力的第一步，我們從車架做起，從前方看向CADEX TRI三鐵車，絕對會立刻被那獨特的前叉吸引，寬肩且如刀鋒般的前叉能使氣流順利通過，經風洞測試後的結果顯示，此設計能大幅減少氣流受干擾的程度，將三鐵車與騎士的風阻降到最低。\r\n       除了前叉之外，很少被大家考慮到的後叉也是空力設計的一部分，CADEX Tri的後叉寬度幾乎與前叉相同，而且不同於一般自行車的後上叉是由座管筆直的連接至後勾爪，CADEX Tri的後上叉是由後輪軸心以接近垂直的角度向上，經過一個俐落的轉折後，再水平的連接至座管。藉由此設計，不僅能將車架後叉的受風面積降至最低，以強化空力效益，更能提升車架剛性，完整的傳遞選手的輸出動能。\r\n\r\n賽事裝備完美整合\r\n       過去的選手會在三鐵車上自行安裝相關設備，包含前置水壺、上管袋等，以滿足各自的補給需求，但不可否認的是，這將影響原本車架的空力效果。而CADEX Tri在開發時，就已完整的考量三鐵選手在賽事中的補給需求，將補給系統完美的融入車架當中，為選手帶來絕對的優勢。\r\n       CADEX Tri獨特的車架造型設計 - 取消車架上管並加大下管 - 能將補給盒、水袋與維修工具完美整合於車架中，水袋吸管由頭管前方的空力罩向上延伸，使選手在補充水份時依舊能維持低風阻的空力騎姿，而位在下管中央的水袋補充孔，也使選手在賽事中能快速補充袋中的水量。\r\n       位於下管頂端的可拆式補給盒可放置多達10包32ml的能量膠(L尺寸車架)，表面的橡膠蓋可以幫助固定能量棒或能量膠，使選手在保持空力騎姿時依舊方便取用，而可拆式設計也讓選手能在賽後快速清洗整理。整合於車架內、接近五通非傳動側的維修工具盒，則能安裝多功能功具、內胎、挖胎棒、CO2氣瓶及充氣頭等維修工具。', '2022-06-30', 572),
 (12, 'GIANT發表全新 SURGE PRO自行車鞋', '  GIANT發表全新 SURGE PRO自行車鞋，旨在幫助頂尖選手於世界一級賽事中脫穎而出，透過頂尖選手們-包含三大賽冠軍Simon Yates-不斷的測試與驗證，全新SURGE PRO自行車鞋成為自行車騎士追求效率、舒適性以及輕量化的第一選擇。\r\n\r\n全新SURGE PRO有2大改款重點：「ExoBeam™動力傳遞軸」和「ExoWrap™足弓包覆」的技術升級，帶給騎士最佳的騎乘效率與360度全面貼合的舒適性。當BikeExchange-Jayco車隊主將Simon Yates與其他隊員在季前訓練營拿到SURGE PRO並開始測試使用後，他們毫無保留的表達出對全新SURGE PRO自行車鞋的喜好。\r\n\r\n  Simon Yates說：「在去年底的訓練營拿到SURGE PRO的時候我們就超興奮的，因為你能立即感受到他的輕量、踩踏效率和舒適性，自從拿到SURGE PRO之後，我就只穿著他訓練和比賽。」而全新 SURGE PRO自行車鞋也在三月時幫助Simon Yates拿下巴黎-尼斯大賽最終站的單站冠軍，成功鎖定總排第二的好成績，為他帶來無比的信心來面對即將展開的環義大賽。\r\n\r\n「看到Simon Yates能在最高層級的比賽展現出最佳水準，你就知道我們真的成功了!我們投入了大量的時間與努力，就是想為騎士提供最高水準的車鞋，而我們做到了。」GIANT全球產品經理Jeff Schneider說：「在最高層級的比賽中，任何一點的產品優勢都能為選手帶來巨大的改變，而對於Simon這樣的頂級選手來說，車鞋當然是在比賽中非常重要的關鍵之一。」\r\n \r\n全新「ExoBeam™動力傳遞軸」和「ExoWrap™足弓包覆」技術\r\n \r\n       全新的ExoBeam™動力傳遞軸是讓騎士享有最佳踩踏效率的最大關鍵，新一代不僅由單軸改為雙軸設計，鞋底板更是100%以超輕碳纖疊層的結構打造，大幅提升騎士踩踏時的動能傳遞，且在ExoBeam™動力傳遞軸巧妙的設計下，同時能提供騎士踩踏時一定的扭轉彈性，完美實現碳纖維鞋底超強剛性卻不死硬的性能表現。\r\n\r\n  其次，全新ExoWrap™足弓包覆技術則是能帶給騎士腳掌完美的貼合度，不同於一般市售車鞋通常只是拉緊鞋面，將腳掌下壓固定於鞋底板，SURGE PRO自行車鞋以改良後的ExoWrap™足弓包覆技術，搭配最高級的BOA®Li2雙旋鈕設計，在拉緊時能同時將車鞋內側與鞋面往騎士的腳掌收緊貼合，並透過BOA®Li2雙旋鈕給騎士最精密的微調空間，以達到360度全方位的貼合度與最佳的個人化調整。\r\n\r\n  而對於專業騎士也非常注重的舒適度，SURGE PRO將超薄、超透氣的微網布使用於鞋內合成纖維層和超耐磨的PU表層之間，並在鞋面搭配超大範圍的雷射透氣孔，大幅提升鞋內空氣循環的對流效果，長時間維持騎士雙足乾燥，達到最佳化的透氣性與鞋面彈性。', '2022-06-16', 5568),
 (13, 'ARX 24 - 小鐵人的最佳選擇', '當各位鐵人爸、鐵人媽忙著為自己的三鐵戰駒進行各式改裝，只為了追求更輕、更快、更帥的性能或視覺效果時，您是否也為您們家的小鐵人找到最適合小鐵人賽事的自行車了呢? ARX 24在台灣一上市便以輕、速、帥三大特點襲捲國內各項小鐵人賽事，成為國內小鐵人第一指名的自行車，究竟ARX 24背後有著什麼樣的關鍵設計，讓我們敢說ARX 24是青少年參加小鐵人賽事的最佳選擇呢?\r\n\r\n首先，同級最輕的重量表現，讓ARX 24在屬於競速性質的小鐵人賽事中占盡優勢。一般男性三鐵運動員體重大約60-90公斤，尚且為了自行車裝備上1、200公克的重量在錙銖比較，對於體重僅有約20-40公斤小鐵人來說，自行車的輕量化將更為重要。\r\n \r\n最後，ARX 24俐落簡潔的車架外型設計，更完全符合以速度為導向的小鐵人賽事形象，加上亮眼飽滿的車架塗裝，讓小鐵人一騎上ARX 24，馬上成為賽場上最耀眼的小鐵人。\r\nARX 24以ALUXX競速級鋁合金車架打造，整車僅9公斤的重量表現，比市面上其他青少年車款至少都再輕2-3公斤，這對於力量較小的小鐵人來說是非常巨大的優勢，從轉換區的取車、牽車開始，使用ARX 24的小鐵人就已開始享受輕量化所帶來的優勢，更不用說在自行賽道上「更輕即更快」的真理，使用ARX 24 將幫助小鐵人更輕鬆省力的完成自行車項目，迅速銜接跑步項目。\r\n\r\n其次，ARX 24在設計上以「速」為優先選擇，不僅要幫助小鐵人快速的完成自行車項目，使小鐵人輕鬆、迅速的轉換至最後的跑步項目，甚至連小鐵人平時的訓練方便性也依並融入設計的考量之中。\r\n\r\n1. 低風阻騎乘幾何\r\n自行車為對抗風阻的運動，ARX 24相較一般平把青少年車有更前傾的低風阻騎姿，不僅速度更快，也讓小鐵人更省力。\r\n\r\n2. 全地形8段變速\r\n直覺的指撥式8段變速把手，搭配前32T x 後12-32T全地形齒比，不論在比賽中面對上、下坡或要進行平路衝刺，小鐵人皆能快速調整至最適檔位，以最有力的雙腿進入最後的跑步項目。\r\n\r\n3. 依青少年身型量身打造\r\n為了追求成績或舒適度而進行FITTING的鐵人爸、鐵人媽比比皆是，但小鐵人是否也擁有了適合他們的騎姿了呢? ARX 24依青少年的肩寬打造較窄的把手，讓小鐵人擁有更靈敏的操控性，另外也依照青少年較小的坐骨寬設定窄的Q factor(兩邊曲柄最外側切線的距離)，使小鐵人擁有更順暢的踩踏效能。\r\n\r\n4. 載運拆裝，方便快速\r\nARX 24前/後輪及座管皆使用快拆裝置，符合小鐵人移地訓練、比賽等載運需求，方便拆裝，快速調整。\r\n', '2022-06-30', 9),
 (14, '2022年式Revolt全新大改款，強勢出騎、解鎖生活的野性樂趣', ' 全新2022年式Revolt以滿足當今市場上對礫石公路車(Gravel Bike)的性能要求為目標，捷安特工程師、設計師與Giant Factory Off-Road Team的選手共同合作開發，以頂尖的製造工藝和競賽的性能標準打造出全新Revolt，準備帶你征服更多樣的地形和路況，解鎖生活中更多的野性樂趣。\r\n\r\n       全新Revolt有著大家所熟悉的彎把公路車外型，多功能設計、順應升級和效率提升則是本次Revolt的3大改款重點，獨家FLIP CHIP可調式後勾爪則讓你1台車架即有2種幾何，針對不同的路況能採用不同的車架幾何與不同的胎寬選擇，即使再野的路，也能讓你放膽趣騎；獨家D-FUSE減震座管與把手則能減輕騎士在長時間騎乘後的疲勞與不適，是面對碎石路面不可或缺的關鍵技術；最後，更輕的車架重量提供騎士更好的騎乘效率，全新Revolt Advanced車架組較上一代減輕160公克，對於想追求極致表現的選手來說更可謂為一大優勢。\r\n\r\n多功能設計\r\n1. FLIP CHIP可調式後勾爪\r\n       本次Revolt改款後新增的FLIP CHIP可調式後勾爪，使騎士能夠依據騎乘的路況來選擇不同的幾何設定，透過翻轉FLIP CHIP裝置，能產生Short Position與Long Position兩種幾何，且騎士只需要使用內六角板手即可自行調整，對於騎乘風格與路線較多元的騎士來說是非常方便的一大特點。\r\n\r\n2. 可相容伸縮座管\r\n       全新車架設計新增了座管轉接座，除了原車標配的D字形D-FUSE減震座管，在移除座管轉接座後，騎士還能依騎乘需求安裝30.9mm的圓形座管或伸縮座管，以面對更多樣的騎乘路線。\r\n\r\n3. 多功能彎把\r\n       5度的上把位後傾角，讓騎士在進行長距離騎乘或進行長爬坡時能擁有更輕鬆的騎姿；8度的內旋角，使把手下把位稍向外擴，讓騎士在使用下把位面對碎石路面時有更高的穩定感。\r\n\r\n4. 預留水壺架&貨架孔位\r\n         為了滿足更多元、更豐富的騎乘形態，全新Revolt在車架上位騎士預留了安裝水壺架以及貨架的孔位，尤其最多能安裝多達6個水壺架，對於喜歡進行長途騎乘的騎士來說是非常貼心的設計。\r\n\r\n順應升級\r\n       騎乘礫石公路車，代表你可能會面對到各式各樣的路況，也許是河床邊的礫石路，或是充滿小碎石的混合路面，也因此順應性能的提升，讓騎士在騎乘過程中盡可能的不受震動干擾，也是本次Revolt改款的重點之一。\r\n\r\n1. 後上叉下移減震設計\r\n        將後上叉與座管之接觸點下移之後，座管之可變形量增加，能夠提升Revolt之吸震性能。\r\n2. 薄型後上叉吸震技術\r\n       新一代Revolt擁有比前一代更薄的後上叉，同樣能夠在吸震性上有顯著的提升。\r\n3. 獨家D-FUSE專利吸震座管\r\n       以複合式碳纖材質打造的D字形座管，能較一般傳統圓形座管提高2.4倍的變形與吸震能力，吸收騎乘時路面所造成的震動，有效降低因為震動而對身體造成的累積疲勞感。\r\n4. D-FUSE減震把手\r\n       將D-FUSE科技運用在把手上，能夠將吸震效果完美複製，減緩騎士的疲勞程度。\r\n\r\n效率提升\r\n       近年來礫石公路賽的競賽激烈程度有越來越像公路車賽的趨勢，所以選手們對礫石公路車的競賽性能要求也越來越高，新一代Revolt Advanced車架組較上一代減輕了160公克，在不犧牲剛性的情況下提升騎士的騎乘效率。\r\n\r\n2022年式Revolt系列在台灣共有3種車款選擇，分別是碳纖車架版本的 Revolt Advanced 0 、Revolt Advanced 2 以及鋁合金車架版本的 Revolt 2，分別提供XS、S、M、ML等尺寸可供選擇，各車款已全面到貨，賞車請洽各地區捷安特門市。', '2022-06-28', 4545),
@@ -590,6 +604,7 @@ INSERT INTO `news` (`id`, `title`, `content`, `date`, `touch`) VALUES
 -- 資料表結構 `newspicture`
 --
 
+DROP TABLE IF EXISTS `newspicture`;
 CREATE TABLE `newspicture` (
   `id` int(11) NOT NULL,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
@@ -669,6 +684,7 @@ INSERT INTO `newspicture` (`id`, `name`) VALUES
 -- 資料表結構 `news_picture`
 --
 
+DROP TABLE IF EXISTS `news_picture`;
 CREATE TABLE `news_picture` (
   `news_id` int(10) NOT NULL,
   `picture_id` int(10) NOT NULL
@@ -747,6 +763,7 @@ INSERT INTO `news_picture` (`news_id`, `picture_id`) VALUES
 -- 資料表結構 `order_list`
 --
 
+DROP TABLE IF EXISTS `order_list`;
 CREATE TABLE `order_list` (
   `order_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
@@ -760,6 +777,8 @@ CREATE TABLE `order_list` (
   `course_total` int(15) NOT NULL,
   `activity_total` int(15) NOT NULL,
   `total` int(15) NOT NULL,
+  `discount_price` int(20) NOT NULL,
+  `discount_total` int(20) NOT NULL,
   `order_address` varchar(50) NOT NULL,
   `phone` varchar(15) NOT NULL,
   `remark` varchar(100) NOT NULL,
@@ -770,8 +789,8 @@ CREATE TABLE `order_list` (
 -- 傾印資料表的資料 `order_list`
 --
 
-INSERT INTO `order_list` (`order_id`, `user_id`, `order_create_time`, `order_status`, `payment_method_id`, `payment_status_id`, `delivery_id`, `recipient`, `product_total`, `course_total`, `activity_total`, `total`, `order_address`, `phone`, `remark`, `coupon_id`) VALUES
-(24, 13, '2022-06-29 18:08:54', 1, 1, 2, 1, '潘奕辰', 34000, 0, 0, 34000, '臺南市永康區永忠路28號', '0945654789', '測試', 0);
+INSERT INTO `order_list` (`order_id`, `user_id`, `order_create_time`, `order_status`, `payment_method_id`, `payment_status_id`, `delivery_id`, `recipient`, `product_total`, `course_total`, `activity_total`, `total`, `discount_price`, `discount_total`, `order_address`, `phone`, `remark`, `coupon_id`) VALUES
+(25, 13, '2022-07-07 20:43:38', 1, 1, 2, 1, '潘奕辰', 22000, 0, 0, 22000, 1100, 20900, '臺南市永康區永忠路28號', '0934545978', '測試', 2);
 
 -- --------------------------------------------------------
 
@@ -779,10 +798,7 @@ INSERT INTO `order_list` (`order_id`, `user_id`, `order_create_time`, `order_sta
 -- 資料表結構 `order_status`
 --
 
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 DROP TABLE IF EXISTS `order_status`;
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `order_status` (
   `id` int(3) NOT NULL,
   `order_status` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -802,6 +818,7 @@ INSERT INTO `order_status` (`id`, `order_status`) VALUES
 -- 資料表結構 `payment_method`
 --
 
+DROP TABLE IF EXISTS `payment_method`;
 CREATE TABLE `payment_method` (
   `id` int(2) NOT NULL,
   `payment_method_name` varchar(100) NOT NULL,
@@ -826,10 +843,7 @@ INSERT INTO `payment_method` (`id`, `payment_method_name`, `valid`) VALUES
 -- 資料表結構 `payment_status`
 --
 
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 DROP TABLE IF EXISTS `payment_status`;
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 CREATE TABLE `payment_status` (
   `id` int(2) NOT NULL,
   `payment_status` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -849,6 +863,7 @@ INSERT INTO `payment_status` (`id`, `payment_status`) VALUES
 -- 資料表結構 `product`
 --
 
+DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `product_id` int(5) NOT NULL,
   `product_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -858,7 +873,9 @@ CREATE TABLE `product` (
   `product_category_id` int(5) NOT NULL,
   `product_brand_id` int(4) NOT NULL,
   `product_color` varchar(22) NOT NULL,
-  `product_rating` double(5,0) NOT NULL DEFAULT 1,
+  `product_rating` double(5,1) NOT NULL DEFAULT 1.0,
+  `product_description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_detail_description` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `valid` int(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -866,81 +883,88 @@ CREATE TABLE `product` (
 -- 傾印資料表的資料 `product`
 --
 
-INSERT INTO `product` (`product_id`, `product_name`, `product_images`, `product_price`, `product_update`, `product_category_id`, `product_brand_id`, `product_color`, `product_rating`, `valid`) VALUES
-(1, '挑戰者300', '挑戰者300.jpg', 18800, '2022-04-22', 1, 1, 'Teal', 1, 1),
-(2, '公爵500 ', '公爵500.jpg', 11800, '2022-04-12', 1, 1, 'Black', 2, 1),
-(3, '探索者100\r\n', '探索者100.jpg\r\n', 11800, '2022-04-06', 1, 1, 'Red', 4, 1),
-(4, '公爵300', '公爵300.jpg', 12800, '2022-04-20', 1, 1, 'Teal', 4, 1),
-(5, '勇士500-D', '勇士500-D.jpg', 9500, '2022-04-26', 1, 1, 'Teal', 1, 1),
-(6, '勇士500-V', '勇士500-V.jpg', 8500, '2022-04-26', 1, 1, 'Black', 3, 1),
-(7, '勇士300-DS', '勇士300-DS.jpg', 8500, '2022-04-01', 1, 1, 'Black', 3, 1),
-(8, '勇士300-V', '勇士300-V.jpg', 7500, '2022-04-26', 1, 1, 'White', 5, 1),
-(9, '維多300-V', '維多300-V.jpg', 7980, '2022-04-17', 1, 1, 'White', 2, 1),
-(10, '維多利亞500', '維多利亞500.jpg', 7480, '2022-04-26', 1, 1, 'White', 3, 1),
-(11, '維多利亞600D', '維多利亞600D.jpg', 11800, '2022-04-26', 1, 1, 'White', 2, 1),
-(12, '維多利亞500MD', '維多利亞500MD.jpg', 9500, '2022-04-26', 1, 1, 'White', 3, 1),
-(13, '達卡624MD', '達卡624MD.jpg', 7280, '2022-04-26', 1, 1, 'Black', 2, 1),
-(14, '達卡624', '達卡624.jpg', 6500, '2022-04-20', 1, 1, 'White', 2, 1),
-(15, 'FS90', 'FS90.jpg', 3950, '2022-04-21', 1, 1, 'Black', 5, 1),
-(16, 'BIG_NINE7000', 'BIG_NINE7000.jpg', 118000, '2022-04-01', 2, 1, 'Green', 3, 1),
-(17, 'BIG_NINE_XT', 'BIG_NINE_XT.jpg', 79800, '2022-04-26', 2, 2, 'Black', 2, 1),
-(18, '探索者300', '探索者300.jpg', 14800, '2022-04-26', 1, 2, 'Indigo', 4, 1),
-(19, 'BIG_NINE_5000 ', 'BIG_NINE_5000.jpg', 69800, '2022-04-26', 2, 2, 'Orange', 4, 1),
-(20, 'BIG_NINE_3000', 'BIG_NINE_3000.jpg', 52800, '2022-04-26', 2, 2, 'Teal', 5, 1),
-(21, 'BIG_NINE_700', 'BIG_NINE_700.jpg', 55000, '2022-04-26', 2, 2, 'Cyan', 2, 1),
-(22, 'BIG_NINE_600', 'BIG_NINE_600.jpg', 41800, '2022-04-26', 2, 2, 'Teal', 4, 1),
-(23, 'BIG_NINE_LIMITED', 'BIG_NINE_LIMITED.jpg', 32800, '2022-04-26', 2, 2, 'Red', 3, 1),
-(24, 'BIG_NINE_XT_EDITION', 'BIG_NINE_XT_EDITION.jpg', 49800, '2022-04-26', 2, 2, 'Dark Grey', 5, 1),
-(25, 'BIG_NINE_XT2', 'BIG_NINE_XT2.jpg', 45000, '2022-04-26', 2, 2, 'Dark Grey', 1, 1),
-(26, 'ONE_SIXTY_700', 'ONE_SIXTY_700.jpg', 36000, '2022-04-22', 2, 2, 'Cyan', 5, 1),
-(27, 'BIG_NINE_SLX_EDITION', 'BIG_NINE_SLX_EDITION.jpg', 36000, '2022-04-26', 2, 2, 'Dark Grey', 2, 1),
-(28, 'BIG_NINE_500', 'BIG_NINE_500.jpg', 29800, '2022-04-26', 2, 2, 'Red', 3, 1),
-(29, 'BIG_NINE_400', 'BIG_NINE_400.jpg', 27800, '2022-04-26', 2, 2, 'Dark Grey', 2, 1),
-(30, 'BIG_NINE_300', 'BIG_NINE_300.jpg', 23800, '2022-04-26', 2, 2, 'Dark Grey', 1, 1),
-(31, 'BIG_NINE_200', 'BIG_NINE_200.jpg', 22000, '2022-04-26', 2, 2, 'Dark Grey', 3, 1),
-(32, 'BIG_NINE_100_2x', 'BIG_NINE_100_2x.jpg', 19900, '2022-04-26', 2, 2, 'Cyan', 5, 1),
-(33, 'BIG_NINE_100_3x', 'BIG_NINE_100_3x.jpg', 19900, '2022-04-26', 2, 3, 'Dark Grey', 2, 1),
-(34, 'BIG_NINE_60_2x\r\n', 'BIG_NINE_60_2x.jpg', 19800, '2022-04-26', 2, 3, 'Red', 3, 1),
-(35, 'BIG_NINE_60_3x', 'BIG_NINE_60_3x.jpg', 19800, '2022-04-26', 2, 3, 'Brown', 4, 1),
-(36, 'BIG_NINE_20_2x', 'BIG_NINE_20_2x.jpg', 16800, '2022-04-26', 2, 3, 'Teal', 2, 1),
-(37, 'BIG_NINE_20_3x', 'BIG_NINE_20_3x.jpg', 16800, '2022-04-26', 2, 3, 'White', 5, 1),
-(38, 'BIG_NINE_15\r\n', 'BIG_NINE_15.jpg', 14800, '2022-04-26', 2, 3, 'Brown', 4, 1),
-(39, 'BIG_SEVEN_300', 'BIG_SEVEN_300.jpg', 23800, '2022-04-26', 2, 3, 'Orange', 2, 1),
-(40, 'BIG_SEVEN_200', 'BIG_SEVEN_200.jpg', 22000, '2022-04-26', 2, 3, 'Teal', 2, 1),
-(41, 'BIG_SEVEN_100_2x', 'BIG_SEVEN_100_2x.jpg', 19900, '2022-04-26', 2, 3, 'Dark Grey', 4, 1),
-(42, 'BIG_SEVEN_60_2x', 'BIG_SEVEN_60_2x.jpg', 19800, '2022-04-26', 2, 3, 'Dark Grey', 5, 1),
-(43, 'BIG_SEVEN_20', 'BIG_SEVEN_20.jpg', 16800, '2022-04-26', 2, 3, 'Dark Grey', 4, 1),
-(44, 'BIG_SEVEN_15', 'BIG_SEVEN_15.jpg', 14800, '2022-04-26', 2, 3, 'Brown', 3, 1),
-(45, 'BIG_TRAIL_600', 'BIG_TRAIL_600.jpg', 45000, '2022-04-26', 2, 3, 'Black', 3, 1),
-(46, 'BIG_TRAIL_500', 'BIG_TRAIL_500.jpg', 35000, '2022-04-25', 2, 3, 'Green', 4, 1),
-(47, 'BIG_TRAIL_400', 'BIG_TRAIL_400.jpg', 29900, '2022-04-24', 2, 3, 'Dark Grey', 4, 1),
-(48, 'BIG_TRAIL_200', 'BIG_TRAIL_200.jpg', 23800, '2022-04-24', 2, 3, 'Dark Grey', 2, 1),
-(49, 'MATTS_7_80', 'MATTS_7_80.jpg', 21800, '2022-04-24', 2, 4, 'Green', 1, 1),
-(50, 'MATTS_7_70', 'MATTS_7_70.jpg', 20800, '2022-04-25', 2, 4, 'Orange', 4, 1),
-(51, 'MATTS_7_60_2x', 'MATTS_7_60_2x.jpg', 18000, '2022-04-24', 2, 4, 'Indigo', 1, 1),
-(52, 'MATTS_7_30', 'MATTS_7_30.jpg', 16000, '2022-04-16', 2, 4, 'Dark Grey', 5, 1),
-(53, 'MATTS_7_20', 'MATTS_7_20.jpg', 15000, '2022-04-26', 2, 4, 'Dark Grey', 4, 1),
-(54, 'MATTS_J_CHAMPION', 'MATTS_J_CHAMPION.jpg', 22500, '2022-04-24', 2, 4, 'Green', 2, 1),
-(55, 'MATTS_J_24', 'MATTS_J_24.jpg', 14500, '2022-04-26', 2, 4, 'Violet', 2, 1),
-(56, 'MATTS_6_10_V', 'MATTS_6_10_V.jpg', 14500, '2022-04-15', 2, 4, 'Green', 3, 1),
-(57, 'ONE_TWENTY_600', 'ONE_TWENTY_600.jpg', 69800, '2022-04-15', 3, 4, 'Red', 1, 1),
-(58, 'ONE_TWENTY_400', 'ONE_TWENTY_400.jpg', 51800, '2022-04-01', 3, 4, 'Dark Grey', 3, 1),
-(59, 'ONE_FORTY_600', 'ONE_FORTY_600.jpg', 66800, '2022-04-22', 3, 4, 'Dark Grey', 2, 1),
-(60, 'ONE_FORTY_400', 'ONE_FORTY_400.jpg', 55800, '2022-04-15', 3, 4, 'Dark Grey', 5, 1),
-(61, 'ONE_SIXTY_700     ', 'ONE_SIXTY_700.jpg', 52800, '2022-03-24', 2, 4, 'Cyan', 4, 1),
-(62, 'MY22 Reign Advanced Pro', 'MY22 Reign Advanced Pro.jpg', 168000, '2022-04-25', 3, 4, 'Dark Grey', 4, 1),
-(63, 'Reign 29 1', 'Reign 29 1.jpg', 10800, '2022-04-25', 3, 4, 'Dark Grey', 4, 1),
-(64, 'Reign 29', 'Reign 29.jpg', 98000, '2022-04-25', 3, 4, 'Orange', 2, 1),
-(65, 'Trance X Advanced Pro 29 1', 'Trance X Advanced Pro 29 1.jpg', 168000, '2022-04-25', 3, 5, 'Black', 3, 1),
-(66, 'Trance X 29 1', 'Trance X 29 1.jpg', 98000, '2022-04-25', 3, 5, 'Black', 2, 1),
-(67, 'Trance X 29 2', 'Trance X 29 2.jpg', 72800, '2022-04-25', 3, 5, 'Dark Grey', 5, 1),
-(68, 'Trance Advanced Pro 29 1', 'Trance Advanced Pro 29 1.jpg', 148000, '2022-04-25', 3, 5, 'Dark Grey', 3, 1),
-(69, 'Anthem 29 2', 'Anthem 29 2.jpg', 59800, '2022-04-25', 2, 5, 'Black', 3, 1),
-(70, 'XTC Advanced 29 1', 'XTC Advanced 29 1.jpg', 125000, '2022-04-25', 3, 5, 'Black', 5, 1),
-(71, 'XTC ADVANCED 3 ', 'XTC ADVANCED 3.jpg', 49900, '2022-04-25', 2, 5, 'Dark Grey', 4, 1),
-(72, 'XTC SLR 2', 'XTC SLR 2.jpg', 36800, '2022-04-26', 2, 5, 'Black', 3, 1),
-(73, 'XtC 800', 'XtC 800.jpg', 22800, '2022-04-25', 1, 5, 'Black', 4, 1),
-(141, 'x500', 'BIG_NINE_20_2x.jpg', 19880, '2022-04-25', 2, 5, 'Cyan', 5, 1);
+INSERT INTO `product` (`product_id`, `product_name`, `product_images`, `product_price`, `product_update`, `product_category_id`, `product_brand_id`, `product_color`, `product_rating`, `product_description`, `product_detail_description`, `valid`) VALUES
+(1, '挑戰者300', '挑戰者300.jpg', 18800, '2022-04-22', 1, 1, 'Teal', 3.4, '2021年最受歡迎的BIG.TRAIL車型，合宜的零組件搭配，合宜的售價！', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano XTSLX 2x12傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(2, '公爵500 ', '公爵500.jpg', 11800, '2022-04-12', 1, 1, 'Black', 4.4, '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，Shimano 1X 傳動系統。 ', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(3, '探索者100\r\n', '探索者100.jpg\r\n', 11800, '2022-04-06', 1, 1, 'Red', 3.2, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano 2x8 零組件搭配， Suntour避震前叉。', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Shimano 1x11s 傳動系統，Manitou避震前叉，油壓碟煞。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(4, '公爵300', '公爵300.jpg', 12800, '2022-04-20', 1, 1, 'Teal', 3.7, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano XTSLX 2x12零組件搭配。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(5, '勇士500-D', '勇士500-D.jpg', 9500, '2022-04-26', 1, 1, 'Teal', 3.3, '中階碳纖維單避震登山車，適用XCMarathon騎乘環境。CF3碳纖維車架，主流零組件搭配。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(6, '勇士500-V', '勇士500-V.jpg', 8500, '2022-04-26', 1, 1, 'Black', 2.3, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x8 傳動系統，100mm行程避震前叉。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(7, '勇士300-DS', '勇士300-DS.jpg', 8500, '2022-04-01', 1, 1, 'Black', 1.8, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x10 傳動系統，100mm行程避震前叉。', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano Deore 11s 傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(8, '勇士300-V', '勇士300-V.jpg', 7500, '2022-04-26', 1, 1, 'White', 2.4, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano XTSLX 2x12零組件搭配。', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(9, '維多300-V', '維多300-V.jpg', 7980, '2022-04-17', 1, 1, 'White', 4.7, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 零組件搭配， RockShox避震前叉。', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(10, '維多利亞500', '維多利亞500.jpg', 7480, '2022-04-26', 1, 1, 'White', 1.5, 'BIG.TRAIL入門車款，120mm長行程避震，林道騎乘幾何！', '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，2x12傳通配置。', 1),
+(11, '維多利亞600D', '維多利亞600D.jpg', 11800, '2022-04-26', 1, 1, 'White', 2.9, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 傳動系統，100mm行程避震前叉。', '最頂規的鋁合金單避震車，採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(12, '維多利亞500MD', '維多利亞500MD.jpg', 9500, '2022-04-26', 1, 1, 'White', 1.1, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 傳動系統，100mm行程避震前叉。', '單避震進階車款，輕量的CF3碳纖維車體，Shimano XT傳動組件與制動系統，RockShox Reba避震前叉，相容無內胎系統的輪組，S-FLEX高吸震座桿。&break 從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(13, '達卡624MD', '達卡624MD.jpg', 7280, '2022-04-26', 1, 1, 'Black', 1.3, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x8 傳動系統，100mm行程避震前叉。', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(14, '達卡624', '達卡624.jpg', 6500, '2022-04-20', 1, 1, 'White', 4.0, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano Deore 2x10組件搭配，Suntour避震前叉。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano XTSLX 2x12傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(15, 'FS90', 'FS90.jpg', 3950, '2022-04-21', 1, 1, 'Black', 1.5, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano Deore 2x10組件搭配，Suntour避震前叉。', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(16, 'BIG_NINE7000', 'BIG_NINE7000.jpg', 118000, '2022-04-01', 2, 1, 'Green', 1.5, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano 3x8 零組件搭配， Suntour避震前叉。', '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，2x12傳通配置。', 1),
+(17, 'BIG_NINE_XT', 'BIG_NINE_XT.jpg', 79800, '2022-04-26', 2, 2, 'Black', 1.9, 'BIG.TRAIL親民車款，長行程避震，林道騎乘幾何！', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Shimano 1x11s 傳動系統，Manitou避震前叉，油壓碟煞。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(18, '探索者300', '探索者300.jpg', 14800, '2022-04-26', 1, 2, 'Indigo', 3.5, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano 3x8 零組件搭配， Suntour避震前叉。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(19, 'BIG_NINE_5000 ', 'BIG_NINE_5000.jpg', 69800, '2022-04-26', 2, 2, 'Orange', 1.9, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 傳動系統，RockShox 100mm行程避震前叉。 ', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Shimano 1x11s 傳動系統，Manitou避震前叉，油壓碟煞。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(20, 'BIG_NINE_3000', 'BIG_NINE_3000.jpg', 52800, '2022-04-26', 2, 2, 'Teal', 3.3, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano Deore 2x10組件搭配，Suntour避震前叉。', '單避震進階車款，輕量的CF3碳纖維車體，Shimano XT傳動組件與制動系統，RockShox Reba避震前叉，相容無內胎系統的輪組，S-FLEX高吸震座桿。&break 從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(21, 'BIG_NINE_700', 'BIG_NINE_700.jpg', 55000, '2022-04-26', 2, 2, 'Cyan', 3.4, '2021年最受歡迎的BIG.TRAIL車型，合宜的零組件搭配，合宜的售價！', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(22, 'BIG_NINE_600', 'BIG_NINE_600.jpg', 41800, '2022-04-26', 2, 2, 'Teal', 1.7, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，3x9 零組件搭配， RockShox避震前叉。', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(23, 'BIG_NINE_LIMITED', 'BIG_NINE_LIMITED.jpg', 32800, '2022-04-26', 2, 2, 'Red', 2.3, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano 3x8 零組件搭配， Suntour避震前叉。', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(24, 'BIG_NINE_XT_EDITION', 'BIG_NINE_XT_EDITION.jpg', 49800, '2022-04-26', 2, 2, 'Dark Grey', 1.6, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano 2x8 零組件搭配， Suntour避震前叉。', '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，2x12傳通配置。', 1),
+(25, 'BIG_NINE_XT2', 'BIG_NINE_XT2.jpg', 45000, '2022-04-26', 2, 2, 'Dark Grey', 4.2, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，1x10 傳動系統，100mm行程避震前叉。 ', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(26, 'ONE_SIXTY_700', 'ONE_SIXTY_700.jpg', 36000, '2022-04-22', 2, 2, 'Cyan', 1.7, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano 2x9零組件搭配，Suntour避震前叉。', '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，2x12傳通配置。', 1),
+(27, 'BIG_NINE_SLX_EDITION', 'BIG_NINE_SLX_EDITION.jpg', 36000, '2022-04-26', 2, 2, 'Dark Grey', 1.6, '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，Shimano 1X 傳動系統。 ', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(28, 'BIG_NINE_500', 'BIG_NINE_500.jpg', 29800, '2022-04-26', 2, 2, 'Red', 2.2, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 零組件搭配， RockShox避震前叉。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(29, 'BIG_NINE_400', 'BIG_NINE_400.jpg', 27800, '2022-04-26', 2, 2, 'Dark Grey', 4.9, '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，2x12傳通配置。', '單避震進階車款，輕量的CF3碳纖維車體，Shimano XT傳動組件與制動系統，RockShox Reba避震前叉，相容無內胎系統的輪組，S-FLEX高吸震座桿。&break 從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(30, 'BIG_NINE_300', 'BIG_NINE_300.jpg', 23800, '2022-04-26', 2, 2, 'Dark Grey', 5.0, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，1x10 傳動系統，100mm行程避震前叉。 ', '單避震進階車款，輕量的CF3碳纖維車體，Shimano XT傳動組件與制動系統，RockShox Reba避震前叉，相容無內胎系統的輪組，S-FLEX高吸震座桿。&break 從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(31, 'BIG_NINE_200', 'BIG_NINE_200.jpg', 22000, '2022-04-26', 2, 2, 'Dark Grey', 2.5, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 傳動系統，RockShox 100mm行程避震前叉。 ', '最頂規的鋁合金單避震車，採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(32, 'BIG_NINE_100_2x', 'BIG_NINE_100_2x.jpg', 19900, '2022-04-26', 2, 2, 'Cyan', 1.3, 'BIG.TRAIL親民車款，長行程避震，林道騎乘幾何！', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Shimano 1x11s 傳動系統，Manitou避震前叉，油壓碟煞。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(33, 'BIG_NINE_100_3x', 'BIG_NINE_100_3x.jpg', 19900, '2022-04-26', 2, 3, 'Dark Grey', 3.4, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x8 傳動系統，100mm行程避震前叉。', '單避震進階車款，輕量的CF3碳纖維車體，Shimano XT傳動組件與制動系統，RockShox Reba避震前叉，相容無內胎系統的輪組，S-FLEX高吸震座桿。&break 從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(34, 'BIG_NINE_60_2x\r\n', 'BIG_NINE_60_2x.jpg', 19800, '2022-04-26', 2, 3, 'Red', 2.8, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano XTSLX 2x12零組件搭配。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano XTSLX 2x12傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(35, 'BIG_NINE_60_3x', 'BIG_NINE_60_3x.jpg', 19800, '2022-04-26', 2, 3, 'Brown', 4.3, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，3x8 傳動系統，100mm行程避震前叉。 ', '最頂規的鋁合金單避震車，採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(36, 'BIG_NINE_20_2x', 'BIG_NINE_20_2x.jpg', 16800, '2022-04-26', 2, 3, 'Teal', 2.7, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 零組件搭配， RockShox避震前叉。', '最頂規的鋁合金單避震車，採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(37, 'BIG_NINE_20_3x', 'BIG_NINE_20_3x.jpg', 16800, '2022-04-26', 2, 3, 'White', 1.1, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano XTSLX 2x12零組件搭配。', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano Deore 11s 傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(38, 'BIG_NINE_15\r\n', 'BIG_NINE_15.jpg', 14800, '2022-04-26', 2, 3, 'Brown', 4.9, '中階碳纖維單避震登山車，適用XCMarathon騎乘環境。CF3碳纖維車架，主流零組件搭配。', '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，2x12傳通配置。', 1),
+(39, 'BIG_SEVEN_300', 'BIG_SEVEN_300.jpg', 23800, '2022-04-26', 2, 3, 'Orange', 4.7, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 傳動系統，RockShox 100mm行程避震前叉。 ', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano Deore 11s 傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(40, 'BIG_SEVEN_200', 'BIG_SEVEN_200.jpg', 22000, '2022-04-26', 2, 3, 'Teal', 1.6, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 傳動系統，RockShox 100mm行程避震前叉。 ', '最頂規的鋁合金單避震車，採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(41, 'BIG_SEVEN_100_2x', 'BIG_SEVEN_100_2x.jpg', 19900, '2022-04-26', 2, 3, 'Dark Grey', 4.8, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 傳動系統，RockShox 100mm行程避震前叉。 ', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Shimano 1x11s 傳動系統，Manitou避震前叉，油壓碟煞。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(42, 'BIG_SEVEN_60_2x', 'BIG_SEVEN_60_2x.jpg', 19800, '2022-04-26', 2, 3, 'Dark Grey', 3.5, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano Deore 2x10組件搭配，Suntour避震前叉。', '最頂規的鋁合金單避震車，採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(43, 'BIG_SEVEN_20', 'BIG_SEVEN_20.jpg', 16800, '2022-04-26', 2, 3, 'Dark Grey', 4.6, 'BIG.TRAIL親民車款，長行程避震，林道騎乘幾何！', '單避震中階車款，輕量的CF3碳纖維車體，Shimano傳動組件與制動系統，RockShox避震前叉，相容無內胎系統的輪組。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(44, 'BIG_SEVEN_15', 'BIG_SEVEN_15.jpg', 14800, '2022-04-26', 2, 3, 'Brown', 3.7, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 零組件搭配， RockShox避震前叉。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(45, 'BIG_TRAIL_600', 'BIG_TRAIL_600.jpg', 45000, '2022-04-26', 2, 3, 'Black', 2.1, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，1x10 傳動系統，100mm行程避震前叉。 ', '單避震進階車款，輕量的CF3碳纖維車體，Shimano XT傳動組件與制動系統，RockShox Reba避震前叉，相容無內胎系統的輪組，S-FLEX高吸震座桿。&break 從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(46, 'BIG_TRAIL_500', 'BIG_TRAIL_500.jpg', 35000, '2022-04-25', 2, 3, 'Green', 2.1, '2021年最受歡迎的BIG.TRAIL車型，合宜的零組件搭配，合宜的售價！', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano Deore 11s 傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(47, 'BIG_TRAIL_400', 'BIG_TRAIL_400.jpg', 29900, '2022-04-24', 2, 3, 'Dark Grey', 2.1, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，3x9 零組件搭配， RockShox避震前叉。', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(48, 'BIG_TRAIL_200', 'BIG_TRAIL_200.jpg', 23800, '2022-04-24', 2, 3, 'Dark Grey', 4.4, '2021年最受歡迎的BIG.TRAIL車型，合宜的零組件搭配，合宜的售價！', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(49, 'MATTS_7_80', 'MATTS_7_80.jpg', 21800, '2022-04-24', 2, 4, 'Green', 2.6, 'BIG.TRAIL入門車款，120mm長行程避震，林道騎乘幾何！', '單避震進階車款，輕量的CF3碳纖維車體，Shimano XT傳動組件與制動系統，RockShox Reba避震前叉，相容無內胎系統的輪組，S-FLEX高吸震座桿。&break 從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(50, 'MATTS_7_70', 'MATTS_7_70.jpg', 20800, '2022-04-25', 2, 4, 'Orange', 1.3, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano XTSLX 2x12零組件搭配。', '最頂規的鋁合金單避震車，採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(51, 'MATTS_7_60_2x', 'MATTS_7_60_2x.jpg', 18000, '2022-04-24', 2, 4, 'Indigo', 4.0, '2021年最受歡迎的BIG.TRAIL車型，合宜的零組件搭配，合宜的售價！', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(52, 'MATTS_7_30', 'MATTS_7_30.jpg', 16000, '2022-04-16', 2, 4, 'Dark Grey', 2.8, '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，2x12傳通配置。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(53, 'MATTS_7_20', 'MATTS_7_20.jpg', 15000, '2022-04-26', 2, 4, 'Dark Grey', 4.7, 'BIG.TRAIL入門車款，120mm長行程避震，林道騎乘幾何！', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Shimano 1x11s 傳動系統，Manitou避震前叉，油壓碟煞。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(54, 'MATTS_J_CHAMPION', 'MATTS_J_CHAMPION.jpg', 22500, '2022-04-24', 2, 4, 'Green', 2.2, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano 3x8 零組件搭配， Suntour避震前叉。', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(55, 'MATTS_J_24', 'MATTS_J_24.jpg', 14500, '2022-04-26', 2, 4, 'Violet', 2.6, '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，2x12傳通配置。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(56, 'MATTS_6_10_V', 'MATTS_6_10_V.jpg', 14500, '2022-04-15', 2, 4, 'Green', 4.8, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x8 傳動系統，100mm行程避震前叉。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(57, 'ONE_TWENTY_600', 'ONE_TWENTY_600.jpg', 69800, '2022-04-15', 3, 4, 'Red', 2.1, '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，2x12傳通配置。', '單避震進階車款，輕量的CF3碳纖維車體，Shimano XT傳動組件與制動系統，RockShox Reba避震前叉，相容無內胎系統的輪組，S-FLEX高吸震座桿。&break 從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(58, 'ONE_TWENTY_400', 'ONE_TWENTY_400.jpg', 51800, '2022-04-01', 3, 4, 'Dark Grey', 3.8, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano 2x9零組件搭配，Suntour避震前叉。', '單避震進階車款，輕量的CF3碳纖維車體，Shimano XT傳動組件與制動系統，RockShox Reba避震前叉，相容無內胎系統的輪組，S-FLEX高吸震座桿。&break 從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(59, 'ONE_FORTY_600', 'ONE_FORTY_600.jpg', 66800, '2022-04-22', 3, 4, 'Dark Grey', 2.8, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 零組件搭配， RockShox避震前叉。', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(60, 'ONE_FORTY_400', 'ONE_FORTY_400.jpg', 55800, '2022-04-15', 3, 4, 'Dark Grey', 3.7, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano XTSLX 2x12零組件搭配。', '單避震中階車款，輕量的CF3碳纖維車體，Shimano傳動組件與制動系統，RockShox避震前叉，相容無內胎系統的輪組。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(61, 'ONE_SIXTY_700     ', 'ONE_SIXTY_700.jpg', 52800, '2022-03-24', 2, 4, 'Cyan', 2.9, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 零組件搭配， RockShox避震前叉。', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Shimano 1x11s 傳動系統，Manitou避震前叉，油壓碟煞。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(62, 'MY22 Reign Advanced Pro', 'MY22 Reign Advanced Pro.jpg', 168000, '2022-04-25', 3, 4, 'Dark Grey', 3.8, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 零組件搭配， RockShox避震前叉。', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(63, 'Reign 29 1', 'Reign 29 1.jpg', 10800, '2022-04-25', 3, 4, 'Dark Grey', 3.5, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 零組件搭配， RockShox避震前叉。', '最頂規的鋁合金單避震車，採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(64, 'Reign 29', 'Reign 29.jpg', 98000, '2022-04-25', 3, 4, 'Orange', 3.9, 'undefined', '單避震中階車款，輕量的CF3碳纖維車體，Shimano傳動組件與制動系統，RockShox避震前叉，相容無內胎系統的輪組。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(65, 'Trance X Advanced Pro 29 1', 'Trance X Advanced Pro 29 1.jpg', 168000, '2022-04-25', 3, 5, 'Black', 3.8, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano 2x9零組件搭配，Suntour避震前叉。', '採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Shimano 1x11s 傳動系統，Manitou避震前叉，油壓碟煞。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(66, 'Trance X 29 1', 'Trance X 29 1.jpg', 98000, '2022-04-25', 3, 5, 'Black', 2.7, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 傳動系統，RockShox 100mm行程避震前叉。 ', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(67, 'Trance X 29 2', 'Trance X 29 2.jpg', 72800, '2022-04-25', 3, 5, 'Dark Grey', 4.1, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，3x9 零組件搭配， RockShox避震前叉。', '最頂規的鋁合金單避震車，採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(68, 'Trance Advanced Pro 29 1', 'Trance Advanced Pro 29 1.jpg', 148000, '2022-04-25', 3, 5, 'Dark Grey', 2.9, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，3x9 零組件搭配， RockShox避震前叉。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。 ', 1),
+(69, 'Anthem 29 2', 'Anthem 29 2.jpg', 59800, '2022-04-25', 2, 5, 'Black', 1.3, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano Deore 2x10組件搭配，Suntour避震前叉。', '車架為採用平整焊接、雙重管壁厚度的鋁合金管材所打造，較為直挺的騎乘幾何。Shimano SLX 寬齒域傳動系統，油壓碟煞，Manitou避震前叉。&從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(70, 'XTC Advanced 29 1', 'XTC Advanced 29 1.jpg', 125000, '2022-04-25', 3, 5, 'Black', 4.9, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，2x9 傳動系統，100mm行程避震前叉。', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(71, 'XTC ADVANCED 3 ', 'XTC ADVANCED 3.jpg', 49900, '2022-04-25', 2, 5, 'Dark Grey', 3.6, '2021年最受歡迎的BIG.TRAIL車型，合宜的零組件搭配，合宜的售價！', '輕量高性能競賽級鋁合金單避震登山車，XCMarathon適用，2x12傳通配置。', 1),
+(72, 'XTC SLR 2', 'XTC SLR 2.jpg', 36800, '2022-04-26', 2, 5, 'Black', 4.6, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，3x9 零組件搭配， RockShox避震前叉。', '單避震高階車款，輕量的CF3碳纖維車體，搭配主流零件規格，RockShox SID避震前叉，Reynold碳纖維輪組，Shimano XT傳動組件與制動系統，S-FLEX高吸震座桿。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(73, 'XtC 800', 'XtC 800.jpg', 22800, '2022-04-25', 1, 5, 'Black', 1.3, '鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，Shimano 2x8 零組件搭配， Suntour避震前叉。', '最頂規的鋁合金單避震車，採用三種不同的管壁厚度、平整焊接打造的全鋁合金車架，偏競賽設定的騎乘幾何，Manitou避震前叉，Shimano傳動系統。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(141, 'x500', 'BIG_NINE_20_2x$Cyan.jpg', 19880, '2022-04-25', 2, 5, 'Cyan', 4.5, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，1x10 傳動系統，100mm行程避震前叉。 ', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(142, 'x500', 'BIG_NINE_20_2x$Green.jpg', 19880, '2022-04-25', 2, 5, 'Green', 4.5, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，1x10 傳動系統，100mm行程避震前叉。 ', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(143, 'x500', 'BIG_NINE_20_2x$Dark Grey.jpg', 19880, '2022-04-25', 2, 5, 'Dark Grey', 4.5, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，1x10 傳動系統，100mm行程避震前叉。 ', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(144, 'x500', 'BIG_NINE_20_2x$Teal.jpg', 19880, '2022-04-25', 2, 5, 'Teal', 4.5, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，1x10 傳動系統，100mm行程避震前叉。 ', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(145, 'x500', 'BIG_NINE_20_2x$Red\n.jpg', 19880, '2022-04-25', 2, 5, 'Red', 4.5, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，1x10 傳動系統，100mm行程避震前叉。 ', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(146, 'x500', 'BIG_NINE_20_2x$Orange\n.jpg', 19880, '2022-04-25', 2, 5, 'Orange', 4.5, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，1x10 傳動系統，100mm行程避震前叉。 ', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(147, 'x500', 'BIG_NINE_20_2x$Indigo.jpg', 19880, '2022-04-25', 2, 5, 'Indigo', 4.5, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，1x10 傳動系統，100mm行程避震前叉。 ', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1),
+(148, 'x500', 'BIG_NINE_20_2x$Brown.jpg', 19880, '2022-04-25', 2, 5, 'Brown', 4.5, '27.5鋁合金單避震登山車，採用較為直挺的騎乘幾何設定，1x10 傳動系統，100mm行程避震前叉。 ', '單避震初階車款，CF3碳纖維車體，Shimano傳動組件與制動系統，Manitou避震前叉。&break從單避震登山車的問世，發展至今，已讓無數的車友，找到對運動的熱情，對大自然的尊敬，痛快地享受騎乘樂趣，這也似乎成了品牌的使命！在29er大輪徑蔚為潮流後，我們依然提供多種不同組合的產品，讓每個人都能擁有適宜的單避震登山車，使您更有自信地越過一個又一個、最原始的林道挑戰，生活中配伴您的運動好夥伴。無論是碳纖維還是鋁合金車體的BIG.NNE，皆為29er輪徑規格；騎乘幾何，碳纖版與LITE規格的車架，為競賽取向，而TFS與SPEED規格的鋁合金車架，騎乘姿勢較為直挺舒適。依車架材質與多層次零組件搭配，組合出豐富的產品線內容。BIG.NINE車系，可謂是長年造車工藝演化進程的代表性產品，象徵著美利達品牌精神，人人都可以找到合適的自行車，最重要的是，「Made in Taiwan」，就是品質的保證。', 1);
 
 -- --------------------------------------------------------
 
@@ -948,6 +972,7 @@ INSERT INTO `product` (`product_id`, `product_name`, `product_images`, `product_
 -- 資料表結構 `product_brand`
 --
 
+DROP TABLE IF EXISTS `product_brand`;
 CREATE TABLE `product_brand` (
   `brand_id` int(4) NOT NULL,
   `brand_name` varchar(100) NOT NULL
@@ -970,6 +995,7 @@ INSERT INTO `product_brand` (`brand_id`, `brand_name`) VALUES
 -- 資料表結構 `product_category`
 --
 
+DROP TABLE IF EXISTS `product_category`;
 CREATE TABLE `product_category` (
   `product_category_id` int(3) NOT NULL,
   `product_category_name` varchar(20) NOT NULL
@@ -990,6 +1016,7 @@ INSERT INTO `product_category` (`product_category_id`, `product_category_name`) 
 -- 資料表結構 `product_check`
 --
 
+DROP TABLE IF EXISTS `product_check`;
 CREATE TABLE `product_check` (
   `product_check_id` int(5) NOT NULL,
   `product_check_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
@@ -1047,6 +1074,7 @@ INSERT INTO `product_check` (`product_check_id`, `product_check_name`) VALUES
 -- 資料表結構 `product_color`
 --
 
+DROP TABLE IF EXISTS `product_color`;
 CREATE TABLE `product_color` (
   `color_id` int(4) NOT NULL,
   `color_name` varchar(22) NOT NULL,
@@ -1079,6 +1107,7 @@ INSERT INTO `product_color` (`color_id`, `color_name`, `color_value`, `valid`) V
 -- 資料表結構 `product_order`
 --
 
+DROP TABLE IF EXISTS `product_order`;
 CREATE TABLE `product_order` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -1090,7 +1119,7 @@ CREATE TABLE `product_order` (
 --
 
 INSERT INTO `product_order` (`order_id`, `product_id`, `quantity`) VALUES
-(24, 1, 1),
+(25, 1, 1),
 (24, 2, 1);
 
 -- --------------------------------------------------------
@@ -1099,6 +1128,7 @@ INSERT INTO `product_order` (`order_id`, `product_id`, `quantity`) VALUES
 -- 資料表結構 `product_parts`
 --
 
+DROP TABLE IF EXISTS `product_parts`;
 CREATE TABLE `product_parts` (
   `product_parts_id` int(5) NOT NULL,
   `product_parts` varchar(50) NOT NULL,
@@ -1126,6 +1156,7 @@ INSERT INTO `product_parts` (`product_parts_id`, `product_parts`, `product_parts
 -- 資料表結構 `product_product_check`
 --
 
+DROP TABLE IF EXISTS `product_product_check`;
 CREATE TABLE `product_product_check` (
   `product_id` int(5) NOT NULL,
   `product_check_id` int(5) NOT NULL
@@ -1629,6 +1660,7 @@ INSERT INTO `product_product_check` (`product_id`, `product_check_id`) VALUES
 -- 資料表結構 `product_product_color`
 --
 
+DROP TABLE IF EXISTS `product_product_color`;
 CREATE TABLE `product_product_color` (
   `product_id` int(5) NOT NULL,
   `product_color_id` int(5) NOT NULL
@@ -1710,6 +1742,7 @@ INSERT INTO `product_product_color` (`product_id`, `product_color_id`) VALUES
 -- 資料表結構 `product_product_parts`
 --
 
+DROP TABLE IF EXISTS `product_product_parts`;
 CREATE TABLE `product_product_parts` (
   `product_id` int(6) NOT NULL,
   `product_parts_id` int(5) NOT NULL
@@ -2121,6 +2154,7 @@ INSERT INTO `product_product_parts` (`product_id`, `product_parts_id`) VALUES
 -- 資料表結構 `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(4) UNSIGNED NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2162,6 +2196,7 @@ INSERT INTO `user` (`id`, `name`, `account`, `password`, `gender`, `birthday`, `
 -- 資料表結構 `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `user_id` int(8) NOT NULL,
   `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2179,14 +2214,56 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `password`, `email`, `phone`, `photo`, `create_time`, `verify_string`, `valid`) VALUES
-(1, 'Eason', '$2b$10$l4mgOLEcsNakcn.UuV6ZuOQL56dcO12N6CIOE4wd/TlvU39RfIPz2', 'Eason@test.com', '0933456789', '', '2022-06-27 13:33:28', '', 1),
-(2, 'Alan', '$2b$10$B3OY9Y0GW6ag1nE57kGlt.Ye7yF1w0wSBpo9f3woUn4/8NJ75Snqa', 'Alan@test.com', '0955456789', '', '2022-06-27 13:34:19', '', 1),
-(3, '王小明', '$2b$10$Tm9ixMusINNGwHPrRKhUhOXPGKX6kgVTXBp1T97wLO/m5VnKQt9Uq', 'tom@test.com', '0956123456', '', '2022-06-27 13:50:04', '', 1),
-(4, 'wade', '$2b$10$Cp59FFQc.ZOECBe7ztze6OSqOYJbpAt5/.S2l2aM38cYnuB8f1a6S', 'wade@test.com', '0956123478', '', '2022-06-27 13:55:45', '', 1),
-(5, 'mike', '$2b$10$1dXvdqt/A8kA7wBuwQQgYepKLPnBzEYw59.1JcPRuOXhI72KJav7G', 'mike@test.com', '0900000011', '', '2022-06-27 14:06:46', '', 1),
-(6, 'sara', '$2b$10$RG8cuw0fXw9ClCTOBbLeUOnwktD/XUozBW3zBaYdR/zZH0kNQGb8S', 'sara@test.com', '0956123456', '', '2022-06-27 14:20:05', '', 1),
-(13, 'Eason', '$2b$10$R.Atnurm.lXAznm.iAlareYTw4650No1tVhhcSna3fpiWglH/k8Qe', 'a28165965@gmail.com', '0933123456', '1657009752440.png', '2022-06-29 14:02:07', 'q753c4zyIu', 0),
-(14, 'AAAA', '$2b$10$oZCARR7jbvRJOjClo1JA.en2iTxClMh8NVe8a08fU2MjkRxvqehiC', 'asdasdasd@gmail.com', '0977777777', '', '2022-06-30 11:16:41', 'kmoBuTJ292', 0);
+(1, 'Eason', '$2b$10$dzHgpDDPx4qHU2C3YQ1KJOS2QDIJwx.4oLZfQfYImMUuZQACudBM.', 'Eason@test.com', '0933456789', '', '2022-06-27 13:33:28', '', 1),
+(2, 'Alan', '$2b$10$dzHgpDDPx4qHU2C3YQ1KJOS2QDIJwx.4oLZfQfYImMUuZQACudBM.', 'Alan@test.com', '0955456789', '', '2022-06-27 13:34:19', '', 1),
+(3, '王小明', '$2b$10$dzHgpDDPx4qHU2C3YQ1KJOS2QDIJwx.4oLZfQfYImMUuZQACudBM.', 'tom@test.com', '0956123456', '', '2022-06-27 13:50:04', '', 1),
+(4, 'wade', '$2b$10$dzHgpDDPx4qHU2C3YQ1KJOS2QDIJwx.4oLZfQfYImMUuZQACudBM.', 'wade@test.com', '0956123478', '', '2022-06-27 13:55:45', '', 1),
+(5, 'mike', '$2b$10$dzHgpDDPx4qHU2C3YQ1KJOS2QDIJwx.4oLZfQfYImMUuZQACudBM.', 'mike@test.com', '0900000011', '', '2022-06-27 14:06:46', '', 1),
+(6, 'sara', '$2b$10$dzHgpDDPx4qHU2C3YQ1KJOS2QDIJwx.4oLZfQfYImMUuZQACudBM.', 'sara@test.com', '0956123456', '', '2022-06-27 14:20:05', '', 1),
+(13, '黃曉明', '$2b$10$dzHgpDDPx4qHU2C3YQ1KJOS2QDIJwx.4oLZfQfYImMUuZQACudBM.', 'a28165965@gmail.com', '0933666777', '1657261600025.png', '2022-06-29 14:02:07', 'q753c4zyIu', 0),
+(14, 'AAAA', '$2b$10$dzHgpDDPx4qHU2C3YQ1KJOS2QDIJwx.4oLZfQfYImMUuZQACudBM.', 'asdasdasd@gmail.com', '0977777777', '', '2022-06-30 11:16:41', 'kmoBuTJ292', 0),
+(15, 'AAAA', '$2b$10$dzHgpDDPx4qHU2C3YQ1KJOS2QDIJwx.4oLZfQfYImMUuZQACudBM.', 'aaa@aaa.aaa', '0977777777', '', '2022-07-08 10:06:33', 'hdhVL4KCJB', 0),
+(16, 'a', '$2b$10$dzHgpDDPx4qHU2C3YQ1KJOS2QDIJwx.4oLZfQfYImMUuZQACudBM.', 'gm123@gmail.com', '0912345678', '', '2022-07-08 13:56:51', 'NW8BIaPAOI', 0),
+(17, '桃醫宣', '$2b$10$dzHgpDDPx4qHU2C3YQ1KJOS2QDIJwx.4oLZfQfYImMUuZQACudBM.', 'guaduckgua@gmail.com', '0978978978', '', '2022-07-08 14:17:58', 'XKWhRLVR2O', 0);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `user_coupons`
+--
+
+DROP TABLE IF EXISTS `user_coupons`;
+CREATE TABLE `user_coupons` (
+  `coupons_user_id` int(11) NOT NULL,
+  `coupons_id` int(11) NOT NULL,
+  `coupons_is` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `user_coupons`
+--
+
+INSERT INTO `user_coupons` (`coupons_user_id`, `coupons_id`, `coupons_is`) VALUES
+(1, 1, 1),
+(1, 2, 0),
+(1, 3, 1),
+(1, 4, 0),
+(1, 5, 1),
+(1, 6, 0),
+(1, 7, 1),
+(1, 8, 0),
+(1, 9, 1),
+(1, 10, 0),
+(13, 1, 1),
+(13, 2, 0),
+(13, 3, 1),
+(13, 4, 0),
+(13, 5, 1),
+(13, 6, 0),
+(13, 7, 1),
+(13, 8, 0),
+(13, 9, 1),
+(13, 10, 0);
 
 -- --------------------------------------------------------
 
@@ -2194,6 +2271,7 @@ INSERT INTO `users` (`user_id`, `name`, `password`, `email`, `phone`, `photo`, `
 -- 資料表結構 `venue`
 --
 
+DROP TABLE IF EXISTS `venue`;
 CREATE TABLE `venue` (
   `id` int(3) UNSIGNED NOT NULL,
   `venue_name` varchar(10) NOT NULL
@@ -2287,23 +2365,18 @@ ALTER TABLE `course_status`
   ADD PRIMARY KEY (`course_status_id`);
 
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 -- 資料表索引 `customizeorder`
 --
 ALTER TABLE `customizeorder`
   ADD PRIMARY KEY (`orderId`);
 
 --
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 -- 資料表索引 `delivery`
 --
 ALTER TABLE `delivery`
   ADD PRIMARY KEY (`delivery_id`);
 
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
-========
 -- 資料表索引 `favorite_activity`
 --
 ALTER TABLE `favorite_activity`
@@ -2322,7 +2395,6 @@ ALTER TABLE `favorite_product`
   ADD PRIMARY KEY (`favorite_user_id`,`favorite_product_id`);
 
 --
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 -- 資料表索引 `news`
 --
 ALTER TABLE `news`
@@ -2437,6 +2509,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
 
 --
+-- 資料表索引 `user_coupons`
+--
+ALTER TABLE `user_coupons`
+  ADD PRIMARY KEY (`coupons_user_id`,`coupons_id`);
+
+--
 -- 資料表索引 `venue`
 --
 ALTER TABLE `venue`
@@ -2507,15 +2585,12 @@ ALTER TABLE `course_status`
   MODIFY `course_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 -- 使用資料表自動遞增(AUTO_INCREMENT) `customizeorder`
 --
 ALTER TABLE `customizeorder`
-  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `orderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 -- 使用資料表自動遞增(AUTO_INCREMENT) `delivery`
 --
 ALTER TABLE `delivery`
@@ -2537,7 +2612,7 @@ ALTER TABLE `newspicture`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `order_list`
 --
 ALTER TABLE `order_list`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `order_status`
@@ -2553,29 +2628,17 @@ ALTER TABLE `payment_method`
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `payment_status`
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
 --
 ALTER TABLE `payment_status`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `product`
-========
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
---
-ALTER TABLE `payment_status`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
-<<<<<<<< HEAD:sql/大專完整版/20220707.sql
-========
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `product_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
->>>>>>>> d3c28fd3008584b038608491091baa9c60a8323e:sql/20220705/Eason_goral_bike.sql
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product_brand`
 --
 ALTER TABLE `product_brand`
@@ -2615,7 +2678,7 @@ ALTER TABLE `user`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `venue`
@@ -2623,7 +2686,3 @@ ALTER TABLE `users`
 ALTER TABLE `venue`
   MODIFY `id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
