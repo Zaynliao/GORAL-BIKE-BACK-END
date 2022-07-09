@@ -213,7 +213,7 @@ router.post('/favorite/check', async (req, res, next) => {
       `SELECT * FROM favorite_${favoriteMethod} WHERE favorite_user_id = ? AND favorite_${favoriteMethod}_id = ?`,
       [req.body.userId, req.body.courseId]
     );
-    console.log(checkFavorite);
+    // console.log(checkFavorite);
     res.json({ data: checkFavorite });
   }
 });

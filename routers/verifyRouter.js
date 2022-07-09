@@ -5,6 +5,7 @@ const sgMail = require('@sendgrid/mail');
 const randomString = require('randomstring');
 const moment = require('moment');
 const alert = require('alert');
+const bcrypt = require('bcrypt');
 
 router.post('/resend', async (req, res) => {
   try {
@@ -122,6 +123,117 @@ router.get('/:verifyString', async (req, res, next) => {
   } catch (err) {
     console.error(err);
     return res.json({
+      code: 3006,
+      error: '發生錯誤，請稍後在試',
+    });
+  }
+});
+
+router.post('/forgetPassword', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // 檢查用戶是否已存在
+    let [users] = await pool.execute(
+      'SELECT email FROM users WHERE email = ? ',
+      [req.body.email]
+    );
+    if (users.length === 0) {
+      // 不存在此使用者
+      return res.status(400).json({ code: 3007, error: '不存在此使用者' });
+    }
+
+    // 產生指定長度的隨機字串(用於驗證)
+    const verifyCode = randomString.generate(10);
+
+    // 寄送驗證信設定
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const msg = {
+      to: email,
+      from: 'Goral Bike <goralbiker@gmail.com>',
+      subject: '羊百克網站-密碼重置',
+      text: '您好，請點選以下連結進行重置密碼',
+      html: `
+    <div>
+        <a href=${process.env.FRONTEND_URL}/reset/m=${email}&v=${verifyCode}>請點此處重置密碼</a>
+        <p>或是直接複製下列網址貼到瀏覽器上重置密碼</p>
+        <span>${process.env.FRONTEND_URL}/reset/m=${email}&v=${verifyCode}</span>
+    </div>
+        `,
+    };
+
+    const sendMail = async () => {
+      try {
+        await sgMail.send(msg);
+      } catch (err) {
+        console.error(err);
+        return res.json({
+          code: 3006,
+          error: '發生錯誤，請稍後在試',
+        });
+      }
+    };
+
+    // 更新用戶用於驗證的驗證碼
+
+    const [verify] = await pool.execute(
+      'UPDATE users SET verify_string = ? WHERE email = ?',
+      [verifyCode, req.body.email]
+    );
+
+    sendMail();
+    return res.json({
+      code: 200,
+      msg: '重設密碼信已寄出',
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({
+      code: 3006,
+      error: '發生錯誤，請稍後在試',
+    });
+  }
+});
+
+router.post('/resetPassword', async (req, res) => {
+  try {
+    const { email, password, verifyString } = req.body;
+    let [users] = await pool.execute('SELECT * FROM users WHERE email = ? ', [
+      req.body.email,
+    ]);
+    let user = users[0];
+    if (user.verify_string !== verifyString) {
+      return res.status(400).json({
+        code: 3005,
+        error: '發生錯誤，請重新請求密碼重置信',
+      });
+    }
+
+    let passwordCompareResult = await bcrypt.compare(password, user.password);
+
+    if (passwordCompareResult) {
+      return res.status(400).json({
+        code: 3004,
+        error: '密碼不可與之前的相同',
+      });
+    }
+
+    const newHashPassword = await bcrypt.hash(password, 10);
+
+    const [updatePassword] = await pool.execute(
+      'UPDATE users SET password = ? WHERE email = ? ',
+      [newHashPassword, email]
+    );
+
+    if (updatePassword.warningStatus === 0) {
+      return res.json({
+        code: 0,
+        msg: '密碼更新成功',
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({
       code: 3006,
       error: '發生錯誤，請稍後在試',
     });
