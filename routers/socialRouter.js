@@ -4,7 +4,6 @@ const pool = require('../utils/db'); // 引入 db
 const passport = require('passport');
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
-
 passport.use(
   new GoogleStrategy(
     {
@@ -36,6 +35,7 @@ passport.use(
     }
   )
 )
+// http://localhost:3001/api/social/google
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
