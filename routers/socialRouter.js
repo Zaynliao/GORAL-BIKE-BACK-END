@@ -2,18 +2,18 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../utils/db'); // 引入 db
 const passport = require('passport');
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3001/api/social/google/callback",
+      callbackURL: 'http://localhost:3001/api/social/google/callback',
       passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, done) => {
-      console.log(profile);
+      console.log('profile', profile);
       const user = {
         email: profile.emails[0].value,
         name: profile.displayName,
@@ -34,28 +34,27 @@ passport.use(
       done(null, user); // 設定 session
     }
   )
-)
+);
 // http://localhost:3001/api/social/google
 router.get(
-  "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 // http://localhost:3001/api/social/google/callback
 router.get(
-  "/google/callback",
-  passport.authenticate("google", { session: false }),
+  '/google/callback',
+  passport.authenticate('google', { session: false }),
   async (req, res) => {
     // Successful authentication, redirect home.
     res.send({
       status: true,
       data: {
         id: req.user.id,
-        name: req.user.displayName
-      }
+        name: req.user.displayName,
+      },
     });
     // res.redirect("http://localhost:3000/");
   }
 );
-
 
 module.exports = router;
