@@ -28,7 +28,7 @@ const registerRules = [
     .withMessage('密碼驗證不一致'),
 ];
 
-// /api/member/register
+// /api/auth/register
 router.post('/register', registerRules, async (req, res, next) => {
   // 1. req.params <-- 網址上的路由參數
   // 2. req.query <-- 網址上的 query string
@@ -103,7 +103,7 @@ router.post('/register', registerRules, async (req, res, next) => {
   res.json({ code: 0, msg: '註冊成功，請至您的信箱收取驗證信以驗證身份' });
 });
 
-// /api/member/login
+// /api/auth/login
 router.post('/login', async (req, res, next) => {
   // 確認有沒有這個帳號
   let [users] = await pool.execute('SELECT * FROM users WHERE email = ?', [
@@ -141,7 +141,7 @@ router.post('/login', async (req, res, next) => {
   res.json({ code: 0, user: returnUser, msg: '登入成功' });
 });
 
-// /api/member/logout
+// /api/auth/logout
 router.get('/logout', async (req, res, next) => {
   console.log(req.session);
   req.session.destroy();
