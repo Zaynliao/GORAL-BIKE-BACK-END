@@ -1,7 +1,7 @@
 const express = require('express');
 // 利用 express 建立一個 express application
 const app = express();
-
+const passport = require('passport');
 const cors = require('cors');
 // path 為內建套件
 const path = require('path');
@@ -32,6 +32,9 @@ app.use(
 
 // 把 db.js 引入
 let pool = require('./utils/db');
+// passport 設定
+app.use(passport.initialize());
+app.use(passport.session());
 
 // express 處理靜態資料
 // 靜態資料: html, css 檔案, javascript 檔案, 圖片, 影音檔...
@@ -61,6 +64,7 @@ const verifyRouter = require('./routers/verifyRouter');
 const CartRouter = require('./routers/cartRouter');
 const OrderRouter = require('./routers/orderRouter');
 const CustomizeRouter = require('./routers/customizeRouter');
+const SocialRouter = require('./routers/socialRouter');
 // 使用 router
 app.use('/api/auth', AuthRouter);
 app.use('/api/verify', verifyRouter);
@@ -73,6 +77,7 @@ app.use('/api/news', NewsRouter);
 app.use('/api/cart', CartRouter);
 app.use('/api/order', OrderRouter);
 app.use('/api/customize', CustomizeRouter);
+app.use('/api/social', SocialRouter);
 
 app.use((req, res, next) => {
   console.log('所有路由的後面 => 404', req.path);
