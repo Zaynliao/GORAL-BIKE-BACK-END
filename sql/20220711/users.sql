@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-07-11 05:57:26
+-- 產生時間： 2022-07-11 06:13:08
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 8.1.6
 
@@ -35,7 +35,7 @@ CREATE TABLE `users` (
   `email` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `create_time` datetime NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT current_timestamp(),
   `verify_string` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `googleId` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -47,7 +47,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `password`, `email`, `phone`, `photo`, `create_time`, `verify_string`, `googleId`, `token`, `valid`) VALUES
-(14, 'Goral', '$2b$10$odPgGdu7NlQJDSo8XiG1uu2Q.p0xbbQh1o1RVPByOkr.Ja08hOq7e', 'goralbiker@gmail.com', '0955456654', '', '2022-07-11 11:53:36', 'oqnriQlTVT', '', '', 0);
+(14, 'Goral', '$2b$10$odPgGdu7NlQJDSo8XiG1uu2Q.p0xbbQh1o1RVPByOkr.Ja08hOq7e', 'goralbiker@gmail.com', '0955456654', '', '2022-07-11 11:53:36', 'oqnriQlTVT', '', '', 0),
+(15, '潘奕辰', 'socialMedia', 's110113001@stu.ntue.edu.tw', '', '', '0000-00-00 00:00:00', '', '106415522997575996027', '', 0);
 
 --
 -- 已傾印資料表的索引
@@ -67,7 +68,7 @@ ALTER TABLE `users`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
