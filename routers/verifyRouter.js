@@ -143,6 +143,16 @@ router.post('/forgetPassword', async (req, res) => {
       return res.status(400).json({ code: 3007, error: '不存在此使用者' });
     }
 
+    let user = users[0];
+
+    if (user.password === 'socialMedia') {
+      // 如果密碼等於socialMedia
+      // 不開放修改密碼
+      return res
+        .status(400)
+        .json({ code: 3016, error: '不允許第三方登入修改密碼' });
+    }
+
     // 產生指定長度的隨機字串(用於驗證)
     const verifyCode = randomString.generate(10);
 

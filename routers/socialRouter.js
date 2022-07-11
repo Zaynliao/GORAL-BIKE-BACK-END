@@ -10,28 +10,32 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: 'http://localhost:3001/api/social/google/callback',
-      passReqToCallback: true,
     },
-    async (req, accessToken, refreshToken, profile, done) => {
-      console.log('profile', profile);
-      const user = {
-        email: profile.emails[0].value,
-        name: profile.displayName,
-        id: profile.id,
-        provider: profile.provider,
-      };
-      // found user -> done(null,user)
-      // let sql = "SELECT * FROM user WHERE email = ?";
-      // const [searchEmail] = await pool.execute(sql, [user.email]),
-      //   hasCreated = searchEmail.length > 0;
-      // if (!hasCreated) {
-      //   // not found -> create user -> done(null,user)
-      //   sql =
-      //     "INSERT INTO user (email, password, full_name,id) VALUES (?, ?, ?, ?)";
-      //   await pool.execute(sql, [user.email, uuidv4(), user.name, user.id]);
-      // }
-
-      done(null, user); // 設定 session
+    async (req, accessToken, refreshToken, profile, cb) => {
+      try {
+        console.log('profile', profile);
+        const user = {
+          email: profile.emails[0].value,
+          name: profile.displayName,
+          accessToken,
+        };
+        const [currentUser] = await pool.execute(
+          'SELECT * FROM users WHERE email = ?',
+          [user.email]
+        );
+        console.log(user);
+        if (currentUser.length > 0) {
+          return cb(null, user);
+        }
+        // not found -> create user -> done(null,user)
+        await pool.execute(
+          `INSERT INTO users (email, name, password, googleId) VALUES (?, ?, ?, ?)`,
+          [user.email, user.name, 'socialMedia', profile.id]
+        );
+        return cb(null, user);
+      } catch (error) {
+        console.log(error);
+      }
     }
   )
 );
@@ -43,18 +47,35 @@ router.get(
 // http://localhost:3001/api/social/google/callback
 router.get(
   '/google/callback',
-  passport.authenticate('google', { session: false }),
+  passport.authenticate('google', {
+    session: false,
+    failureRedirect: '/api/social/check',
+  }),
   async (req, res) => {
+    console.log('req', req.user);
+    const [currentUser] = await pool.execute(
+      'SELECT * FROM users WHERE email = ?',
+      [req.user.email]
+    );
+    let returnUser = {
+      user_id: currentUser[0].user_id,
+      name: currentUser[0].name,
+      email: currentUser[0].email,
+      phone: currentUser[0].phone,
+      photo: currentUser[0].photo,
+    };
+    req.session.user = returnUser;
+    console.log(req.session);
+
     // Successful authentication, redirect home.
-    res.send({
-      status: true,
-      data: {
-        id: req.user.id,
-        name: req.user.displayName,
-      },
-    });
-    // res.redirect("http://localhost:3000/");
+    res.redirect('http://localhost:3000/');
   }
 );
+
+// http://localhost:3001/api/social/check
+router.get('/check', (req, res) => {
+  console.log('in /social/check', req.session);
+  res.send(req.session.user);
+});
 
 module.exports = router;

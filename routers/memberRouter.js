@@ -60,7 +60,7 @@ router.get('/profile/:userId', async (req, res, next) => {
   try {
     let [members] = await pool.execute(
       `
-    SELECT name,email,phone,photo FROM users 
+    SELECT name,email,phone,photo FROM users
     WHERE user_id = ?`,
       [req.params.userId]
     );
@@ -100,21 +100,21 @@ router.post(
 
     if (photo) {
       let [members] = await pool.execute(
-        `UPDATE users 
-          SET photo = ?, 
-          name = ?, 
-          email = ?, 
-          phone = ?  
+        `UPDATE users
+          SET photo = ?,
+          name = ?,
+          email = ?,
+          phone = ?
           WHERE user_id = ?`,
         [photo, req.body.name, req.body.email, req.body.phone, req.body.user_id]
       );
     } else {
       let [members] = await pool.execute(
-        `UPDATE users 
-          SET  
-          name = ?, 
-          email = ?, 
-          phone = ?  
+        `UPDATE users
+          SET
+          name = ?,
+          email = ?,
+          phone = ?
           WHERE user_id = ?`,
         [req.body.name, req.body.email, req.body.phone, req.body.user_id]
       );
@@ -153,6 +153,14 @@ router.post('/password/update', async (req, res) => {
     return res.status(400).json({ code: 3003, error: '沒有該用戶' });
   }
   let user = users[0];
+
+  if (user.password === 'socialMedia') {
+    // 如果密碼等於socialMedia
+    // 不開放修改密碼
+    return res
+      .status(400)
+      .json({ code: 3016, error: '不允許第三方登入修改密碼' });
+  }
 
   let passwordCompareResult = await bcrypt.compare(
     req.body.oldPassword,
@@ -240,9 +248,9 @@ router.get('/favorite/course', async (req, res, next) => {
 
   // ------------------------------------ user 收藏資料
   let [favoriteResult] = await pool.execute(
-    `SELECT * FROM classes 
-    RIGHT JOIN favorite_course 
-    ON favorite_course.favorite_course_id = classes.course_id 
+    `SELECT * FROM classes
+    RIGHT JOIN favorite_course
+    ON favorite_course.favorite_course_id = classes.course_id
     AND favorite_course.favorite_user_id = ? WHERE course_valid = ?`,
     [req.query.userId, 1]
   );
@@ -258,11 +266,11 @@ router.get('/favorite/course', async (req, res, next) => {
     LEFT JOIN course_contents ON course_contents.course_content_id = classes.course_content_id
     LEFT JOIN course_location ON course_location.course_location_id  = classes.course_location_id
     LEFT JOIN venue ON venue.id = course_location.course_venue_id
-    RIGHT JOIN favorite_course ON favorite_course.favorite_course_id = classes.course_id 
-    AND favorite_course.favorite_user_id = ? 
-    WHERE course_valid = ? 
-    ${sortCourseMethodString} 
-    LIMIT ? 
+    RIGHT JOIN favorite_course ON favorite_course.favorite_course_id = classes.course_id
+    AND favorite_course.favorite_user_id = ?
+    WHERE course_valid = ?
+    ${sortCourseMethodString}
+    LIMIT ?
     OFFSET ?`,
     [req.query.userId, 1, perPage, offset]
   );
@@ -300,26 +308,26 @@ router.get('/favorite/activity', async (req, res, next) => {
   const offset = (page - 1) * perPage;
 
   let [favoriteActivityResult] = await pool.execute(
-    `SELECT * FROM activity 
-    RIGHT JOIN favorite_activity 
-    ON favorite_activity.favorite_activity_id = activity.activity_id 
-    AND favorite_activity.favorite_user_id = ? 
+    `SELECT * FROM activity
+    RIGHT JOIN favorite_activity
+    ON favorite_activity.favorite_activity_id = activity.activity_id
+    AND favorite_activity.favorite_user_id = ?
     WHERE activity_valid = ? `,
     [req.query.userId, 1]
   );
 
   let [favoritePageResults] = await pool.execute(
     `SELECT * FROM activity
-    LEFT JOIN activity_status 
+    LEFT JOIN activity_status
     ON activity.activity_status_id = activity_status.id
-    LEFT JOIN venue 
+    LEFT JOIN venue
     ON activity.activity_venue_id = venue.id
-    RIGHT JOIN favorite_activity 
-    ON favorite_activity.favorite_activity_id = activity.activity_id 
-    AND favorite_activity.favorite_user_id = ? 
-    WHERE activity_valid = ? 
-    ${sortActivityMethodString} 
-    LIMIT ? 
+    RIGHT JOIN favorite_activity
+    ON favorite_activity.favorite_activity_id = activity.activity_id
+    AND favorite_activity.favorite_user_id = ?
+    WHERE activity_valid = ?
+    ${sortActivityMethodString}
+    LIMIT ?
     OFFSET ?`,
     [req.query.userId, 1, perPage, offset]
   );
@@ -386,10 +394,10 @@ router.get('/coupon', async (req, res, next) => {
 
 router.get('/coupon/unused', async (req, res, next) => {
   let [couponResults] = await pool.execute(
-    `SELECT user_coupons.coupons_id,coupons.coupon_name,coupons.coupon_content,coupon_discount FROM coupons 
-    LEFT JOIN user_coupons 
-    ON user_coupons.coupons_id = coupons.id 
-    WHERE user_coupons.coupons_user_id = ? 
+    `SELECT user_coupons.coupons_id,coupons.coupon_name,coupons.coupon_content,coupon_discount FROM coupons
+    LEFT JOIN user_coupons
+    ON user_coupons.coupons_id = coupons.id
+    WHERE user_coupons.coupons_user_id = ?
     AND user_coupons.coupons_is = ?
     ORDER BY user_coupons.coupons_id`,
     [req.query.userId, 1]
